@@ -1,0 +1,61 @@
+---
+import Nav from '~/components/Nav.astro';
+import Footer from '~/components/Footer.astro';
+import '~/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  ogImage?: string;
+}
+
+const {
+  title = 'HackAll360',
+  description = 'Builder, tinkerer, and chronic note taker.',
+  structuredData,
+  ogImage = '/social-share.jpg'
+} = Astro.props as Props;
+---
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HackAll360" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={Astro.site?.href ?? 'https://hackall360.github.io'} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
+
+    {structuredData && (
+      <script type="application/ld+json" is:inline>
+        {JSON.stringify(structuredData)}
+      </script>
+    )}
+  </head>
+  <body class="bg-transparent text-inherit selection:bg-accent/30 selection:text-accent-light">
+    <div class="relative z-10 flex min-h-screen flex-col">
+      <Nav />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>
