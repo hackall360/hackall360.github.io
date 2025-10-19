@@ -28,6 +28,19 @@ The project fetcher script reads the following optional variables:
 
 If your network requires a proxy, set `GITHUB_PROXY` or rely on `HTTPS_PROXY`/`HTTP_PROXY`, which the script respects automatically.
 
+### Site features
+
+Set these optional variables to toggle specific site features:
+
+| Variable | Purpose |
+| --- | --- |
+| `PUBLIC_PLAUSIBLE_DOMAIN` | Enables the Plausible analytics script and sets the tracked domain. Leave unset to disable analytics entirely. |
+| `PUBLIC_PLAUSIBLE_API_HOST` | Optional custom API endpoint for self-hosted Plausible deployments. |
+| `PUBLIC_PLAUSIBLE_SRC` | Override the Plausible script source URL (defaults to `https://plausible.io/js/script.js`). |
+| `PUBLIC_FORMSPREE_ENDPOINT` | Formspree endpoint used by the `/about` contact form. |
+| `PUBLIC_ASSISTANT_API_URL` | Hosted inference endpoint for the `/assistant` prototype. |
+| `PUBLIC_ASSISTANT_API_KEY` | Public token or ephemeral key passed to the hosted inference endpoint. Prefer proxying secrets through your own backend in production. |
+
 ## Fetching project metadata
 
 Use the `fetch-projects` script to synchronize local project data with GitHub:
@@ -89,3 +102,44 @@ Open http://localhost:4321/ to iterate locally.
 npm run build
 npm run preview
 ```
+
+## Notes collection
+
+- Markdown notes live in `src/content/notes/` and follow the schema defined in `src/content/config.ts`.
+- Run `npm run sync` after adding or renaming notes so Astro refreshes the content collection types.
+- Each note must set `title`, `publishedAt`, and optional `tags`, `description`, or `updatedAt`. The listing page at `/notes` renders titles, tag chips, and calculated read times using `src/utils/readTime.ts`.
+
+## Now page data
+
+- Update `src/data/now.json` to refresh the timeline on `/now`.
+- Each entry supports `title`, `window`, `description`, `status`, and optional `links` (`label` + `href`).
+- Keep entries short so the cards remain scannable on small screens.
+
+## Analytics and privacy
+
+- Analytics load only when `PUBLIC_PLAUSIBLE_DOMAIN` is defined. Remove the variable locally to disable tracking during development or preview builds.
+- The Plausible script ships with `data-dnt="true"` so browsers that express “Do Not Track” are automatically respected.
+- Visitors can opt out manually by setting `localStorage.plausible_ignore = "true"` in their browser console or by visiting `https://plausible.io/docs/excluding`. Clearing the key re-enables analytics.
+- Document any additional privacy policies alongside `/about` or in a future `/privacy` page if requirements expand.
+
+## Contact form
+
+- The `/about` page embeds a Formspree-powered form when `PUBLIC_FORMSPREE_ENDPOINT` is present. Configure it with the Formspree dashboard and paste the generated endpoint.
+- A honeypot input named `company` provides basic spam protection. Formspree also supports additional filtering via reCAPTCHA or server-side rules if needed.
+- Without the environment variable, the UI falls back to email-only guidance so there are no broken submissions.
+
+## Portfolio assistant prototype
+
+- Enable the `/assistant` Astro Island by setting both `PUBLIC_ASSISTANT_API_URL` and `PUBLIC_ASSISTANT_API_KEY`.
+- The component posts JSON payloads (`{ prompt, context }`) to the configured endpoint and expects a JSON response with a `reply` property.
+- Treat `PUBLIC_ASSISTANT_API_KEY` as a short-lived or public-safe token. For sensitive credentials, front the API with a small serverless proxy and expose only a `PUBLIC_ASSISTANT_SESSION_TOKEN`.
+- Error states surface inline so the page remains informative even when the API is unavailable.
+
+## Custom domain readiness
+
+- Preferred domain: `hackall360.dev` (aligned with the primary contact email). Once DNS can be updated, create the following records:
+  - `A` records pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153` (GitHub Pages IPv4).
+  - Optional `AAAA` records to `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, and `2606:50c0:8003::153` for IPv6.
+  - A `CNAME` record for `www` pointing to `hackall360.github.io` if a `www` subdomain is desired.
+- After DNS propagates, add a `CNAME` file at the repository root (under `public/`) with `hackall360.dev` to lock in the custom domain for deployments.
+- Finally, visit the repository’s **Settings → Pages** panel to set the custom domain, enforce HTTPS, and verify the DNS checkmark turns green.

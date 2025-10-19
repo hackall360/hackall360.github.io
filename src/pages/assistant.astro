@@ -1,0 +1,44 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import AssistantIsland from '~/components/AssistantIsland.astro';
+
+const assistantEnabled = Boolean(import.meta.env.PUBLIC_ASSISTANT_API_URL && import.meta.env.PUBLIC_ASSISTANT_API_KEY);
+---
+
+<BaseLayout
+  title="Portfolio Assistant Prototype | HackAll360"
+  description="Chat with an AI assistant tuned to HackAll360’s reliability work, migrations, and facilitation rituals."
+>
+  <div class="mx-auto flex max-w-4xl flex-col gap-12 px-6 py-24 sm:px-10 lg:py-28">
+    <header class="space-y-6 text-slate-200">
+      <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// assistant</p>
+      <h1 class="text-4xl font-semibold text-white sm:text-5xl">Ask the portfolio copilot.</h1>
+      <p class="text-base leading-relaxed text-slate-300 sm:text-lg">
+        This interactive prototype taps into a hosted inference API to surface concise summaries about platform outcomes,
+        facilitation rituals, and active experiments. Credentials stay opt-in via environment variables so local previews remain
+        private.
+      </p>
+      {!assistantEnabled && (
+        <div class="rounded-2xl border border-amber-400/40 bg-amber-500/10 p-4 text-sm text-amber-200">
+          <p class="font-semibold">Prototype disabled.</p>
+          <p class="text-amber-100/80">
+            Add <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_URL</code>
+            and <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_KEY</code>
+            to your environment to activate live responses.
+          </p>
+        </div>
+      )}
+    </header>
+
+    <AssistantIsland />
+
+    <section class="space-y-4 rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6 text-sm text-slate-300">
+      <h2 class="text-lg font-semibold text-white">Safety and privacy guardrails</h2>
+      <ul class="list-disc space-y-2 pl-5">
+        <li>The assistant forwards prompts to a configured API endpoint over HTTPS. No prompts are stored client-side.</li>
+        <li>Disable analytics or the assistant entirely by omitting the related environment variables.</li>
+        <li>Responses are advisory; verify architectural decisions with the source repositories before implementing.</li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
