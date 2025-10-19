@@ -1,0 +1,127 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import projects from '~/data/projects.json';
+import ProjectFilters from '~/components/ProjectFilters.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
+
+const pageTitle = 'Projects | HackAll360';
+const pageDescription =
+  "Explore HackAll360's mix of AI experiments, security tooling, and full-stack prototypes.";
+
+const tagGroups = new Map<string, number>();
+for (const project of projects) {
+  for (const tag of project.tags ?? []) {
+    const key = tag.trim();
+    tagGroups.set(key, (tagGroups.get(key) ?? 0) + 1);
+  }
+}
+const availableTags = Array.from(tagGroups.keys()).sort();
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'HackAll360 Projects',
+  description: pageDescription,
+  itemListElement: projects.map((project, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: project.url,
+    name: project.name,
+    description: project.description
+  }))
+};
+---
+<BaseLayout title={pageTitle} description={pageDescription} structuredData={structuredData}>
+  <section class="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-20">
+    <header class="space-y-4 text-center sm:text-left">
+      <p class="text-sm font-semibold uppercase tracking-[0.3em] text-accent-light">Projects</p>
+      <h1 class="text-4xl font-bold text-slate-100 sm:text-5xl">Building in public</h1>
+      <p class="text-base text-slate-400 sm:text-lg">
+        Browse experiments and long-running builds across AI, security, and full-stack playgrounds.
+      </p>
+    </header>
+
+    <ProjectFilters tags={availableTags} />
+
+    <div
+      id="projects-grid"
+      class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+      role="list"
+      aria-live="polite"
+    >
+      {projects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+
+    <div
+      id="projects-empty"
+      class="hidden rounded-2xl border border-dashed border-slate-700/80 bg-slate-900/60 p-10 text-center text-slate-300"
+      role="status"
+      aria-live="polite"
+    >
+      <h2 class="text-xl font-semibold text-slate-100">No projects match those tags yet</h2>
+      <p class="mt-2 text-sm text-slate-400">
+        Try relaxing your filters or jump into the full list of repositories on GitHub for even more builds.
+      </p>
+      <a
+        class="mt-6 inline-flex items-center justify-center rounded-full border border-accent/70 bg-accent/10 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-accent-light transition hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+        href="https://github.com/hackall360?tab=repositories"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Explore GitHub
+      </a>
+    </div>
+  </section>
+
+  <script is:inline>
+    const filterContainer = document.querySelector('[data-project-filters]');
+    const grid = document.getElementById('projects-grid');
+    const emptyState = document.getElementById('projects-empty');
+    if (!filterContainer || !grid || !emptyState) {
+      throw new Error('Projects page failed to initialize filters');
+    }
+
+    const cards = Array.from(
+      grid.querySelectorAll<HTMLElement>('[data-project-card]')
+    );
+
+    const updateVisibility = (activeTags: string[]) => {
+      const normalized = activeTags.map((tag) => tag.toLowerCase());
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const tags = (card.dataset.tags ?? '')
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter(Boolean);
+
+        const isVisible =
+          normalized.length === 0 ||
+          normalized.every((tag) => tags.includes(tag));
+
+        card.classList.toggle('hidden', !isVisible);
+        card.setAttribute('tabindex', isVisible ? '0' : '-1');
+        if (isVisible) {
+          visibleCount += 1;
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+        grid.setAttribute('aria-hidden', 'true');
+      } else {
+        emptyState.classList.add('hidden');
+        grid.setAttribute('aria-hidden', 'false');
+      }
+    };
+
+    filterContainer.addEventListener('filtersChange', (event: Event) => {
+      const customEvent = event as CustomEvent<{ activeTags: string[] }>;
+      updateVisibility(customEvent.detail.activeTags ?? []);
+    });
+
+    updateVisibility([]);
+  </script>
+</BaseLayout>
