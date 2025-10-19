@@ -13,13 +13,18 @@ module.exports = {
           dark: colors.blue[500]
         },
         surface: {
-          DEFAULT: '#0f172a',
-          elevated: '#1e293b'
+          DEFAULT: '#020617',
+          elevated: '#0f172a',
+          highlight: '#11203f'
         }
       },
       fontFamily: {
         mono: ['"JetBrains Mono"', 'SFMono-Regular', 'Menlo', 'monospace'],
         sans: ['"Inter"', 'system-ui', 'sans-serif']
+      },
+      backgroundImage: {
+        'tech-grid':
+          'linear-gradient(rgba(59,130,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.08) 1px, transparent 1px)'
       }
     }
   },

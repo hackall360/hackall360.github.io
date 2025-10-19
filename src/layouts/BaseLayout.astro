@@ -17,7 +17,7 @@ const {
   ogImage = '/social-share.jpg'
 } = Astro.props as Props;
 ---
-<html lang="en" class="bg-slate-50 text-slate-900 dark:bg-surface dark:text-slate-100">
+<html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,8 +49,8 @@ const {
       </script>
     )}
   </head>
-  <body class="min-h-screen bg-inherit text-inherit">
-    <div class="flex min-h-screen flex-col">
+  <body class="bg-transparent text-inherit selection:bg-accent/30 selection:text-accent-light">
+    <div class="relative z-10 flex min-h-screen flex-col">
       <Nav />
       <main class="flex-1">
         <slot />
