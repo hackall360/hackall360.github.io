@@ -8,9 +8,9 @@
   }
 
   body {
-    @apply relative min-h-screen overflow-x-hidden bg-surface text-slate-200 antialiased;
-    background-image: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.12), transparent 45%),
-      radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.08), transparent 55%);
+    @apply relative min-h-screen overflow-x-hidden bg-surface text-neutral-emphasis antialiased font-sans;
+    background-image: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.16), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.12), transparent 55%);
     background-attachment: fixed;
   }
 
@@ -24,25 +24,34 @@
   }
 
   body::before {
-    background: radial-gradient(circle at 15% 85%, rgba(165, 243, 252, 0.12), transparent 50%),
-      radial-gradient(circle at 75% 40%, rgba(14, 116, 144, 0.1), transparent 55%);
+    background: radial-gradient(circle at 15% 85%, rgba(94, 234, 212, 0.12), transparent 50%),
+      radial-gradient(circle at 75% 40%, rgba(14, 116, 144, 0.15), transparent 55%);
     mix-blend-mode: screen;
   }
 
   body::after {
-    background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)),
-      linear-gradient(90deg, rgba(94, 234, 212, 0.06) 1px, transparent 1px),
-      linear-gradient(rgba(94, 234, 212, 0.06) 1px, transparent 1px);
-    background-size: 100% 100%, 80px 80px, 80px 80px;
+    background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),
+      linear-gradient(90deg, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+      linear-gradient(rgba(14, 165, 233, 0.08) 1px, transparent 1px);
+    background-size: 100% 100%, 72px 72px, 72px 72px;
     background-position: center;
-    opacity: 0.45;
+    opacity: 0.5;
   }
 
   a {
     @apply text-accent-light transition-colors hover:text-accent;
   }
+
+  :focus-visible {
+    @apply focus-ring-accent;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
 }
 
 .code-inline {
-  @apply rounded-md bg-surface-elevated/60 px-1.5 py-0.5 font-mono text-sm text-accent-light;
+  @apply rounded-md bg-surface-elevated/70 px-1.5 py-0.5 font-mono text-sm text-accent-light;
 }
