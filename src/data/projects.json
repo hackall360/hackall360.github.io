@@ -1,29 +1,123 @@
 [
   {
-    "title": "Observability Toolkit",
-    "tagline": "Unified dashboards and runbooks aligning engineers around actionable telemetry.",
-    "tags": ["SRE", "Dashboards", "Playbooks"],
-    "repoUrl": "https://github.com/hackall360/observability-toolkit",
-    "caseStudyUrl": "/projects/observability-toolkit"
+    "slug": "auto-coder",
+    "name": "auto-coder",
+    "description": "",
+    "tags": [],
+    "stars": 0,
+    "language": "Python",
+    "url": "https://github.com/hackall360/auto-coder",
+    "caseStudy": null,
+    "featured": false
   },
   {
-    "title": "Deploy Orchestrator",
-    "tagline": "Progressive delivery pipelines with built-in guardrails and chat-ops controls.",
-    "tags": ["Platform", "CI/CD", "Automation"],
-    "repoUrl": "https://github.com/hackall360/deploy-orchestrator",
-    "caseStudyUrl": "/projects/deploy-orchestrator"
+    "slug": "hackall360.github.io",
+    "name": "hackall360.github.io",
+    "description": "",
+    "tags": [],
+    "stars": 0,
+    "language": "Astro",
+    "url": "https://github.com/hackall360/hackall360.github.io",
+    "caseStudy": null,
+    "featured": false
   },
   {
-    "title": "Incident Collaboration Kit",
-    "tagline": "Lightweight incident command center integrating status pages, retros, and ownership maps.",
-    "tags": ["Reliability", "Collaboration", "Tooling"],
-    "repoUrl": "https://github.com/hackall360/incident-collab-kit",
-    "caseStudyUrl": "/projects/incident-collab-kit"
+    "slug": "NeoGradleTemplate",
+    "name": "NeoGradleTemplate",
+    "description": "",
+    "tags": [],
+    "stars": 0,
+    "language": "Java",
+    "url": "https://github.com/hackall360/NeoGradleTemplate",
+    "caseStudy": null,
+    "featured": false
   },
   {
-    "title": "Developer Portal",
-    "tagline": "Self-serve documentation and golden paths for internal services and APIs.",
-    "tags": ["DX", "Docs", "Guides"],
-    "caseStudyUrl": "/projects/developer-portal"
+    "slug": "portfolio-lesson-1",
+    "name": "portfolio-lesson-1",
+    "description": "",
+    "tags": [],
+    "stars": 0,
+    "language": "HTML",
+    "url": "https://github.com/hackall360/portfolio-lesson-1",
+    "caseStudy": null,
+    "featured": false
+  },
+  {
+    "slug": "PyGoConverter",
+    "name": "PyGoConverter",
+    "description": "A python to golang language converter written in golang.",
+    "tags": [],
+    "stars": 0,
+    "language": null,
+    "url": "https://github.com/hackall360/PyGoConverter",
+    "caseStudy": null,
+    "featured": false
+  },
+  {
+    "slug": "Software-Development-Course-Git",
+    "name": "Software-Development-Course-Git",
+    "description": "A Github based lesson series in software development -- Git Flow and using git in real-world applications",
+    "tags": [],
+    "stars": 0,
+    "language": null,
+    "url": "https://github.com/hackall360/Software-Development-Course-Git",
+    "caseStudy": null,
+    "featured": false
+  },
+  {
+    "slug": "SOLLOL",
+    "name": "SOLLOL",
+    "description": "FORKED FOR WORKING ON -- Super Ollama Load Balancer - Performance-aware routing for distributed Ollama deployments with Ray, Dask, and adaptive metrics",
+    "tags": [],
+    "stars": 0,
+    "language": "Python",
+    "url": "https://github.com/hackall360/SOLLOL",
+    "caseStudy": null,
+    "featured": false
+  },
+  {
+    "slug": "studio-rust-mcp-server",
+    "name": "studio-rust-mcp-server",
+    "description": "Standalone Roblox Studio MCP Server",
+    "tags": [],
+    "stars": 0,
+    "language": "Luau",
+    "url": "https://github.com/hackall360/studio-rust-mcp-server",
+    "caseStudy": null,
+    "featured": false
+  },
+  {
+    "slug": "SuperToken",
+    "name": "SuperToken",
+    "description": "",
+    "tags": [],
+    "stars": 0,
+    "language": "Python",
+    "url": "https://github.com/hackall360/SuperToken",
+    "caseStudy": null,
+    "featured": false
+  },
+  {
+    "slug": "UnityDiscord",
+    "name": "UnityDiscord",
+    "description": "Unity's GitHub directory for discord chat bot",
+    "tags": [],
+    "stars": 0,
+    "language": null,
+    "url": "https://github.com/hackall360/UnityDiscord",
+    "caseStudy": null,
+    "featured": false
+  },
+  {
+    "slug": "WOTLK-WebServer",
+    "name": "WOTLK-WebServer",
+    "description": "REPLACE ME",
+    "tags": [],
+    "stars": 0,
+    "language": "JavaScript",
+    "url": "https://github.com/hackall360/WOTLK-WebServer",
+    "caseStudy": null,
+    "featured": false
   }
 ]

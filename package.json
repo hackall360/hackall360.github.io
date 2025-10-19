@@ -7,10 +7,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro:check": "astro check"
+    "astro:check": "astro check",
+    "fetch-projects": "node ./scripts/fetch-projects.mjs"
   },
   "dependencies": {
-    "astro": "^4.16.12"
+    "astro": "^4.16.12",
+    "undici": "^7.16.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
