@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Observability Toolkit",
+    "tagline": "Unified dashboards and runbooks aligning engineers around actionable telemetry.",
+    "tags": ["SRE", "Dashboards", "Playbooks"],
+    "repoUrl": "https://github.com/hackall360/observability-toolkit",
+    "caseStudyUrl": "/projects/observability-toolkit"
+  },
+  {
+    "title": "Deploy Orchestrator",
+    "tagline": "Progressive delivery pipelines with built-in guardrails and chat-ops controls.",
+    "tags": ["Platform", "CI/CD", "Automation"],
+    "repoUrl": "https://github.com/hackall360/deploy-orchestrator",
+    "caseStudyUrl": "/projects/deploy-orchestrator"
+  },
+  {
+    "title": "Incident Collaboration Kit",
+    "tagline": "Lightweight incident command center integrating status pages, retros, and ownership maps.",
+    "tags": ["Reliability", "Collaboration", "Tooling"],
+    "repoUrl": "https://github.com/hackall360/incident-collab-kit",
+    "caseStudyUrl": "/projects/incident-collab-kit"
+  },
+  {
+    "title": "Developer Portal",
+    "tagline": "Self-serve documentation and golden paths for internal services and APIs.",
+    "tags": ["DX", "Docs", "Guides"],
+    "caseStudyUrl": "/projects/developer-portal"
+  }
+]
