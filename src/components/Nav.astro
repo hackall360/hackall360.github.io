@@ -1,0 +1,32 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: '/now', label: 'Now', comingSoon: true },
+  { href: '/blog', label: 'Blog', comingSoon: true }
+];
+---
+<header class="border-b border-slate-200 bg-slate-50/80 backdrop-blur dark:border-slate-700 dark:bg-surface/80">
+  <div class="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent dark:text-accent-light">$ whoami</p>
+      <h1 class="mt-1 font-mono text-xl font-semibold text-slate-800 dark:text-white">hackall360</h1>
+    </div>
+    <nav class="flex flex-wrap items-center gap-3 font-mono text-sm">
+      {links.map((item) => (
+        <a
+          class:list={[
+            'rounded-md border border-transparent px-3 py-1 text-slate-700 transition-colors dark:text-slate-200',
+            'hover:border-accent hover:bg-accent/10 dark:hover:border-accent-light dark:hover:bg-accent/20',
+            item.comingSoon && 'pointer-events-none opacity-50'
+          ]}
+          href={item.href}
+        >
+          <span>{item.label}</span>
+          {item.comingSoon && <span class="ml-2 text-xs text-slate-500">(soon)</span>}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>

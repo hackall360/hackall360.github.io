@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-surface dark:text-slate-100 antialiased;
+  }
+
+  a {
+    @apply text-accent dark:text-accent-light hover:text-accent-dark transition-colors;
+  }
+}
+
+.code-inline {
+  @apply font-mono text-sm px-1.5 py-0.5 rounded-md bg-surface-elevated/60 text-accent-light;
+}
