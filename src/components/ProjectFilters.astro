@@ -7,34 +7,29 @@ const { tags } = Astro.props as Props;
 ---
 <section
   data-project-filters
-  class="mx-auto flex w-full flex-col gap-4 rounded-2xl border border-slate-800/60 bg-surface-elevated/30 p-6 shadow-lg shadow-slate-900/20"
+  data-motion-reveal
+  data-motion-direction="up"
+  class="mx-auto flex w-full flex-col gap-4 rounded-3xl border border-accent/15 bg-surface-elevated/70 p-6 shadow-inner-terminal"
 >
   <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-    <h2 class="text-lg font-semibold text-slate-100">Filter by focus area</h2>
+    <h2 class="text-lg font-semibold text-white">Filter by focus area</h2>
     <button
       type="button"
-      class="self-start rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-slate-300 transition hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+      class="self-start rounded-full border border-transparent bg-surface-highlight/70 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
       data-clear-filters
     >
       Clear filters
     </button>
   </div>
-  <div
-    class="flex flex-wrap gap-3"
-    role="group"
-    aria-label="Toggle project tags"
-  >
+  <div class="flex flex-wrap gap-3" role="group" aria-label="Toggle project tags">
     {tags.map((tag) => (
       <button
         type="button"
-        class="tag-filter inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-accent hover:text-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+        class="tag-filter inline-flex items-center gap-2 rounded-full border border-accent/20 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
         data-tag={tag.toLowerCase()}
         aria-pressed="false"
       >
-        <span
-          aria-hidden="true"
-          class="indicator size-2 rounded-full bg-slate-600 transition"
-        ></span>
+        <span aria-hidden="true" class="indicator size-2 rounded-full bg-neutral-soft transition"></span>
         {tag}
       </button>
     ))}
@@ -48,18 +43,21 @@ const { tags } = Astro.props as Props;
   }
 
   const buttons = Array.from(
-    container.querySelectorAll<HTMLButtonElement>('button[data-tag]')
+    container.querySelectorAll('button[data-tag]')
   );
-  const clearButton = container.querySelector<HTMLButtonElement>('[data-clear-filters]');
+  const clearButton = container.querySelector('[data-clear-filters]');
 
-  const toggleButtonState = (button: HTMLButtonElement, active: boolean) => {
+  const toggleButtonState = (button, active) => {
     button.setAttribute('aria-pressed', active ? 'true' : 'false');
     button.classList.toggle('border-accent', active);
+    button.classList.toggle('bg-accent/20', active);
     button.classList.toggle('text-accent-light', active);
-    const indicator = button.querySelector<HTMLElement>('.indicator');
+    button.classList.toggle('shadow-glow', active);
+
+    const indicator = button.querySelector('.indicator');
     if (indicator) {
       indicator.classList.toggle('bg-accent-light', active);
-      indicator.classList.toggle('bg-slate-600', !active);
+      indicator.classList.toggle('bg-neutral-soft', !active);
     }
   };
 
@@ -82,6 +80,15 @@ const { tags } = Astro.props as Props;
       const isActive = button.getAttribute('aria-pressed') === 'true';
       toggleButtonState(button, !isActive);
       update();
+    });
+
+    button.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        const isActive = button.getAttribute('aria-pressed') === 'true';
+        toggleButtonState(button, !isActive);
+        update();
+      }
     });
   });
 

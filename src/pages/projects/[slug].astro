@@ -100,16 +100,18 @@ let caseStudyData: Partial<ProjectEntry['data']> = {};
 if (entry) {
   const rendered = await entry.render();
   Content = rendered.Content;
-  caseStudyData = rendered.data ?? {};
-  summary = rendered.data?.summary ?? summary;
-} else if (
-  typeof project.caseStudy === 'string' &&
-  project.caseStudy.trim().length > 0 &&
-  !project.caseStudy.trim().startsWith('/projects')
-) {
-  caseStudyMarkdown = project.caseStudy;
+  const frontmatter = (rendered as unknown as { data?: Record<string, unknown>; Content: typeof rendered.Content }).data ?? {};
+  caseStudyData = frontmatter as Partial<ProjectEntry['data']>;
+  if (typeof frontmatter.summary === 'string' && frontmatter.summary.length > 0) {
+    summary = frontmatter.summary;
+  }
 } else {
-  caseStudyMarkdown = await loadReadmeMarkdown(project.url);
+  const rawCaseStudy = String(project.caseStudy ?? '').trim();
+  if (rawCaseStudy.length > 0 && !rawCaseStudy.startsWith('/projects')) {
+    caseStudyMarkdown = rawCaseStudy;
+  } else {
+    caseStudyMarkdown = await loadReadmeMarkdown(project.url);
+  }
 }
 
 if (!Content && caseStudyMarkdown) {
