@@ -41,7 +41,7 @@ jobs:
         run: npm ci
 
       - name: Fetch projects
-        if: steps.projects-cache.outputs.cache-hit != 'true'
+        if: github.event_name != 'schedule' || steps.projects-cache.outputs.cache-hit != 'true'
         run: npm run fetch-projects
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
