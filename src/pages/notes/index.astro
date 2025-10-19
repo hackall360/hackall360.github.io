@@ -1,0 +1,79 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { estimateReadTime } from '~/utils/readTime';
+
+const notes = (await getCollection('notes'))
+  .map((note) => ({
+    ...note,
+    readTime: estimateReadTime(note.body)
+  }))
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+---
+
+<BaseLayout
+  title="Engineering Notes | HackAll360"
+  description="A changelog of experiments, facilitation rituals, and platform heuristics from HackAll360."
+>
+  <div class="mx-auto flex max-w-6xl flex-col gap-14 px-6 py-24 sm:px-10 lg:py-28">
+    <header class="space-y-6 text-slate-200">
+      <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// working notes</p>
+      <h1 class="text-4xl font-semibold text-white sm:text-5xl">Signals from the systems desk.</h1>
+      <p class="max-w-3xl text-base leading-relaxed text-slate-300 sm:text-lg">
+        Each note is a snapshot of ongoing experiments, facilitation techniques, or reliability habits that keep teams calm and
+        shipping. Expect brevity, clear tags, and a quick skim time.
+      </p>
+    </header>
+
+    <section class="grid gap-6">
+      {notes.length === 0 ? (
+        <p class="rounded-3xl border border-slate-800/70 bg-slate-950/40 p-8 text-slate-300">
+          Notes are drafting backstage. Check back soon for fresh thinking.
+        </p>
+      ) : (
+        notes.map((note) => (
+          <article
+            class="flex flex-col gap-5 rounded-3xl border border-slate-800/70 bg-slate-950/40 p-8 transition hover:border-accent/60"
+          >
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h2 class="text-2xl font-semibold text-white">
+                <a
+                  class="transition hover:text-accent-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  href={`/notes/${note.slug}/`}
+                >
+                  {note.data.title}
+                </a>
+              </h2>
+              <span class="font-mono text-xs uppercase tracking-widest text-accent-light/70">{note.readTime}</span>
+            </div>
+            {note.data.description && <p class="text-sm leading-relaxed text-slate-300">{note.data.description}</p>}
+            <div class="flex flex-wrap gap-2">
+              {note.data.tags.map((tag) => (
+                <span
+                  class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent-light"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <p class="font-mono text-xs uppercase tracking-[0.4em] text-slate-500">
+              Published {note.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </p>
+            <div>
+              <a
+                class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-accent-light transition hover:text-accent"
+                href={`/notes/${note.slug}/`}
+              >
+                Read note
+                <svg class="h-3 w-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M7.5 5H15v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M15 5 5 15" stroke-linecap="round"></path>
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))
+      )}
+    </section>
+  </div>
+</BaseLayout>

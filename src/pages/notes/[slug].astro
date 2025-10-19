@@ -1,0 +1,80 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import { estimateReadTime } from '~/utils/readTime';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note }
+  }));
+}
+
+interface Props {
+  note: CollectionEntry<'notes'>;
+}
+
+const { note } = Astro.props as Props;
+const { Content } = await note.render();
+const readTime = estimateReadTime(note.body);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: note.data.title,
+  description: note.data.description,
+  datePublished: note.data.publishedAt.toISOString(),
+  dateModified: (note.data.updatedAt ?? note.data.publishedAt).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: 'HackAll360'
+  }
+};
+---
+
+<BaseLayout title={`${note.data.title} | HackAll360`} description={note.data.description ?? undefined} structuredData={structuredData}>
+  <article class="mx-auto flex max-w-3xl flex-col gap-10 px-6 py-24 sm:px-10 lg:py-28">
+    <header class="space-y-4">
+      <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// note</p>
+      <h1 class="text-4xl font-semibold text-white sm:text-5xl">{note.data.title}</h1>
+      <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+        <span class="uppercase tracking-[0.35em]">{readTime}</span>
+        <span aria-hidden="true">•</span>
+        <time dateTime={note.data.publishedAt.toISOString()}>
+          Published {note.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+        </time>
+        {note.data.updatedAt && note.data.updatedAt.getTime() !== note.data.publishedAt.getTime() && (
+          <>
+            <span aria-hidden="true">•</span>
+            <time dateTime={note.data.updatedAt.toISOString()}>
+              Updated {note.data.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </time>
+          </>
+        )}
+      </div>
+      {note.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {note.data.tags.map((tag) => (
+            <span class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent-light">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose prose-invert prose-slate max-w-none">
+      <Content />
+    </div>
+
+    <footer class="space-y-2 rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6 text-sm text-slate-300">
+      <p class="font-semibold text-white">Continue the conversation</p>
+      <p>
+        Reply with context via the contact form on <a class="text-accent-light underline decoration-accent-light/50 underline-offset-2" href="/about">/about</a>
+        or spin up the <a class="text-accent-light underline decoration-accent-light/50 underline-offset-2" href="/assistant">portfolio assistant</a>
+        to ask follow-up questions.
+      </p>
+    </footer>
+  </article>
+</BaseLayout>

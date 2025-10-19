@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Leading reliability playbook refresh",
+    "window": "This quarter",
+    "description": "Auditing incident response runbooks and facilitating tabletop drills to validate escalation clarity and observability coverage.",
+    "status": "In motion",
+    "links": [
+      {
+        "label": "Facilitation outline",
+        "href": "https://hackall360.github.io/notes"
+      }
+    ]
+  },
+  {
+    "title": "AI-assisted knowledge capture",
+    "window": "October 2024",
+    "description": "Pairing with staff engineers to build a lightweight assistant that summarizes architecture reviews and flags regression risks.",
+    "status": "Prototyping",
+    "links": [
+      {
+        "label": "Assistant prototype",
+        "href": "/assistant"
+      }
+    ]
+  },
+  {
+    "title": "Domain migration checklist",
+    "window": "Preparing",
+    "description": "Coordinating DNS updates, HTTPS automation, and redirect policies ahead of pointing hackall360.dev at this site.",
+    "status": "Scoping",
+    "links": [
+      {
+        "label": "DNS readiness notes",
+        "href": "https://github.com/hackall360/hackall360.github.io#custom-domain-readiness"
+      }
+    ]
+  }
+]

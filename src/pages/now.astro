@@ -1,0 +1,69 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import nowTimeline from '~/data/now.json';
+
+interface TimelineItem {
+  title: string;
+  window: string;
+  description: string;
+  status: string;
+  links?: Array<{ label: string; href: string }>;
+}
+
+const items = nowTimeline as TimelineItem[];
+---
+
+<BaseLayout
+  title="Now | HackAll360"
+  description="What HackAll360 is focused on right now — reliability playbooks, AI knowledge capture, and domain readiness."
+>
+  <div class="mx-auto flex max-w-5xl flex-col gap-16 px-6 py-24 sm:px-10 lg:py-28">
+    <header class="space-y-6 text-slate-200">
+      <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// now</p>
+      <h1 class="text-4xl font-semibold text-white sm:text-5xl">Current areas of focus.</h1>
+      <p class="max-w-3xl text-base leading-relaxed text-slate-300 sm:text-lg">
+        A living snapshot of what is receiving attention this month. Each card links to artifacts or prototypes where you can
+        follow along.
+      </p>
+    </header>
+
+    <section class="relative space-y-8">
+      <span class="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-accent/20 via-accent/40 to-transparent sm:block" aria-hidden="true"></span>
+      <div class="space-y-10">
+        {items.map((item) => (
+          <article class="relative grid gap-4 rounded-3xl border border-slate-800/70 bg-slate-950/40 p-8 shadow-[0_0_40px_-30px_rgba(56,189,248,0.7)] transition hover:border-accent/60 sm:grid-cols-[auto,1fr] sm:gap-8">
+            <div class="flex items-center gap-4">
+              <span class="hidden h-4 w-4 rounded-full border-2 border-accent/70 bg-slate-900 sm:flex"></span>
+              <span class="rounded-full border border-accent/40 bg-accent/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-accent-light">
+                {item.window}
+              </span>
+            </div>
+            <div class="space-y-4">
+              <div class="space-y-2">
+                <h2 class="text-2xl font-semibold text-white">{item.title}</h2>
+                <p class="font-mono text-xs uppercase tracking-[0.4em] text-accent-light/80">{item.status}</p>
+                <p class="text-sm leading-relaxed text-slate-300">{item.description}</p>
+              </div>
+              {item.links && item.links.length > 0 && (
+                <div class="flex flex-wrap gap-3">
+                  {item.links.map((link) => (
+                    <a
+                      class="inline-flex items-center gap-2 rounded-full border border-slate-700/60 bg-slate-900/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-200 transition hover:border-accent/60 hover:text-white"
+                      href={link.href}
+                    >
+                      <span>{link.label}</span>
+                      <svg class="h-3 w-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                        <path d="M7.5 5H15v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M15 5 5 15" stroke-linecap="round"></path>
+                      </svg>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
