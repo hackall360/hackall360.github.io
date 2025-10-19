@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, stat, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import process from 'node:process';
 import { fetch, ProxyAgent, setGlobalDispatcher } from 'undici';
@@ -27,6 +27,8 @@ const FEATURE_TOPIC = (process.env.GITHUB_FEATURE_TOPIC ?? 'featured').toLowerCa
 const CASE_STUDY_TOPIC = (process.env.GITHUB_CASE_STUDY_TOPIC ?? 'case-study').toLowerCase();
 const CASE_STUDY_PREFIX = (process.env.GITHUB_CASE_STUDY_PREFIX ?? 'case-study:').toLowerCase();
 const OUTPUT_PATH = resolve(process.cwd(), process.env.GITHUB_PROJECTS_OUTPUT ?? 'src/data/projects.json');
+const CACHE_MAX_AGE_HOURS = Number.parseInt(process.env.GITHUB_PROJECTS_CACHE_MAX_AGE_HOURS ?? '24', 10);
+const FORCE_REFRESH = /^(1|true|yes)$/i.test(process.env.GITHUB_PROJECTS_FORCE_REFRESH ?? '');
 const API_BASE = 'https://api.github.com';
 const token = process.env.GITHUB_TOKEN;
 
@@ -83,6 +85,37 @@ async function fetchAllRepos() {
   }
 
   return repos;
+}
+
+async function isCacheFresh() {
+  if (FORCE_REFRESH) {
+    console.log('Cache refresh forced via GITHUB_PROJECTS_FORCE_REFRESH.');
+    return false;
+  }
+
+  if (!Number.isFinite(CACHE_MAX_AGE_HOURS) || CACHE_MAX_AGE_HOURS <= 0) {
+    return false;
+  }
+
+  try {
+    const stats = await stat(OUTPUT_PATH);
+    const ageMs = Date.now() - stats.mtimeMs;
+    const maxAgeMs = CACHE_MAX_AGE_HOURS * 60 * 60 * 1000;
+
+    if (ageMs <= maxAgeMs) {
+      const ageHours = ageMs / (60 * 60 * 1000);
+      console.log(
+        `Using cached projects data from ${stats.mtime.toISOString()} (age ${ageHours.toFixed(2)} hours; max ${CACHE_MAX_AGE_HOURS} hours).`
+      );
+      return true;
+    }
+  } catch (error) {
+    if (error?.code !== 'ENOENT') {
+      console.warn('Unable to read cached projects data.', error);
+    }
+  }
+
+  return false;
 }
 
 async function fetchTopics(repoName) {
@@ -155,6 +188,10 @@ function sortProjects(projects) {
 
 async function main() {
   try {
+    if (await isCacheFresh()) {
+      return;
+    }
+
     const repos = await fetchAllRepos();
     const projects = [];
 
