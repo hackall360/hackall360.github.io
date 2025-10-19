@@ -1,0 +1,91 @@
+---
+interface SkillColumn {
+  title: string;
+  summary: string;
+  skills: string[];
+  icon: string;
+}
+
+const columns: SkillColumn[] = [
+  {
+    title: 'Frontend',
+    summary: 'Accessible, resilient interfaces with modern tooling.',
+    skills: ['Astro', 'React', 'TypeScript', 'Tailwind CSS', 'Accessibility audits', 'Design systems'],
+    icon: 'interface'
+  },
+  {
+    title: 'Backend',
+    summary: 'Service design that favors observability, reliability, and clarity.',
+    skills: ['Node.js', 'Rust', 'GraphQL', 'PostgreSQL', 'gRPC & REST', 'Observability pipelines'],
+    icon: 'server'
+  },
+  {
+    title: 'AI/ML',
+    summary: 'Human-in-the-loop automation and platform-level ML enablement.',
+    skills: ['Retrieval systems', 'Prompt engineering', 'LangChain', 'Vector stores', 'LLM guardrails', 'Ethical review'],
+    icon: 'spark'
+  },
+  {
+    title: 'Security & Infra',
+    summary: 'Operational rigor and proactive hardening across environments.',
+    skills: ['Kubernetes', 'Terraform', 'Identity & access', 'Incident response', 'Threat modeling', 'Chaos engineering'],
+    icon: 'shield'
+  }
+];
+
+const iconMap: Record<string, string> = {
+  interface:
+    'M6 6h12a2 2 0 0 1 2 2v2H4V8a2 2 0 0 1 2-2zm-2 8h20v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2zm4 6h12v2H8z',
+  server:
+    'M4 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5zm0 10a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-4zm5 3h2v2H9v-2zm0-10h2v2H9V8z',
+  spark:
+    'M12 2 9 9H2l7 3-3 7 7-3 3 7 3-7 7 3-3-7 7-3h-7l-3-7-3 7-3-7z',
+  shield:
+    'M12 2 4.5 5v6c0 5.55 3.9 10.74 7.5 11.99 3.6-1.25 7.5-6.44 7.5-11.99V5L12 2zm0 6 3 1.5-3 7-3-7L12 8z'
+};
+---
+<section class="rounded-3xl border border-slate-800/70 bg-surface-elevated/70 p-8 shadow-[0_0_60px_-35px_rgba(94,234,212,0.7)]">
+  <header class="mb-8 max-w-3xl space-y-3">
+    <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// skills matrix</p>
+    <h2 class="text-3xl font-semibold text-white sm:text-4xl">Stacks that turn strategy into shipped systems.</h2>
+    <p class="text-base text-slate-300">
+      Breadth to lead cross-functional work, depth to keep critical paths reliable. Each column highlights go-to tools and
+      responsibilities across the platform surface area.
+    </p>
+  </header>
+  <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+    {columns.map((column) => (
+      <article
+        class="group flex h-full flex-col gap-4 rounded-2xl border border-slate-700/60 bg-slate-900/50 p-6 text-left transition hover:border-accent/70 focus-within:border-accent/70"
+      >
+        <div class="flex items-center gap-3">
+          <span
+            class="flex h-11 w-11 items-center justify-center rounded-full border border-accent/50 bg-accent/10 text-accent-light shadow-inner shadow-cyan-400/20"
+          >
+            <svg
+              class="h-5 w-5 fill-current text-accent-light"
+              viewBox="0 0 24 24"
+              role="img"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d={iconMap[column.icon]} />
+            </svg>
+          </span>
+          <div>
+            <h3 class="text-xl font-semibold text-white">{column.title}</h3>
+            <p class="text-sm text-slate-300">{column.summary}</p>
+          </div>
+        </div>
+        <ul class="mt-2 space-y-2 text-sm text-slate-300">
+          {column.skills.map((skill) => (
+            <li class="flex items-start gap-2">
+              <span class="mt-1 inline-flex h-2.5 w-2.5 flex-none rounded-full bg-accent/80"></span>
+              <span class="flex-1 leading-relaxed">{skill}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>

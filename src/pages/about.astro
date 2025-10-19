@@ -1,0 +1,167 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SkillsMatrix from '~/components/SkillsMatrix.astro';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'HackAll360',
+  jobTitle: 'Principal Systems Engineer',
+  description:
+    'HackAll360 is a principal systems engineer based in North America, shaping resilient platforms, reliable infrastructure, and thoughtful developer experiences.',
+  url: 'https://hackall360.github.io/about',
+  sameAs: ['https://github.com/hackall360', 'https://www.linkedin.com/in/hackall360'],
+  email: 'mailto:hello@hackall360.dev',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Remote',
+    addressRegion: 'North America'
+  }
+};
+
+const contactLinks = [
+  {
+    label: 'Email',
+    href: 'mailto:hello@hackall360.dev',
+    description: 'Say hello or start a technical deep-dive.',
+    iconPath: 'M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm2 .5 6 4 6-4V6H6v.5z'
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/hackall360',
+    description: 'Connect for collaborations and leadership opportunities.',
+    iconPath: 'M5 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-2 6h4v12H3V9zm6 0h3.6v1.8h.1c.5-.9 1.8-1.8 3.6-1.8 3.9 0 4.6 2.4 4.6 5.4V21h-4v-5.2c0-1.2 0-2.8-1.8-2.8s-2 1.4-2 2.7V21H9V9z'
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/hackall360',
+    description: 'Browse experiments, automations, and platform tooling.',
+    iconPath:
+      'M12 .5a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-3 0-3.7-1.4-3.9-2.7-.1-.4-.6-1-1-1.2-.3-.2-.8-.6 0-.6.7.1 1.2.7 1.4 1 .8 1.3 2.1.9 2.6.7.1-.6.3-1 .6-1.2-2.7-.3-5.6-1.4-5.6-6a4.6 4.6 0 0 1 1.2-3.2 4.2 4.2 0 0 1 .1-3.1s1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2a4.2 4.2 0 0 1 .1 3.1 4.6 4.6 0 0 1 1.2 3.2c0 4.6-2.9 5.7-5.6 6 .4.3.7.9.7 1.8v2.6c0 .3.2.6.7.5A10 10 0 0 0 12 .5z'
+  },
+  {
+    label: 'Book office hours',
+    href: 'https://cal.com/hackall360/office-hours',
+    description: 'Schedule a strategy session or async systems audit.',
+    iconPath: 'M6 2a2 2 0 0 0-2 2v2h16V4a2 2 0 0 0-2-2H6zm14 6H4v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm-4 5h-4v4h4v-4z'
+  }
+];
+---
+<BaseLayout
+  title="About HackAll360 | Principal Systems Engineer"
+  description="Meet HackAll360 — a principal systems engineer crafting resilient platforms, human-centered tooling, and trusted operations."
+  structuredData={structuredData}
+>
+  <div class="relative mx-auto flex max-w-6xl flex-col gap-16 px-6 py-24 sm:px-10 lg:gap-20 lg:py-28">
+    <section class="grid gap-12 rounded-3xl border border-slate-800/80 bg-surface-elevated/70 p-8 shadow-[0_0_80px_-45px_rgba(14,165,233,0.7)] lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:p-12">
+      <div class="space-y-6">
+        <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// biography</p>
+        <h1 class="text-4xl font-semibold text-white sm:text-5xl">The systems engineer who keeps platforms calm under pressure.</h1>
+        <div class="space-y-5 text-base leading-relaxed text-slate-300 sm:text-lg">
+          <p>
+            HackAll360 is a principal systems engineer based in Remote, North America, known for transforming ambiguous platform
+            challenges into reliable, human-friendly outcomes. They guide teams through migrations, incident recovery, and
+            developer experience overhauls with equal parts empathy and engineering rigor.
+          </p>
+          <p>
+            Across fast-scaling startups and enterprise platforms, HackAll360 has led cross-functional crews spanning product,
+            security, and operations. Their playbook pairs instrumentation-first thinking with narrative documentation so every
+            launch, rollout, and retrospective leaves the organization calmer than it started.
+          </p>
+          <p>
+            When not shipping systems, HackAll360 mentors emerging engineers, curates runbooks, and experiments with automation
+            that gives humans better leverage. Reliable infrastructure is the foundation — but the mission is always confident,
+            curious teams.
+          </p>
+        </div>
+      </div>
+      <figure class="relative flex items-center justify-center">
+        <div
+          class="relative aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-slate-700/70 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 shadow-[0_0_70px_-30px_rgba(45,212,191,0.6)]"
+          role="img"
+          aria-label="Abstract portrait placeholder for HackAll360"
+        >
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.22),transparent_55%),radial-gradient(circle_at_80%_70%,rgba(14,165,233,0.18),transparent_60%)]"></div>
+          <div class="absolute inset-6 rounded-2xl border border-slate-600/40 bg-slate-900/40 backdrop-blur"></div>
+          <div class="absolute inset-x-8 bottom-8 space-y-3 text-center text-slate-200">
+            <p class="text-sm font-mono uppercase tracking-[0.3em] text-accent-light/80">// portrait</p>
+            <p class="text-lg font-semibold text-white">Abstract visual forthcoming</p>
+            <p class="text-xs text-slate-400">Placeholder representing the systems-first aesthetic.</p>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <section class="grid gap-6 rounded-3xl border border-slate-800/70 bg-slate-900/60 p-8 shadow-[0_0_60px_-40px_rgba(15,118,110,0.6)] lg:grid-cols-3 lg:p-12">
+      <div class="lg:col-span-1">
+        <h2 class="text-3xl font-semibold text-white sm:text-4xl">Values that anchor every engagement.</h2>
+        <p class="mt-4 text-base text-slate-300">
+          Each principle keeps delivery grounded in trust, clarity, and measurable impact — regardless of scale or team size.
+        </p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:col-span-2">
+        <article class="flex h-full flex-col gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 p-6">
+          <h3 class="text-xl font-semibold text-white">Build context, not just artifacts</h3>
+          <p class="text-sm text-slate-300">
+            Systems work succeeds when stakeholders understand the why as much as the what. Every project ships with narratives,
+            playbooks, and signal-rich dashboards.
+          </p>
+        </article>
+        <article class="flex h-full flex-col gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 p-6">
+          <h3 class="text-xl font-semibold text-white">Reliability is a team sport</h3>
+          <p class="text-sm text-slate-300">
+            Aligning product, platform, and security leads to resilient change. HackAll360 fosters rituals that invite every
+            discipline into the reliability conversation.
+          </p>
+        </article>
+        <article class="flex h-full flex-col gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 p-6">
+          <h3 class="text-xl font-semibold text-white">Automation should amplify humans</h3>
+          <p class="text-sm text-slate-300">
+            AI and tooling are leveraged to extend judgment, not replace it — highlighting moments where operators can deliver
+            the most value.
+          </p>
+        </article>
+        <article class="flex h-full flex-col gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 p-6">
+          <h3 class="text-xl font-semibold text-white">Bias for elegant recoveries</h3>
+          <p class="text-sm text-slate-300">
+            Incidents happen. The goal is confident, repeatable recovery backed by thoughtful instrumentation and post-incident
+            storytelling.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <SkillsMatrix />
+
+    <section class="rounded-3xl border border-accent/40 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-950 p-8 shadow-[0_0_80px_-40px_rgba(6,182,212,0.7)] lg:p-12">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div class="max-w-2xl space-y-4">
+          <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// get in touch</p>
+          <h2 class="text-3xl font-semibold text-white sm:text-4xl">Let’s architect the next dependable milestone.</h2>
+          <p class="text-base text-slate-200">
+            Reach out for platform leadership, cross-functional facilitation, or technical storytelling support. Responses come
+            with clear next steps — no vague intros.
+          </p>
+        </div>
+        <div class="grid w-full gap-4 sm:grid-cols-2 lg:max-w-xl">
+          {contactLinks.map((contact) => (
+            <a
+              class="group flex flex-col gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 p-5 transition hover:border-accent/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              href={contact.href}
+            >
+              <span class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full border border-accent/50 bg-accent/10 text-accent-light shadow-inner shadow-cyan-400/20">
+                  <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d={contact.iconPath} />
+                  </svg>
+                </span>
+                <span class="text-lg font-semibold text-white">{contact.label}</span>
+              </span>
+              <span class="text-sm text-slate-300">{contact.description}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
