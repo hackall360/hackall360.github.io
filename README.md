@@ -152,11 +152,7 @@ The built bundle is also linked from the home page so you can download or inspec
 - Treat `PUBLIC_ASSISTANT_API_KEY` as a short-lived or public-safe token. For sensitive credentials, front the API with a small serverless proxy and expose only a `PUBLIC_ASSISTANT_SESSION_TOKEN`.
 - Error states surface inline so the page remains informative even when the API is unavailable.
 
-## Custom domain readiness
+## Domain configuration
 
-- Preferred domain: `hackall360.dev` (aligned with the primary contact email). Once DNS can be updated, create the following records:
-  - `A` records pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153` (GitHub Pages IPv4).
-  - Optional `AAAA` records to `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, and `2606:50c0:8003::153` for IPv6.
-  - A `CNAME` record for `www` pointing to `hackall360.github.io` if a `www` subdomain is desired.
-- After DNS propagates, add a `CNAME` file at the repository root (under `public/`) with `hackall360.dev` to lock in the custom domain for deployments.
-- Finally, visit the repository’s **Settings → Pages** panel to set the custom domain, enforce HTTPS, and verify the DNS checkmark turns green.
+- The site is currently served from the default GitHub Pages domain (`hackall360.github.io`).
+- When a custom domain becomes available, reintroduce the DNS and CNAME steps that GitHub Pages requires before switching traffic.

@@ -24,14 +24,14 @@
     ]
   },
   {
-    "title": "Domain migration checklist",
+    "title": "GitHub Pages polish",
     "window": "Preparing",
-    "description": "Coordinating DNS updates, HTTPS automation, and redirect policies ahead of pointing hackall360.dev at this site.",
+    "description": "Auditing redirects, HTTPS settings, and documentation while the site continues to live on hackall360.github.io.",
     "status": "Scoping",
     "links": [
       {
-        "label": "DNS readiness notes",
-        "href": "https://github.com/hackall360/hackall360.github.io#custom-domain-readiness"
+        "label": "Deployment notes",
+        "href": "https://github.com/hackall360/hackall360.github.io#domain-configuration"
       }
     ]
   }

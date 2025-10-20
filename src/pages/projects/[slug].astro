@@ -89,7 +89,14 @@ if (!project) {
 
 type ProjectEntry = CollectionEntry<'projects'>;
 
-const entry = slug ? await getEntryBySlug('projects', slug) : null;
+let entry = slug ? await getEntryBySlug('projects', slug) : null;
+
+if (!entry && typeof slug === 'string') {
+  const sanitizedSlug = slug.replace(/[^a-zA-Z0-9-]/g, '');
+  if (sanitizedSlug !== slug) {
+    entry = await getEntryBySlug('projects', sanitizedSlug);
+  }
+}
 
 let Content: Awaited<ReturnType<ProjectEntry['render']>>['Content'] | null = null;
 let caseStudyMarkdown: string | null = null;

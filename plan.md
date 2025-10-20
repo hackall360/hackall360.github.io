@@ -152,7 +152,7 @@ Optional: Cache API results and images for speed.
 - Add analytics (Plausible or simple server logs).  
 - Integrate a contact form (Formspree or serverless function).  
 - Build an **AI portfolio assistant** section: a chatbot trained on your repos and write-ups.  
-- Optionally mirror on a personal domain (`sponge.dev` or `hackall.dev`) for cleaner branding.
+- Optionally mirror on a personal domain once one is registered, keeping GitHub Pages as the default in the meantime.
 
 ---
 
