@@ -69,6 +69,7 @@ function projectsAutoSync() {
 
 export default defineConfig({
   site: 'https://hackall360.github.io',
+  outDir: './docs',
   integrations: [
     tailwind({
       config: {
