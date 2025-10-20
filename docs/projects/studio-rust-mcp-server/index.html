@@ -1,0 +1,874 @@
+<!DOCTYPE html><html lang="en" class="dark"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>studio-rust-mcp-server | HackAll360 Projects</title><meta name="description" content="Standalone Roblox Studio MCP server built with a Rust core and Luau interface."><meta property="og:type" content="website"><meta property="og:site_name" content="HackAll360"><meta property="og:title" content="studio-rust-mcp-server | HackAll360 Projects"><meta property="og:description" content="Standalone Roblox Studio MCP server built with a Rust core and Luau interface."><meta property="og:image" content="/social-share.jpg"><meta property="og:url" content="https://hackall360.github.io/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="studio-rust-mcp-server | HackAll360 Projects"><meta name="twitter:description" content="Standalone Roblox Studio MCP server built with a Rust core and Luau interface."><meta name="twitter:image" content="/social-share.jpg"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)"><script type="application/ld+json">
+        {JSON.stringify(structuredData)}
+      </script><link rel="stylesheet" href="/_astro/about.BUkMVsf9.css"></head> <body class="bg-transparent text-inherit selection:bg-accent/30 selection:text-accent-light"> <div class="relative z-10 flex min-h-screen flex-col"> <header class="relative border-b border-accent/10 bg-surface/80 shadow-lg shadow-accent/10 backdrop-blur"> <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" aria-hidden="true"></div> <div class="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between"> <div> <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent/80">$ whoami</p> <h1 class="mt-1 font-mono text-xl font-semibold text-white"> <span class="text-accent-light">hack</span>all360
+</h1> </div> <nav class="flex flex-wrap items-center gap-3 font-mono text-sm text-neutral-soft" aria-label="Primary navigation"> <a class="rounded-md border border-accent/15 px-3 py-1 transition-colors duration-200 ease-spring-out focus-visible:outline-none hover:border-accent hover:bg-accent/10 hover:text-accent-light" href="/"> <span>Home</span>  </a><a class="rounded-md border border-accent/15 px-3 py-1 transition-colors duration-200 ease-spring-out focus-visible:outline-none hover:border-accent hover:bg-accent/10 hover:text-accent-light" href="/projects"> <span>Projects</span>  </a><a class="rounded-md border border-accent/15 px-3 py-1 transition-colors duration-200 ease-spring-out focus-visible:outline-none hover:border-accent hover:bg-accent/10 hover:text-accent-light" href="/about"> <span>About</span>  </a><a class="rounded-md border border-accent/15 px-3 py-1 transition-colors duration-200 ease-spring-out focus-visible:outline-none hover:border-accent hover:bg-accent/10 hover:text-accent-light" href="/now"> <span>Now</span>  </a><a class="rounded-md border border-accent/15 px-3 py-1 transition-colors duration-200 ease-spring-out focus-visible:outline-none hover:border-accent hover:bg-accent/10 hover:text-accent-light" href="/notes"> <span>Notes</span>  </a><a class="rounded-md border border-accent/15 px-3 py-1 transition-colors duration-200 ease-spring-out focus-visible:outline-none hover:border-accent hover:bg-accent/10 hover:text-accent-light" href="/assistant"> <span>Assistant</span>  </a> </nav> </div> </header> <main class="flex-1">  <article class="relative mx-auto flex w-full max-w-5xl flex-col gap-12 px-6 py-16"> <nav aria-label="Breadcrumb" class="text-sm text-slate-400"> <ol class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.25em]"> <li class="flex items-center gap-2">  <a class="text-accent-light hover:text-accent" href="/">Home</a> </li><li class="flex items-center gap-2"> <span class="text-slate-600">/</span> <a class="text-accent-light hover:text-accent" href="/projects">Projects</a> </li><li class="flex items-center gap-2" aria-current="page"> <span class="text-slate-600">/</span> <span class="text-slate-300">studio-rust-mcp-server</span> </li> </ol> </nav> <header class="space-y-6"> <p class="text-sm font-semibold uppercase tracking-[0.35em] text-accent-light">Project Case Study</p> <h1 class="text-4xl font-bold text-slate-100 sm:text-5xl">studio-rust-mcp-server</h1> <p class="max-w-3xl text-lg text-slate-300">Standalone Roblox Studio MCP server built with a Rust core and Luau interface.</p> <div class="flex flex-col gap-3 sm:flex-row sm:items-center"> <a href="/projects" class="inline-flex items-center justify-center rounded-full border border-slate-700/70 px-5 py-2 text-sm font-medium uppercase tracking-wide text-slate-200 transition hover:border-accent hover:text-accent">
+← Back to Projects
+</a> <a href="https://github.com/hackall360/studio-rust-mcp-server" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-full border border-accent/70 bg-accent/10 px-5 py-2 text-sm font-semibold uppercase tracking-wide text-accent-light transition hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900">
+View on GitHub
+</a>  </div> </header> <section class="grid gap-10 rounded-3xl border border-slate-800/80 bg-slate-900/50 p-8 shadow-xl shadow-accent/5 sm:grid-cols-2"> <div class="space-y-6"> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Problem</h2> <p class="mt-3 text-base leading-relaxed text-slate-300">How do we push this build forward without compromising speed, reliability, or security?</p> </div> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Solution</h2> <p class="mt-3 text-base leading-relaxed text-slate-300">Lean on tight feedback loops, automation, and thoughtful defaults. The README below unpacks the current implementation.</p> </div> </div> <div class="space-y-6"> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Tech Stack</h2> <ul class="mt-3 flex flex-wrap gap-2"> <li class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-light"> Security </li><li class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-light"> Utility </li> </ul> </div> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Results</h2> <ul class="mt-3 space-y-2 text-base leading-relaxed text-slate-300"> <li class="flex items-start gap-2"> <span class="mt-2 h-1.5 w-1.5 rounded-full bg-accent"></span> <span>Track progress through commit history and release notes in the repository.</span> </li> </ul> </div> </div> </section> <section class="space-y-6"> <div class="flex flex-col gap-2"> <h2 class="text-sm font-semibold uppercase tracking-[0.35em] text-accent-light">Deep Dive</h2> <p class="text-base text-slate-400">
+Detailed notes that surface the engineering trade-offs, safeguards, and iteration loops powering this build.
+</p> </div> <div class="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:text-slate-100 prose-a:text-accent-light prose-code:bg-surface-elevated/60 prose-code:text-accent-light prose-pre:bg-slate-900/70"> <div><h1 id="roblox-studio-mcp-server">Roblox Studio MCP Server</h1>
+<p>This repository contains a reference implementation of the Model Context Protocol (MCP) that enables
+communication between Roblox Studio via a plugin and <a href="https://claude.ai/download">Claude Desktop</a>, <a href="https://www.cursor.com/">Cursor</a>, or <a href="https://lmstudio.ai/">LM Studio</a>.
+It consists of the following Rust-based components, which communicate through internal shared
+objects.</p>
+<ul>
+<li>A web server built on <code>axum</code> that a Studio plugin long polls.</li>
+<li>A <code>rmcp</code> server that talks to Claude via <code>stdio</code> transport.</li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<ul>
+<li><a href="docs/ARCHITECTURE.md">Architecture overview</a> – explains how the HTTP/stdio bridge, installer, and
+plugin interact, with references to the Roblox Studio systems they rely on.</li>
+<li><a href="docs/TOOLS.md">Tool catalogue</a> – documents every MCP tool, links to the
+underlying Roblox documentation, and suggests prompts for common workflows.</li>
+</ul>
+<p>When LLM requests to run a tool, the plugin will get a request through the long polling and post a
+response. It will cause responses to be sent to the Claude app.</p>
+<p><strong>Please note</strong> that this MCP server will be accessed by third-party tools, allowing them to modify
+and read the contents of your opened place. Third-party data handling and privacy practices are
+subject to their respective terms and conditions.</p>
+<p><img src="MCP-Server.png" alt="Scheme"></p>
+<p>The setup process also contains a short plugin installation and Claude Desktop configuration script.</p>
+<h2 id="setup">Setup</h2>
+<h3 id="install-with-release-binaries">Install with release binaries</h3>
+<p>This MCP Server supports pretty much any MCP Client but will automatically set up <a href="https://claude.ai/download">Claude Desktop</a>, <a href="https://www.cursor.com/">Cursor</a>, and <a href="https://lmstudio.ai/">LM Studio</a> if found.</p>
+<p>To set up automatically:</p>
+<ol>
+<li>Ensure you have <a href="https://create.roblox.com/docs/en-us/studio/setup">Roblox Studio</a>,
+and <a href="https://claude.ai/download">Claude Desktop</a>/<a href="https://www.cursor.com/">Cursor</a> installed and started at least once.</li>
+<li>Exit MCP Clients and Roblox Studio if they are running.</li>
+<li>Download and run the installer:
+<ol>
+<li>Go to the <a href="https://github.com/Roblox/studio-rust-mcp-server/releases">releases</a> page and
+download the latest release for your platform.</li>
+<li>Unzip the downloaded file if necessary and run the installer.</li>
+<li>Restart Claude/Cursor/LM Studio and Roblox Studio if they are running.</li>
+</ol>
+</li>
+</ol>
+<h3 id="command-line-usage">Command line usage</h3>
+<p>Running the binary without arguments triggers the legacy, non-interactive installer flow. Additional
+commands let you target specific workflows:</p>
+<ul>
+<li><code>rbx-studio-mcp studio-install</code> (or <code>rbx-studio-mcp --studio-install</code>) launches an interactive menu
+where you can install or update the Roblox Studio plugin alongside individual MCP client
+integrations, including LM Studio.</li>
+<li><code>rbx-studio-mcp server</code> (or <code>rbx-studio-mcp --stdio</code>) starts the MCP server over stdio transport so
+MCP-compatible AI tools can connect directly.</li>
+</ul>
+<h3 id="setting-up-manually">Setting up manually</h3>
+<p>To set up manually add following to your MCP Client config:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "mcpServers"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "Roblox Studio"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      "args"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">        "--stdio"</span></span>
+<span class="line"><span style="color:#E1E4E8">      ],</span></span>
+<span class="line"><span style="color:#79B8FF">      "command"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Path-to-downloaded</span><span style="color:#79B8FF">\\</span><span style="color:#9ECBFF">rbx-studio-mcp.exe"</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>On macOS the path would be something like <code>"/Applications/RobloxStudioMCP.app/Contents/MacOS/rbx-studio-mcp"</code> if you move the app to the Applications directory.</p>
+<p>For LM Studio, the installer provisions a plugin directory at <code>%USERPROFILE%\\.lmstudio\\extensions\\plugins\\mcp\\roblox-studio</code>
+(or the equivalent path under your home directory on macOS/Linux) containing <code>install-state.json</code>,
+<code>manifest.json</code>, and <code>mcp-bridge-config.json</code>. The bridge configuration points to the MCP server
+binary with <code>--stdio</code> arguments so that LM Studio can launch the connection automatically.</p>
+<h3 id="build-from-source">Build from source</h3>
+<p>To build and install the MCP reference implementation from this repository’s source code:</p>
+<ol>
+<li>Ensure you have <a href="https://create.roblox.com/docs/en-us/studio/setup">Roblox Studio</a> and
+<a href="https://claude.ai/download">Claude Desktop</a> installed and started at least once.</li>
+<li>Exit Claude and Roblox Studio if they are running.</li>
+<li><a href="https://www.rust-lang.org/tools/install">Install</a> Rust.</li>
+<li>Download or clone this repository.</li>
+<li>Run the following command from the root of this repository.
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">cargo</span><span style="color:#9ECBFF"> run</span></span>
+<span class="line"></span></code></pre>
+This command carries out the following actions:
+<ul>
+<li>Builds the Rust MCP server app.</li>
+<li>Sets up Claude to communicate with the MCP server.</li>
+<li>Builds and installs the Studio plugin to communicate with the MCP server.</li>
+</ul>
+</li>
+</ol>
+<p>After the command completes, the Studio MCP Server is installed and ready for your prompts from
+Claude Desktop.</p>
+<h2 id="verify-setup">Verify setup</h2>
+<p>To make sure everything is set up correctly, follow these steps:</p>
+<ol>
+<li>In Roblox Studio, click on the <strong>Plugins</strong> tab and verify that the MCP plugin appears. Clicking on
+the icon toggles the MCP communication with Claude Desktop on and off, which you can verify in
+the Roblox Studio console output.</li>
+<li>In the console, verify that <code>The MCP Studio plugin is ready for prompts.</code> appears in the output.
+Clicking on the plugin’s icon toggles MCP communication with Claude Desktop on and off,
+which you can also verify in the console output.</li>
+<li>Verify that Claude Desktop is correctly configured by clicking on the hammer icon for MCP tools
+beneath the text field where you enter prompts. This should open a window with the list of
+available Roblox Studio tools (<code>insert_model</code>, <code>inspect_environment</code>, <code>data_model_snapshot</code>, and
+<code>run_code</code>).</li>
+</ol>
+<p><strong>Note</strong>: You can fix common issues with setup by restarting Studio and Claude Desktop. Claude
+sometimes is hidden in the system tray, so ensure you’ve exited it completely.</p>
+<h2 id="send-requests">Send requests</h2>
+<ol>
+<li>Open a place in Studio.</li>
+<li>Type a prompt in Claude Desktop and accept any permissions to communicate with Studio.</li>
+<li>Verify that the intended action is performed in Studio by checking the console, inspecting the
+data model in Explorer, or visually confirming the desired changes occurred in your place.</li>
+</ol>
+<h2 id="available-mcp-tools">Available MCP tools</h2>
+<p>Claude Desktop and Cursor expose the following Roblox Studio tooling through this server:</p>
+<ul>
+<li>
+<p><strong><code>run_code</code></strong> – Execute Luau snippets directly in Studio and stream any printed output or return
+values back to the client.</p>
+</li>
+<li>
+<p><strong><code>insert_model</code></strong> – Search for a marketplace model by name, insert the best match into the
+workspace, and report the name of the created instance.</p>
+</li>
+<li>
+<p><strong><code>inspect_environment</code></strong> – Collect read-only information about the current Studio session. The
+tool accepts an object with optional sections that let you tailor the response:</p>
+<ul>
+<li><code>selection</code>: Controls which properties of selected instances are reported. <code>includeNames</code>,
+<code>includeClassNames</code>, and <code>includeFullNames</code> default to <code>true</code> and determine whether those fields
+are present in the response.</li>
+<li><code>camera</code>: Describes what camera details to emit. Toggle <code>includeCFrame</code>, <code>includeFocus</code>, and
+<code>includeFieldOfView</code> (all default <code>true</code>) to adjust the payload.</li>
+<li><code>services</code>: Allows you to inspect key services without mutating the place. Provide
+<code>services = { "Workspace", "Players", ... }</code> to customize the list and set <code>includeCounts</code>
+(default <code>true</code>) to gather descendant totals. The plugin serializes the results with
+<code>HttpService:JSONEncode</code>, so responses are safe to parse directly in Claude/Cursor prompts.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>data_model_snapshot</code></strong> – Traverse the DataModel (or a filtered subset of it) and emit
+structured metadata for each visited instance without touching ChangeHistory. Requests accept:</p>
+<ul>
+<li><code>rootPaths</code>: Array of instance paths that serve as traversal roots. Defaults to the DataModel if
+omitted.</li>
+<li><code>maxDepth</code>: Restrict how deep the walk should descend relative to each root (depth <code>0</code> captures
+just the root instance).</li>
+<li><code>classAllowList</code>/<code>classBlockList</code>: Filter which classes show up in the response while optionally
+skipping specific branches entirely.</li>
+<li><code>propertyPicks</code>: Describe which properties to read per class. Each pick can target specific
+classes, list properties, and request deterministic sampling via <code>sampleCount</code>/<code>randomize</code> plus
+an optional <code>randomSeed</code>.</li>
+<li><code>includeAttributes</code>, <code>includeProperties</code>, and <code>includeFullName</code> toggle the extra metadata
+collected for each entry.</li>
+<li><code>pageSize</code> and <code>pageCursor</code> make the tool page-friendly for large worlds, returning a
+<code>nextCursor</code> token when more data is available.</li>
+</ul>
+<p>Example snapshot request that inspects lighting under <code>Workspace</code> and <code>Lighting</code>, sampling a few
+expensive properties along the way:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"DataModelSnapshot"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "rootPaths"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">      [</span><span style="color:#9ECBFF">"Lighting"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    ],</span></span>
+<span class="line"><span style="color:#79B8FF">    "maxDepth"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "classAllowList"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Part"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"SpotLight"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Lighting"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    "propertyPicks"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Material"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Color"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Reflectance"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Anchored"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "sampleCount"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "randomize"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "classes"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Part"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Brightness"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"ClockTime"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"FogEnd"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ],</span></span>
+<span class="line"><span style="color:#79B8FF">    "pageSize"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "includeAttributes"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "includeFullName"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>The plugin returns JSON containing the <code>entries</code> array, pagination metadata, and normalized
+attribute/property payloads ready for direct downstream parsing.</p>
+</li>
+<li>
+<p><strong><code>environment_control</code></strong> – Shape ambience and audio in one request. You can tune lighting colors,
+<code>ClockTime</code>, <code>FogEnd</code>, and rendering technology, automatically create/update <code>Atmosphere</code>, <code>Sky</code>,
+and post-processing effects, retint <code>Workspace.Terrain</code> water, and set <code>SoundService</code> properties or
+trigger specific <code>Sound</code> instances (swap <code>SoundId</code>, adjust <code>Volume</code>, and optionally <code>Play</code>/<code>Stop</code>).
+The plugin validates every value and wraps the batch in a single change-history recording so failed
+edits roll back cleanly.</p>
+</li>
+<li>
+<p><strong><code>apply_instance_operations</code></strong> – Perform bulk instance edits (create/update/delete/reparent/clone/
+bulk_set_properties) in a single checkpointed ChangeHistory batch. Operations accept structured
+payloads so you can rename or move instances, spawn new assets, or fan out property edits across
+multiple targets in one request.</p>
+<ul>
+<li>
+<p><code>create</code>, <code>update</code>, and <code>delete</code> behave as before, and now also understand an <code>attributes</code> map
+that is synchronised via <code>Instance:SetAttribute</code> alongside property updates.</p>
+</li>
+<li>
+<p><code>reparent</code> resolves a <code>newParentPath</code>, optionally renames the instance, and enforces the same
+script placement safety checks as the script management tool.</p>
+</li>
+<li>
+<p><code>clone</code> duplicates a target <code>cloneCount</code> times (capped to 25), supports per-clone property and
+attribute overrides, and can drop the copies into an alternate parent.</p>
+</li>
+<li>
+<p><code>bulk_set_properties</code> broadcasts a shared property/attribute payload across many
+<code>targetPaths</code>, letting you toggle large groups of emitters, lights, or UI widgets at once.</p>
+</li>
+<li>
+<p>The creation allowlist now covers common art/audio/UI classes such as <code>Sound</code>, <code>ParticleEmitter</code>,
+<code>Trail</code>, <code>Decal</code>, <code>Texture</code>, <code>Humanoid</code>, <code>UIGradient</code>, and text-based GUI objects, with property
+gates that expose real Studio fields like <code>SoundId</code>, <code>Volume</code>, <code>EmissionRate</code>, <code>Enabled</code>,
+<code>Text</code>, and <code>Rotation</code>.</p>
+</li>
+<li>
+<p>Example payload manipulating UI, audio, particles, and characters:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"ApplyInstanceOperations"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "operations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"create"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Effects"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"CelebrationSound"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "className"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Sound"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "SoundId"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"rbxassetid://123456789"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "Volume"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "PlaybackSpeed"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.2</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#79B8FF">        "attributes"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Category"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Music"</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"create"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"StarterGui"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Hud"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Gradient"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "className"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"UIGradient"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Rotation"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">90</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#79B8FF">        "attributes"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Theme"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Night"</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"reparent"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"StarterGui"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Hud"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"NotificationLabel"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "newParentPath"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"StarterGui"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Hud"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"NotificationFrame"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Position"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">            "type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"UDim2"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">            "xScale"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">            "xOffset"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">-200</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">            "yScale"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">            "yOffset"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">32</span></span>
+<span class="line"><span style="color:#E1E4E8">          }</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#79B8FF">        "attributes"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "State"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Pinned"</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"clone"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Effects"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"CelebrationSound"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "cloneCount"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "newParentPath"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"ReplicatedStorage"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Audio"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "name"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"CelebrationVariant"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Volume"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.25</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"bulk_set_properties"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "targetPaths"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">          [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Environment"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"SmokeEmitter"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">          [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Environment"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"SparkleEmitter"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">        ],</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "EmissionRate"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">40</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "Enabled"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"update"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"NPC"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Rig"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Humanoid"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "WalkSpeed"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">14</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "JumpPower"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">45</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#79B8FF">        "attributes"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Behaviour"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Calm"</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="environment-control-prompt-ideas">Environment control prompt ideas</h3>
+<p>You can pair the new ambience controls with natural-language requests. Try prompts such as:</p>
+<ul>
+<li>
+<p>“Set the place to a warm sunset: clock time 18.5, ambient/outdoor ambient to a soft orange, fog
+rolling in at 80 studs, and enable sun rays for the sunrise vibe.”</p>
+</li>
+<li>
+<p>“Make the campsite feel misty at night. Add a thicker atmosphere haze, lower the fog end to 120,
+and switch the lighting technology to Future.”</p>
+</li>
+<li>
+<p>“Spin up an underwater soundscape by setting SoundService ambient reverb to UnderWater, boosting
+terrain water transparency to 0.7, and playing <code>rbxassetid://184352123</code> on the <code>Workspace.Audio. OceanLoop</code> sound at half volume.”</p>
+</li>
+<li>
+<p><strong><code>physics_and_navigation</code></strong> – Coordinate collision group authoring with navigation queries in a
+single request. The tool understands four operation types that can be mixed in one batch:</p>
+<ul>
+<li>
+<p><code>create_collision_group</code> creates or replaces a group and can immediately toggle its active state.
+Roblox only tracks collision behaviour for BaseParts, so ensure any <code>assign_part_to_group</code> paths
+resolve to BasePart descendants. When <code>replaceExisting</code> is true the plugin removes the previous
+group via <code>RemoveCollisionGroup</code> before creating it again.</p>
+</li>
+<li>
+<p><code>set_collision_enabled</code> flips the collidable relationship between two groups and can optionally
+activate or deactivate them in the same step.</p>
+</li>
+<li>
+<p><code>assign_part_to_group</code> resolves a single instance path and calls
+<code>PhysicsService:SetPartCollisionGroup</code>. Non-part instances return a structured diagnostic showing
+the resolved class and normalised path.</p>
+</li>
+<li>
+<p><code>compute_path</code> uses <code>PathfindingService:CreatePath</code> and <code>ComputeAsync</code> to return waypoint arrays,
+the path status, and whether the solver detected a blockage. Positions are specified as JSON
+objects with <code>x</code>, <code>y</code>, and <code>z</code> fields expressed in studs.</p>
+</li>
+<li>
+<p><strong>Prerequisites</strong>: Collision groups must exist before assignment, and parts referenced in
+operations must already be present in the DataModel. Navigation queries require world-space
+coordinates; the tool reports <code>PathStatus</code> strings and keeps the path read-only (<code>writeOccurred</code>
+remains <code>false</code>).</p>
+</li>
+<li>
+<p>Example collision authoring prompt:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"PhysicsAndNavigation"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "operations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"create_collision_group"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "groupName"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"NPCs"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "replaceExisting"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "active"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"set_collision_enabled"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "groupA"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"NPCs"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "groupB"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Environment"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "collidable"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">false</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"assign_part_to_group"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Obstacles"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Door"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "groupName"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Environment"</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+</li>
+<li>
+<p>Example pathfinding prompt:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"PhysicsAndNavigation"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "operations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"compute_path"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "startPosition"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"x"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"y"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"z"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#79B8FF">        "targetPosition"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"x"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">150</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"y"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"z"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">-120</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#79B8FF">        "agentParameters"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"agentRadius"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"agentCanJump"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>manage_scripts</code></strong> – Scaffold and maintain <code>Script</code>, <code>LocalScript</code>, and <code>ModuleScript</code>
+instances. Combine <code>create</code>, <code>get_source</code>, <code>set_source</code>, and <code>rename</code> operations in a single
+request to build new automation, retrieve existing code, or apply edits. Each operation works with
+array-based paths (e.g. <code>{ "ServerScriptService", "NPC", "Brain" }</code>) and can opt into metadata such
+as class names, parent paths, attributes, or run contexts. Source updates are syntax-checked before
+Studio applies them, and responses include diagnostics when a change fails.</p>
+</li>
+<li>
+<p><strong><code>test_and_play_control</code></strong> – Coordinate Studio play sessions and automated tests. The
+<code>play_solo</code> and <code>run_playtest</code> subcommands drive <code>StudioService</code> to start gameplay while
+continuously streaming console output until the run ends or a timeout is reached. <code>run_tests</code>
+executes <code>TestService</code> suites, recording status transitions, diagnostics, and captured errors.
+The <code>stop</code> subcommand issues best-effort shutdown requests for any active play or test run. Each
+response is encoded as JSON so MCP clients can inspect structured fields such as
+<code>statusUpdates</code>, <code>summary</code>, <code>chunks</code>, and <code>logs</code>.</p>
+</li>
+<li>
+<p><strong><code>editor_session_control</code></strong> – Issue focused Studio editor commands without touching the DataModel.
+The tool accepts an action discriminator alongside structured payloads:</p>
+<ul>
+<li><code>set_selection</code>: Replace the Explorer selection with arrays of instance path segments.</li>
+<li><code>focus_camera</code>: Apply explicit <code>Camera.CFrame</code>, <code>Camera.Focus</code>, or <code>FieldOfView</code> component arrays.</li>
+<li><code>frame_instances</code>: Resolve instance paths, compute a bounding box, and move the camera (optionally
+tweening) so the targets fill the viewport.</li>
+<li><code>open_script</code>: Open a <code>Script</code>/<code>LocalScript</code>/<code>ModuleScript</code>, optionally jumping to a specific
+<code>line</code>/<code>column</code> and focusing the editor tab.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>asset_pipeline</code></strong> – Search the marketplace, insert specific asset versions, import local RBXM
+files, and publish packages without leaving Claude or Cursor. Each operation reports structured
+status including resolved instance paths, collision handling decisions, placement adjustments, and
+optional package metadata.</p>
+</li>
+<li>
+<p><strong><code>terrain_operations</code></strong> – Execute batches of voxel edits without leaving the chat. Supported
+operations include <code>fill_block</code>, <code>fill_region</code>, <code>replace_material</code>, <code>clear_region</code>, and
+<code>convert_to_terrain</code>. Each subcommand accepts numeric payloads (CFrame component arrays, Region3int16
+corners, and material enum names) and returns a JSON summary describing whether terrain was mutated,
+the resolved pivots, and any failures. Optional <code>pivotRelative</code> flags combine with
+<code>pivot = { mode = "active_camera", offset = { dx, dy, dz } }</code> to position edits in front of the
+viewport, making it easy to paint terrain relative to the current shot.</p>
+</li>
+<li>
+<p><strong><code>collection_and_attributes</code></strong> – Manage CollectionService metadata alongside Instance attributes.
+Chain <code>list_tags</code>, <code>add_tags</code>, <code>remove_tags</code>, <code>sync_attributes</code>, and <code>query_by_tag</code> operations to audit
+or mutate large sets of instances. Tag operations accept arrays of instance paths and tag strings,
+automatically skip duplicates, and report per-instance outcomes. Attribute syncs accept key/value
+maps (numbers, strings, booleans, Color3 dictionaries, etc.) and optionally prune attributes that
+are missing from the request. The response includes JSON summaries with <code>writeOccurred</code> and
+<code>affectedInstances</code> fields so you can condition undo checkpoints on whether anything actually
+changed.</p>
+</li>
+<li>
+<p><strong><code>diagnostics_and_metrics</code></strong> – Gather troubleshooting data from Studio in a single response.
+Combine multiple insights in one call:</p>
+<ul>
+<li><code>logs</code>: Filter error, warning, or informational messages, cap the total returned entries, and
+control how many items appear in each chunk so LLMs can page through long histories. Responses
+include severity tallies as well as the oldest/newest timestamps that survived truncation.</li>
+<li><code>includeMemoryStats</code>: Summarise <code>Stats</code> memory usage (total + DeveloperMemoryTag breakdowns).</li>
+<li><code>includeTaskScheduler</code>: Surface scheduler state/metrics when Roblox exposes them in Studio.</li>
+<li><code>includeMicroProfiler</code>: Emit a MicroProfiler dump (chunked when large) for deeper CPU analysis.</li>
+<li><code>serviceSelection</code>: Inspect specific services for descendant counts and relevant memory tags.
+The payload is encoded as JSON so MCP clients can slice out sections such as
+<code>logs.chunks[n].entries</code>, <code>logs.severityCounts</code>, or <code>services.Workspace.memoryUsageMb</code>.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Safety notice:</strong> Starting a play session or running the test harness will execute scripts and
+may mutate workspace state that has not been saved. Ensure critical changes are committed to
+source control or saved locally before invoking the play or test tools, and avoid relying on
+temporary state that might be reset when Studio reloads the environment. Save open scripts and
+publish your place first so any crashes or forced stops do not discard work.</p>
+</blockquote>
+<h3 id="orchestrating-playtests-and-automated-tests">Orchestrating playtests and automated tests</h3>
+<p>Long-running Test and Play requests stream progress back to the MCP client. Status updates, log
+chunks, and structured summaries are appended to the JSON payload so Claude or Cursor can keep you
+informed while Studio runs. Typical prompts include:</p>
+<ul>
+<li><strong>Quick solo play session</strong> – “Start a <code>play_solo</code> run and tell me when it finishes. Stop it if it
+takes longer than 90 seconds.”</li>
+<li><strong>Local server playtest</strong> – “Launch a <code>run_playtest</code> session with server + player and summarize any
+script errors when gameplay ends.”</li>
+<li><strong>Targeted test suite</strong> – “Run <code>run_tests</code> for <code>NPCBehaviour</code> and <code>Inventory</code> test modules. Include
+console logs and highlight failing assertions.”</li>
+<li><strong>Emergency stop</strong> – “Issue a <code>stop</code> command to halt any running playtest or TestService activity
+and report whether Studio was still in a running state.”</li>
+<li><strong>Automated menu navigation</strong> – “Once play mode is running, call <code>send_input</code> with key and mouse
+steps to open the escape menu and click the publish button. Wait between steps so the UI can
+animate.”</li>
+<li><strong>Capture live stats</strong> – “Call <code>capture_stats</code> with <code>includeRunState</code> and a <code>Players.LocalPlayer</code> GUI
+watch target so I can confirm whether the HUD is visible before proceeding.”</li>
+</ul>
+<p>The <code>send_input</code> action waits for <code>RunService:IsRunning()</code> before dispatching key or mouse events
+through <code>VirtualInputManager</code>, so sequences only succeed during active play or playtest sessions. You
+can mix <code>key</code>, <code>mouse_button</code>, <code>mouse_move</code>, and <code>wait</code> steps and attach optional <code>delaySeconds</code>
+values to pace the automation. Pairing the sequence with telemetry flags lets you capture a
+post-action snapshot of the run state, LocalPlayer position, or GUI visibility. The companion
+<code>capture_stats</code> action gathers the same telemetry without emitting input, which is ideal for
+lightweight health checks between runs.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"TestAndPlayControl"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"send_input"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "options"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      "timeoutSeconds"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">45</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "inputSequence"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">        { </span><span style="color:#79B8FF">"kind"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"wait"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"seconds"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">        { </span><span style="color:#79B8FF">"kind"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"key"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"keyCode"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Escape"</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">        { </span><span style="color:#79B8FF">"kind"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"mouse_move"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"x"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">320</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"y"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">180</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"delaySeconds"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.25</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">        {</span></span>
+<span class="line"><span style="color:#79B8FF">          "kind"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"mouse_button"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "button"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"MouseButton1"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "isDown"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "x"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">320</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "y"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">180</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "delaySeconds"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.05</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#E1E4E8">        { </span><span style="color:#79B8FF">"kind"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"mouse_button"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"button"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"MouseButton1"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"isDown"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">      ],</span></span>
+<span class="line"><span style="color:#79B8FF">      "watchTargets"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Players.LocalPlayer.PlayerGui.HUD"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">      "telemetry"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">        "includeRunState"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "includeLocalPlayerPosition"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "includeGuiVisibility"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Equivalent JSON payloads can be sent directly from automation:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"TestAndPlayControl"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"run_tests"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "options"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      "testNames"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"NPCBehaviour"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Inventory"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">      "timeoutSeconds"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">240</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "includeLogHistory"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Responses contain top-level fields such as <code>status</code>, <code>statusUpdates</code>, <code>chunks</code>, and <code>summary</code> so you
+can easily inspect what happened during the run or feed the data into follow-up prompts.</p>
+<h3 id="inspecting-the-studio-environment">Inspecting the Studio environment</h3>
+<p>You can ask Claude or Cursor to sample the current environment by calling:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"InspectEnvironment"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "selection"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"includeFullNames"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#79B8FF">    "camera"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"includeFocus"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#79B8FF">    "services"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"services"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Players"</span><span style="color:#E1E4E8">], </span><span style="color:#79B8FF">"includeCounts"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>The response is JSON with the following sections:</p>
+<ul>
+<li><code>selection</code>: Total selected instances plus per-item <code>name</code>, <code>className</code>, and <code>fullName</code> (opt-in).</li>
+<li><code>camera</code>: Indicates whether <code>Workspace.CurrentCamera</code> exists, and includes the CFrame/focus
+vectors and field of view when requested.</li>
+<li><code>services</code>: Reports requested service availability, optionally including descendant counts.</li>
+<li><code>metadata.generatedAt</code>: Timestamp (ISO 8601) that the plugin recorded for traceability.</li>
+</ul>
+<p>These payloads are ideal for prompts such as “summarise the selected models” or “describe the camera
+setup” without mutating the place or creating ChangeHistory checkpoints.</p>
+<h3 id="terrain-authoring-workflow">Terrain authoring workflow</h3>
+<p><code>terrain_operations</code> requests look like the following:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"TerrainOperations"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "pivot"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      "mode"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"active_camera"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "offset"</span><span style="color:#E1E4E8">: [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">-4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">-40</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#79B8FF">    "operations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"fill_block"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "cframeComponents"</span><span style="color:#E1E4E8">: [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "size"</span><span style="color:#E1E4E8">: [</span><span style="color:#79B8FF">16</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">16</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "material"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Grass"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "pivotRelative"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"replace_material"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "cornerMin"</span><span style="color:#E1E4E8">: [</span><span style="color:#79B8FF">-48</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">-32</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">-48</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "cornerMax"</span><span style="color:#E1E4E8">: [</span><span style="color:#79B8FF">48</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">16</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">48</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "resolution"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "sourceMaterial"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Grass"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "targetMaterial"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Mud"</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Each response is JSON-encoded and includes an array of per-operation results plus a
+<code>writeOccurred</code> flag. The Studio plugin records undo checkpoints only when <code>writeOccurred</code> is true,
+so read-only inspections or failed conversions can be issued safely without cluttering the change
+history. Terrain edits still modify live data; save frequently, keep backups before running bulk
+operations, and double-check the resolved coordinates (reported in the <code>details</code> field) before
+running destructive actions such as <code>clear_region</code>.</p>
+<h3 id="tag-and-attribute-workflows">Tag and attribute workflows</h3>
+<p>Use <code>collection_and_attributes</code> when you want to inspect or mutate CollectionService tags and
+Instance attributes in bulk. Operations accept arrays of instance paths, tag strings, and attribute
+maps, and they produce structured JSON summaries that call out per-instance successes, skips, or
+errors. A typical request might look like:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"CollectionAndAttributes"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "operations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"list_tags"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "paths"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">          [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"NPCs"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Guard"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">          [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"NPCs"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Merchant"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">        ],</span></span>
+<span class="line"><span style="color:#79B8FF">        "includeAttributes"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"add_tags"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "paths"</span><span style="color:#E1E4E8">: [[</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"NPCs"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Guard"</span><span style="color:#E1E4E8">]],</span></span>
+<span class="line"><span style="color:#79B8FF">        "tags"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"npc"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"guard"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"vendor"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"sync_attributes"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "paths"</span><span style="color:#E1E4E8">: [[</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"NPCs"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Guard"</span><span style="color:#E1E4E8">]],</span></span>
+<span class="line"><span style="color:#79B8FF">        "attributes"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Level"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "Faction"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"CityWatch"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "PatrolRadius"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">48</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "operation"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"query_by_tag"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "tag"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"vendor"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "includePaths"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "includeAttributes"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Best practices when working with tags and attributes:</p>
+<ul>
+<li><strong>Adopt consistent naming.</strong> Prefer lowercase, hyphenated tags (<code>npc-guard</code>) or scoped prefixes
+(<code>quest.giver</code>) so collaborators can scan related metadata quickly.</li>
+<li><strong>Reserve tags for membership, attributes for data.</strong> Tags should answer yes/no questions (“is this
+an interactable?”) while attributes store numbers, strings, or booleans that scripts consume.</li>
+<li><strong>Keep attribute types predictable.</strong> Stick to primitives and common Roblox datatypes (Color3, CFrame
+arrays, Vector3 dictionaries). Mixing types under the same key makes scripted consumers brittle.</li>
+<li><strong>Prune stale metadata deliberately.</strong> Set <code>clearMissing = true</code> on <code>sync_attributes</code> when you want
+the plugin to remove attributes that are no longer present in your source of truth.</li>
+<li><strong>Audit before bulk edits.</strong> Chain <code>list_tags</code> before mutating operations so the response clearly
+shows what changed and lets you catch typos before they propagate.</li>
+</ul>
+<p>Because the response reports <code>writeOccurred</code> and <code>affectedInstances</code>, the Studio plugin only commits a
+ChangeHistory checkpoint when at least one instance was updated. Read-only batches (for example, only
+<code>list_tags</code> or <code>query_by_tag</code>) avoid polluting the undo stack.</p>
+<h3 id="example-prompts">Example prompts</h3>
+<p>You can ask Claude or Cursor to stage multiple changes at once. For example, the following prompt
+creates a lighting rig and tweaks an existing part in one tool call:</p>
+<h3 id="bulk-instance-editing">Bulk instance editing</h3>
+<p>Use <code>apply_instance_operations</code> when you need to touch multiple instances in a single, undoable
+batch. The assistant can resolve instance paths, validate allowed property writes, and surface
+per-operation errors.</p>
+<p>Example natural-language prompt for Claude or Cursor:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use apply_instance_operations to:</span></span>
+<span class="line"><span>1. Create a PointLight at Workspace/LightingRig/PointLight with Brightness 3 and Range 18.</span></span>
+<span class="line"><span>2. Update Workspace/SetPiece/SpotlightCube so its Color is (1, 0.8, 0.6) and Transparency is 0.25.</span></span>
+<span class="line"><span>3. Delete Workspace/Temporary/DebugFolder.</span></span>
+<span class="line"><span>Summarize which edits succeeded and report any validation errors.</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The MCP client expands that request into JSON similar to:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"ApplyInstanceOperations"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "operations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"create"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"LightingRig"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"PointLight"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "className"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"PointLight"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Brightness"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "Range"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">18</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"update"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"SetPiece"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"SpotlightCube"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "properties"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "Color"</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">"__type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Color3"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"r"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"g"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"b"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.6</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#79B8FF">          "Transparency"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.25</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"delete"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"Workspace"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Temporary"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"DebugFolder"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Every property write is wrapped in <code>pcall</code> and checked against a conservative allowlist (for example,
+lights expose <code>Brightness</code>, <code>Color</code>, and <code>Range</code>; base parts allow <code>Anchored</code>, <code>CFrame</code>, and <code>Size</code>).
+Create operations are limited to safe classes, and delete operations refuse to destroy the <code>DataModel</code>
+root or services parented directly under it. Successful batches automatically wrap the work inside
+<code>ChangeHistoryService</code> waypoints, and the response includes a <code>writeOccurred</code> flag so callers can
+decide whether to keep or discard the undo checkpoint.</p>
+<p>To label a group of instances and synchronise designer-authored metadata, try a prompt like:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use collection_and_attributes to:</span></span>
+<span class="line"><span>1. list_tags for Workspace/Levels/Hub/MerchantStand and Workspace/Levels/Hub/Blacksmith with attributes.</span></span>
+<span class="line"><span>2. add_tags to those same paths with ["shop", "hub-service"].</span></span>
+<span class="line"><span>3. sync_attributes on Workspace/Levels/Hub/MerchantStand with { "OpensAt": 6, "ClosesAt": 22, "Currency": "Gold" } and clearMissing true.</span></span>
+<span class="line"><span>4. query_by_tag for "hub-service" including paths and attributes.</span></span>
+<span class="line"><span>Summarize any skips or errors in the response.</span></span>
+<span class="line"><span></span></span></code></pre>
+<h3 id="requesting-diagnostics">Requesting diagnostics</h3>
+<p>The <code>diagnostics_and_metrics</code> tool accepts a <code>tool</code> + <code>params</code> payload so you can cherry-pick which
+subsystems to inspect:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>{</span></span>
+<span class="line"><span>  "tool": "DiagnosticsAndMetrics",</span></span>
+<span class="line"><span>  "params": {</span></span>
+<span class="line"><span>    "logs": {</span></span>
+<span class="line"><span>      "includeErrors": true,</span></span>
+<span class="line"><span>      "includeWarnings": true,</span></span>
+<span class="line"><span>      "includeInfo": false,</span></span>
+<span class="line"><span>      "maxEntries": 120,</span></span>
+<span class="line"><span>      "chunkSize": 40</span></span>
+<span class="line"><span>    },</span></span>
+<span class="line"><span>    "includeMemoryStats": true,</span></span>
+<span class="line"><span>    "includeTaskScheduler": true,</span></span>
+<span class="line"><span>    "includeMicroProfiler": true,</span></span>
+<span class="line"><span>    "serviceSelection": {</span></span>
+<span class="line"><span>      "services": ["Workspace", "Players"],</span></span>
+<span class="line"><span>      "includeDescendantCounts": true,</span></span>
+<span class="line"><span>      "includeMemoryTags": true</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Log history comes back in <code>logs.chunks</code> with severity, timestamps, and an aggregate
+<code>logs.severityCounts</code> table so your prompt can prioritise the noisy areas. The wrapper also records
+<code>logs.oldestTimestamp</code>/<code>logs.newestTimestamp</code> so you know what window of time was captured. Large outputs are
+automatically chunked to avoid exhausting context windows, and each chunk is annotated with the
+index of the entries it covers. When <code>includeMicroProfiler</code> is <code>true</code>, Studio attempts to capture a
+microprofiler dump; the response contains a <code>snapshot</code> for small captures or <code>chunks</code> plus
+<code>snapshotSize</code> for larger traces. Enable the MicroProfiler first (View → MicroProfiler or File →
+Studio Settings → Diagnostics → Allow MicroProfiler) and ensure your account has permission to view
+it—otherwise Roblox will return an <code>available = false</code> section explaining the denial.</p>
+<p>To run the automated test suite from Claude or Cursor, you can request:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use test_and_play_control to run_tests with a 90 second timeout and include the full log history.</span></span>
+<span class="line"><span>If any tests fail, summarize the failing cases in the response.</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="asset-pipeline-workflows">Asset pipeline workflows</h2>
+<p>The <code>asset_pipeline</code> tool extends the plugin with a suite of asset-centric operations that execute in
+sequence. Each operation runs inside a single ChangeHistory checkpoint and produces a JSON response
+containing a <code>results</code> array with per-step status, messages, and structured <code>details</code> objects.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>You must be signed into Studio with an account that has permission to load the requested asset
+versions and to publish packages (for example, group upload permissions when targeting a group).</li>
+<li>Asset publishing requires a Studio build that exposes <code>AssetService:CreatePackageUpload</code>. When the
+API is unavailable, the tool returns a descriptive error without mutating your place.</li>
+<li>Marketplace insertions respect Studio permissions and may fail when content is moderated or
+restricted to certain experiences.</li>
+</ul>
+<h3 id="supported-operations">Supported operations</h3>
+<ul>
+<li><code>search_marketplace</code> – Query the Roblox marketplace and return asset metadata (name, creator,
+asset and version IDs). Use <code>limit</code> to cap the number of results (default <code>10</code>, max <code>50</code>) and
+<code>creatorName</code> to filter matches to a specific creator.</li>
+<li><code>insert_asset_version</code> – Load a specific asset version via <code>InsertService:LoadAssetVersion</code>, handle
+naming collisions (<code>rename</code>, <code>overwrite</code>, or <code>skip</code>), place the instance in a target parent, pivot
+it (<code>camera</code>, <code>origin</code>, <code>preserve</code>, or <code>custom_cframe</code>), and optionally publish the inserted
+instance as a package.</li>
+<li><code>import_rbxm</code> – Load a local RBXM/RBXLX file via <code>InsertService:LoadLocalAsset</code> and apply the same
+collision, placement, and optional package publishing workflow as marketplace insertions.</li>
+<li><code>publish_package</code> – Resolve an existing instance by path and publish it as a package using the
+provided metadata (name, description, tags, group, overwrite/comments flags).</li>
+</ul>
+<h3 id="example-prompts-1">Example prompts</h3>
+<p>Ask Claude or Cursor to chain multiple asset operations in one request:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use asset_pipeline to:</span></span>
+<span class="line"><span>1. search_marketplace for "modular sci-fi corridor" and limit results to 5 entries.</span></span>
+<span class="line"><span>2. insert_asset_version with assetVersionId 1234567890 into Workspace/Level using rename collisions</span></span>
+<span class="line"><span>   and camera placement.</span></span>
+<span class="line"><span>3. publish_package for the newly inserted instance named "Corridor" with packageName "SciFiCorridor"</span></span>
+<span class="line"><span>   and allowOverwrite true.</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Import from the filesystem and publish immediately:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use asset_pipeline with defaultParentPath ["ServerStorage", "Imported"] and defaultCollisionStrategy</span></span>
+<span class="line"><span>"rename" to run:</span></span>
+<span class="line"><span>- import_rbxm from "C:/Projects/Roblox/Prefabs/ControlPanel.rbxm" placing at origin.</span></span>
+<span class="line"><span>- publish_package for ["ServerStorage", "Imported", "ControlPanel"] with packageName</span></span>
+<span class="line"><span>  "ControlPanelPrefab", description "Control room UI elements", allowComments false.</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>To verify gameplay flows end-to-end, ask the assistant to playtest and stream logs back:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use test_and_play_control to run_playtest with a 120 second timeout.</span></span>
+<span class="line"><span>Watch for replication or runtime errors while the session is active and stop the run afterwards.</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>You can also ask Claude or Cursor to scaffold and iterate on scripts without leaving the chat. For
+example, the following prompt creates a server script, updates an existing LocalScript after linting
+the new source, and renames a module:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use manage_scripts to:</span></span>
+<span class="line"><span>1. Create ServerScriptService/MCP/EventRouter as a Script with RunContext "Server" and initial source that listens for the "SpawnNPC" RemoteEvent and logs received payloads.</span></span>
+<span class="line"><span>2. Update StarterPlayerScripts/UIBoot/HotbarController (LocalScript) so it requires "ReplicatedStorage/Controllers/EventBus" and forwards button presses through the RemoteEvent.</span></span>
+<span class="line"><span>3. Rename ReplicatedStorage/Controllers/oldEventBus module to EventBus.</span></span>
+<span class="line"><span>Include class names and run contexts in the response metadata.</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The resulting tool call looks like:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"ManageScripts"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "params"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "defaultMetadata"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      "includeClassName"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "includeRunContext"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#79B8FF">    "operations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"create"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"ServerScriptService"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"MCP"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"EventRouter"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "scriptType"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Script"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "runContext"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Server"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "source"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"local event = game.ReplicatedStorage.SpawnNPC</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">local function onSpawn(player, payload)</span><span style="color:#79B8FF">\n\t</span><span style="color:#9ECBFF">print(</span><span style="color:#79B8FF">\"</span><span style="color:#9ECBFF">[MCP] SpawnNPC</span><span style="color:#79B8FF">\"</span><span style="color:#9ECBFF">, player, payload)</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">end</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">event.OnServerEvent:Connect(onSpawn)"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "metadata"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "includeAttributes"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">          "includeParentPath"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"set_source"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"StarterPlayer"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"StarterPlayerScripts"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"UIBoot"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"HotbarController"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "source"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"local ReplicatedStorage = game:GetService('ReplicatedStorage')</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">local event = ReplicatedStorage.SpawnNPC</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">local EventBus = require(ReplicatedStorage.Controllers.EventBus)</span><span style="color:#79B8FF">\n\n</span><span style="color:#9ECBFF">local function onButtonPressed(buttonId)</span><span style="color:#79B8FF">\n\t</span><span style="color:#9ECBFF">EventBus.publish('hotbar', buttonId)</span><span style="color:#79B8FF">\n\t</span><span style="color:#9ECBFF">event:FireServer(buttonId)</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">end</span><span style="color:#79B8FF">\n\n</span><span style="color:#9ECBFF">script.Parent.ButtonPressed:Connect(onButtonPressed)"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "metadata"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "includeFullName"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span></span>
+<span class="line"><span style="color:#79B8FF">        "action"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"rename"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "path"</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"ReplicatedStorage"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Controllers"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"oldEventBus"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">        "newName"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"EventBus"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        "metadata"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">          "includeParentPath"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Studio replies with a JSON payload that summarises each operation, echoes the requested metadata, and
+provides diagnostics (such as syntax errors) whenever a change is rejected. That makes it easy to keep
+Claude/Cursor in the loop while iteratively refining gameplay scripts. LocalScripts are guarded from
+being created under server-only containers, and server Scripts are kept out of client-only parents so
+the plugin will fail fast with a readable diagnostic instead of leaving the instance in an unusable
+state.</p></div> </div> </section> </article>  </main> <footer class="relative border-t border-slate-800/80 bg-surface/80 py-12 text-sm text-slate-400 backdrop-blur"> <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" aria-hidden="true"></div> <div class="mx-auto flex max-w-5xl flex-col gap-10 px-6 md:flex-row md:justify-between"> <div> <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent-light">$ tail -f now</p> <h2 class="mt-2 text-lg font-semibold text-white">Let’s connect</h2> <ul class="mt-4 space-y-2 font-mono text-slate-300"> <li> <a href="mailto:hello@hackall360.dev" class="hover:underline">hello@hackall360.dev</a> </li> <li> <a href="https://github.com/hackall360" class="hover:underline" target="_blank" rel="noopener">github.com/hackall360</a> </li> <li> <a href="https://www.linkedin.com/in/hackall360" class="hover:underline" target="_blank" rel="noopener">linkedin.com/in/hackall360</a> </li> </ul> </div> <div class="grid gap-4 sm:grid-cols-2"> <div class="rounded-xl border border-slate-800/80 bg-surface-elevated/80 p-5 text-slate-200 shadow-[0_0_30px_-15px_rgba(45,212,191,0.6)]"> <p class="font-mono text-xs uppercase tracking-widest text-accent-light">Shipments</p> <p class="mt-2 text-3xl font-semibold text-white">42+</p> <p class="mt-1 text-xs text-slate-400">Production launches & experiments.</p> </div> <div class="rounded-xl border border-slate-800/80 bg-surface-elevated/80 p-5 text-slate-200 shadow-[0_0_30px_-15px_rgba(14,165,233,0.6)]"> <p class="font-mono text-xs uppercase tracking-widest text-accent-light">Uptime</p> <p class="mt-2 text-3xl font-semibold text-white">99.9%</p> <p class="mt-1 text-xs text-slate-400">Projects maintained with obsessive care.</p> </div> </div> </div> <div class="mx-auto mt-10 max-w-5xl px-6 text-xs text-slate-500"> <p>Built with Astro & Tailwind. Deploying curiosity daily.</p> <p class="mt-2">
+Analytics respect Do Not Track. Set <code class="rounded bg-slate-800 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-[0.3em] text-accent-light">localStorage.plausible_ignore = "true"</code>
+to opt out instantly.
+</p> </div> </footer> </div> <script type="module">
+      import '~/scripts/motion.ts';
+    </script> </body> </html>

@@ -21,5 +21,33 @@ const structuredData = {
     <Hero />
     <MetricsStrip />
     <FeaturedProjects />
+    <section class="rounded-3xl border border-slate-800/40 bg-slate-900/40 p-8 text-slate-100 shadow-lg backdrop-blur">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="max-w-2xl space-y-3">
+          <h2 class="text-xl font-semibold tracking-tight sm:text-2xl">Manual build artifacts</h2>
+          <p class="text-sm leading-relaxed text-slate-300 sm:text-base">
+            Build the site locally with <code class="rounded bg-slate-800 px-1.5 py-0.5 text-xs text-slate-200">npm run build</code>,
+            commit the generated <code class="rounded bg-slate-800 px-1.5 py-0.5 text-xs text-slate-200">docs/</code> directory, and push it to publish without relying on GitHub Actions.
+            The latest bundled output is always available for download or manual deployment.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:min-w-[240px]">
+          <a
+            class="inline-flex items-center justify-center rounded-full border border-emerald-500/60 bg-emerald-500/10 px-5 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-400 hover:bg-emerald-400/20 hover:text-emerald-50"
+            href="https://github.com/hackall360/hackall360.github.io/tree/main/docs"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Browse bundled files
+          </a>
+          <a
+            class="inline-flex items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/80 px-5 py-2 text-sm font-medium text-slate-200 transition hover:border-slate-300 hover:bg-slate-700/80 hover:text-white"
+            href="/docs/"
+          >
+            Preview static export
+          </a>
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>

@@ -111,6 +111,14 @@ npm run build
 npm run preview
 ```
 
+## Manual GitHub Pages deploy (without Actions)
+
+1. Run `npm run build` to generate the static site inside the tracked `docs/` directory.
+2. Commit the updated `docs/` folder along with any other changes.
+3. Push to `main` (or your chosen branch) and set **GitHub Pages → Source** to `Deploy from a branch → main → /docs`.
+
+The built bundle is also linked from the home page so you can download or inspect the generated files directly.
+
 ## Notes collection
 
 - Markdown notes live in `src/content/notes/` and follow the schema defined in `src/content/config.ts`.
