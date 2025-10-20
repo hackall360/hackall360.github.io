@@ -2,6 +2,7 @@
 import Nav from '~/components/Nav.astro';
 import Footer from '~/components/Footer.astro';
 import '~/styles/global.css';
+import clientScriptUrl from 'virtual:client-script-url';
 
 interface Props {
   title?: string;
@@ -73,9 +74,6 @@ const analyticsEnabled = Boolean(plausibleDomain);
       </main>
       <Footer />
     </div>
-    <script type="module" is:inline>
-      import '~/scripts/motion.ts';
-      import '~/scripts/contact-actions.ts';
-    </script>
+    <script type="module" src={clientScriptUrl}></script>
   </body>
 </html>

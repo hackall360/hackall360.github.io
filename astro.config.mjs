@@ -1,4 +1,7 @@
 import { defineConfig } from 'astro/config';
+import { build as esbuildBuild } from 'esbuild';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 import tailwind from '@astrojs/tailwind';
 import { syncProjects } from './scripts/github-projects.mjs';
 
@@ -67,9 +70,69 @@ function projectsAutoSync() {
   };
 }
 
+function clientScriptPlugin() {
+  let command = 'build';
+  let bundledPath = null;
+
+  const virtualModuleId = 'virtual:client-script-url';
+
+  return {
+    name: 'client-script-url-resolver',
+    configResolved(resolvedConfig) {
+      command = resolvedConfig.command;
+    },
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return id;
+      }
+      return null;
+    },
+    async load(id) {
+      if (id === virtualModuleId) {
+        if (command === 'serve') {
+          return "export default '/src/scripts/client.ts';";
+        }
+
+        if (!bundledPath) {
+          const entryPath = fileURLToPath(new URL('./src/scripts/client.ts', import.meta.url));
+          const buildResult = await esbuildBuild({
+            entryPoints: [entryPath],
+            bundle: true,
+            format: 'esm',
+            platform: 'browser',
+            write: false,
+            sourcemap: false
+          });
+
+          const code = buildResult.outputFiles[0]?.text ?? '';
+          const hash = createHash('sha256').update(code).digest('hex').slice(0, 8);
+          const fileName = `_astro/client.${hash}.js`;
+
+          this.emitFile({
+            type: 'asset',
+            fileName,
+            source: code
+          });
+
+          bundledPath = `/${fileName}`;
+        }
+
+        return `export default ${JSON.stringify(bundledPath)};`;
+      }
+      return null;
+    }
+  };
+}
+
 export default defineConfig({
   site: 'https://hackall360.github.io',
   outDir: './docs',
+  vite: {
+    build: {
+      assetsInlineLimit: 0
+    },
+    plugins: [clientScriptPlugin()]
+  },
   integrations: [
     tailwind({
       config: {
