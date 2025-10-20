@@ -11,11 +11,16 @@ interface Props {
   ogImage?: string;
 }
 
+const externalOgImage =
+  'https://og-image.vercel.app/**hackall360**.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Ffav.farm%2F%F0%9F%93%9D';
+const externalAppleTouchIcon = 'https://dummyimage.com/180x180/0f172a/f8fafc.png&text=HA';
+const externalFallbackIcon = 'https://fav.farm/%F0%9F%9A%80';
+
 const {
   title = 'hackall360',
   description = 'Builder, tinkerer, and chronic note taker.',
   structuredData,
-  ogImage = '/social-share.jpg'
+  ogImage = externalOgImage
 } = Astro.props as Props;
 
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
@@ -44,8 +49,8 @@ const structuredDataJson = structuredData ? JSON.stringify(structuredData) : nul
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="alternate icon" href={externalFallbackIcon} />
+    <link rel="apple-touch-icon" href={externalAppleTouchIcon} />
 
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
