@@ -1,123 +1,389 @@
 [
   {
-    "slug": "auto-coder",
-    "name": "auto-coder",
-    "description": "Autonomous code generation experiments exploring agent collaboration.",
-    "tags": ["AI", "Utility"],
+    "slug": "SuperToken",
+    "name": "SuperToken",
+    "description": "Token-based authentication service hardened for cross-platform integrations.",
+    "tags": [
+      "Security",
+      "Utility"
+    ],
     "stars": 0,
     "language": "Python",
-    "url": "https://github.com/hackall360/auto-coder",
+    "url": "https://github.com/hackall360/SuperToken",
     "caseStudy": null,
-    "featured": false
-  },
-  {
-    "slug": "hackall360.github.io",
-    "name": "hackall360.github.io",
-    "description": "Astro-powered personal site and experimentation ground for new ideas.",
-    "tags": ["Full-Stack", "Utility"],
-    "stars": 0,
-    "language": "Astro",
-    "url": "https://github.com/hackall360/hackall360.github.io",
-    "caseStudy": null,
-    "featured": false
-  },
-  {
-    "slug": "NeoGradleTemplate",
-    "name": "NeoGradleTemplate",
-    "description": "Opinionated Gradle starter template for rapid JVM project bootstrapping.",
-    "tags": ["Full-Stack", "Utility"],
-    "stars": 0,
-    "language": "Java",
-    "url": "https://github.com/hackall360/NeoGradleTemplate",
-    "caseStudy": null,
-    "featured": false
-  },
-  {
-    "slug": "portfolio-lesson-1",
-    "name": "portfolio-lesson-1",
-    "description": "Foundational portfolio built as part of an educational lesson series.",
-    "tags": ["Full-Stack"],
-    "stars": 0,
-    "language": "HTML",
-    "url": "https://github.com/hackall360/portfolio-lesson-1",
-    "caseStudy": null,
-    "featured": false
-  },
-  {
-    "slug": "PyGoConverter",
-    "name": "PyGoConverter",
-    "description": "Python-to-Go language converter focused on pragmatic utility scripts.",
-    "tags": ["Utility"],
-    "stars": 0,
-    "language": null,
-    "url": "https://github.com/hackall360/PyGoConverter",
-    "caseStudy": null,
-    "featured": false
-  },
-  {
-    "slug": "Software-Development-Course-Git",
-    "name": "Software-Development-Course-Git",
-    "description": "Git-focused coursework covering branching strategies and real-world flows.",
-    "tags": ["Full-Stack", "Utility"],
-    "stars": 0,
-    "language": null,
-    "url": "https://github.com/hackall360/Software-Development-Course-Git",
-    "caseStudy": null,
-    "featured": false
+    "featured": false,
+    "forks": 0,
+    "contributions": 262,
+    "languages": [
+      {
+        "name": "Python",
+        "percentage": 88.4,
+        "bytes": 1123786
+      },
+      {
+        "name": "Markdown",
+        "percentage": 9.3,
+        "bytes": 118330
+      },
+      {
+        "name": "JSON",
+        "percentage": 1.8,
+        "bytes": 22259
+      },
+      {
+        "name": "YAML",
+        "percentage": 0.5,
+        "bytes": 6175
+      }
+    ],
+    "totalLanguageBytes": 1270625
   },
   {
     "slug": "SOLLOL",
     "name": "SOLLOL",
     "description": "Performance-aware routing for distributed Ollama deployments with Ray and Dask.",
-    "tags": ["AI", "Utility"],
+    "tags": [
+      "AI",
+      "Utility"
+    ],
     "stars": 0,
     "language": "Python",
     "url": "https://github.com/hackall360/SOLLOL",
     "caseStudy": null,
-    "featured": false
+    "featured": false,
+    "forks": 0,
+    "contributions": 197,
+    "languages": [
+      {
+        "name": "Python",
+        "percentage": 66.8,
+        "bytes": 1461819
+      },
+      {
+        "name": "Markdown",
+        "percentage": 30.4,
+        "bytes": 664413
+      },
+      {
+        "name": "HTML",
+        "percentage": 1,
+        "bytes": 22290
+      },
+      {
+        "name": "YAML",
+        "percentage": 0.9,
+        "bytes": 19171
+      },
+      {
+        "name": "Shell",
+        "percentage": 0.7,
+        "bytes": 14873
+      }
+    ],
+    "totalLanguageBytes": 2187099
+  },
+  {
+    "slug": "auto-coder",
+    "name": "auto-coder",
+    "description": "Autonomous code generation experiments exploring agent collaboration.",
+    "tags": [
+      "AI",
+      "Utility"
+    ],
+    "stars": 0,
+    "language": "Python",
+    "url": "https://github.com/hackall360/auto-coder",
+    "caseStudy": null,
+    "featured": false,
+    "forks": 0,
+    "contributions": 194,
+    "languages": [
+      {
+        "name": "Python",
+        "percentage": 64.9,
+        "bytes": 1111722
+      },
+      {
+        "name": "Markdown",
+        "percentage": 34.9,
+        "bytes": 598058
+      },
+      {
+        "name": "SQL",
+        "percentage": 0.2,
+        "bytes": 3148
+      }
+    ],
+    "totalLanguageBytes": 1713194
   },
   {
     "slug": "studio-rust-mcp-server",
     "name": "studio-rust-mcp-server",
     "description": "Standalone Roblox Studio MCP server built with a Rust core and Luau interface.",
-    "tags": ["Security", "Utility"],
+    "tags": [
+      "Security",
+      "Utility"
+    ],
     "stars": 0,
     "language": "Luau",
     "url": "https://github.com/hackall360/studio-rust-mcp-server",
     "caseStudy": null,
-    "featured": false
+    "featured": false,
+    "forks": 0,
+    "contributions": 77,
+    "languages": [
+      {
+        "name": "Luau",
+        "percentage": 54.3,
+        "bytes": 365684
+      },
+      {
+        "name": "Rust",
+        "percentage": 18.6,
+        "bytes": 125258
+      },
+      {
+        "name": "Markdown",
+        "percentage": 9.9,
+        "bytes": 66959
+      },
+      {
+        "name": "YAML",
+        "percentage": 0.6,
+        "bytes": 3925
+      },
+      {
+        "name": "Shell",
+        "percentage": 0.2,
+        "bytes": 1479
+      }
+    ],
+    "totalLanguageBytes": 673074
   },
   {
-    "slug": "SuperToken",
-    "name": "SuperToken",
-    "description": "Token-based authentication service hardened for cross-platform integrations.",
-    "tags": ["Security", "Utility"],
+    "slug": "hackall360.github.io",
+    "name": "hackall360.github.io",
+    "description": "Astro-powered personal site and experimentation ground for new ideas.",
+    "tags": [
+      "Full-Stack",
+      "Utility"
+    ],
     "stars": 0,
-    "language": "Python",
-    "url": "https://github.com/hackall360/SuperToken",
+    "language": "Astro",
+    "url": "https://github.com/hackall360/hackall360.github.io",
     "caseStudy": null,
-    "featured": false
+    "featured": false,
+    "forks": 0,
+    "contributions": 44,
+    "languages": [
+      {
+        "name": "HTML",
+        "percentage": 51.8,
+        "bytes": 577350
+      },
+      {
+        "name": "JSON",
+        "percentage": 34.4,
+        "bytes": 383439
+      },
+      {
+        "name": "Astro",
+        "percentage": 6.8,
+        "bytes": 75255
+      },
+      {
+        "name": "CSS",
+        "percentage": 3.3,
+        "bytes": 36582
+      },
+      {
+        "name": "Markdown",
+        "percentage": 1.9,
+        "bytes": 21064
+      }
+    ],
+    "totalLanguageBytes": 1114805
   },
   {
     "slug": "UnityDiscord",
     "name": "UnityDiscord",
     "description": "Discord bot toolkit tailored for Unity-powered community experiences.",
-    "tags": ["Full-Stack", "Utility"],
+    "tags": [
+      "Full-Stack",
+      "Utility"
+    ],
     "stars": 0,
     "language": null,
     "url": "https://github.com/hackall360/UnityDiscord",
     "caseStudy": null,
-    "featured": false
+    "featured": false,
+    "forks": 0,
+    "contributions": 3,
+    "languages": [
+      {
+        "name": "Markdown",
+        "percentage": 100,
+        "bytes": 6277
+      }
+    ],
+    "totalLanguageBytes": 6277
   },
   {
     "slug": "WOTLK-WebServer",
     "name": "WOTLK-WebServer",
     "description": "Wrath of the Lich King themed web server experiment for private realms.",
-    "tags": ["Full-Stack", "Security"],
+    "tags": [
+      "Full-Stack",
+      "Security"
+    ],
     "stars": 0,
     "language": "JavaScript",
     "url": "https://github.com/hackall360/WOTLK-WebServer",
     "caseStudy": null,
-    "featured": false
+    "featured": false,
+    "forks": 0,
+    "contributions": 3,
+    "languages": [
+      {
+        "name": "JavaScript",
+        "percentage": 75.7,
+        "bytes": 927046
+      },
+      {
+        "name": "CSS",
+        "percentage": 19.1,
+        "bytes": 233269
+      },
+      {
+        "name": "JSON",
+        "percentage": 5.2,
+        "bytes": 63585
+      }
+    ],
+    "totalLanguageBytes": 1223929
+  },
+  {
+    "slug": "PyGoConverter",
+    "name": "PyGoConverter",
+    "description": "Python-to-Go language converter focused on pragmatic utility scripts.",
+    "tags": [
+      "Utility"
+    ],
+    "stars": 0,
+    "language": null,
+    "url": "https://github.com/hackall360/PyGoConverter",
+    "caseStudy": null,
+    "featured": false,
+    "forks": 0,
+    "contributions": 2,
+    "languages": [
+      {
+        "name": "Markdown",
+        "percentage": 100,
+        "bytes": 73
+      }
+    ],
+    "totalLanguageBytes": 73
+  },
+  {
+    "slug": "NeoGradleTemplate",
+    "name": "NeoGradleTemplate",
+    "description": "Opinionated Gradle starter template for rapid JVM project bootstrapping.",
+    "tags": [
+      "Full-Stack",
+      "Utility"
+    ],
+    "stars": 0,
+    "language": "Java",
+    "url": "https://github.com/hackall360/NeoGradleTemplate",
+    "caseStudy": null,
+    "featured": false,
+    "forks": 0,
+    "contributions": 1,
+    "languages": [
+      {
+        "name": "Java",
+        "percentage": 35,
+        "bytes": 9812
+      },
+      {
+        "name": "Groovy",
+        "percentage": 28.1,
+        "bytes": 7870
+      },
+      {
+        "name": "TOML",
+        "percentage": 15.2,
+        "bytes": 4256
+      },
+      {
+        "name": "Batchfile",
+        "percentage": 10.6,
+        "bytes": 2966
+      },
+      {
+        "name": "Markdown",
+        "percentage": 5.3,
+        "bytes": 1492
+      }
+    ],
+    "totalLanguageBytes": 28041
+  },
+  {
+    "slug": "portfolio-lesson-1",
+    "name": "portfolio-lesson-1",
+    "description": "Foundational portfolio built as part of an educational lesson series.",
+    "tags": [
+      "Full-Stack"
+    ],
+    "stars": 0,
+    "language": "HTML",
+    "url": "https://github.com/hackall360/portfolio-lesson-1",
+    "caseStudy": null,
+    "featured": false,
+    "forks": 0,
+    "contributions": 1,
+    "languages": [
+      {
+        "name": "HTML",
+        "percentage": 63,
+        "bytes": 580
+      },
+      {
+        "name": "CSS",
+        "percentage": 21.2,
+        "bytes": 195
+      },
+      {
+        "name": "JavaScript",
+        "percentage": 15.9,
+        "bytes": 146
+      }
+    ],
+    "totalLanguageBytes": 921
+  },
+  {
+    "slug": "Software-Development-Course-Git",
+    "name": "Software-Development-Course-Git",
+    "description": "Git-focused coursework covering branching strategies and real-world flows.",
+    "tags": [
+      "Full-Stack",
+      "Utility"
+    ],
+    "stars": 0,
+    "language": null,
+    "url": "https://github.com/hackall360/Software-Development-Course-Git",
+    "caseStudy": null,
+    "featured": false,
+    "forks": 0,
+    "contributions": 1,
+    "languages": [
+      {
+        "name": "Markdown",
+        "percentage": 100,
+        "bytes": 140
+      }
+    ],
+    "totalLanguageBytes": 140
   }
 ]

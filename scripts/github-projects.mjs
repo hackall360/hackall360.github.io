@@ -44,6 +44,10 @@ function parseNumber(value, fallback) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function resolveConfig(env = process.env) {
   const proxyUrl =
     env.GITHUB_PROXY ??
@@ -73,6 +77,36 @@ function resolveConfig(env = process.env) {
     autoSyncDisabled: env.GITHUB_PROJECTS_AUTO_SYNC?.toLowerCase() === 'false',
     allowedRepos,
     allowedReposNormalized
+  };
+}
+
+function summarizeLanguages(languageMap, maxLanguages = 5) {
+  const entries = Object.entries(languageMap ?? {}).filter(([, bytes]) =>
+    Number.isFinite(bytes) && Number(bytes) > 0
+  );
+
+  if (entries.length === 0) {
+    return { totalBytes: 0, languages: [] };
+  }
+
+  const sorted = entries
+    .map(([name, value]) => ({ name, bytes: Number(value) }))
+    .sort((a, b) => b.bytes - a.bytes);
+
+  const totalBytes = sorted.reduce((total, entry) => total + entry.bytes, 0);
+  const limit = Math.min(maxLanguages, sorted.length);
+  const limited = sorted.slice(0, limit);
+
+  return {
+    totalBytes,
+    languages: limited.map((entry) => ({
+      name: entry.name,
+      bytes: entry.bytes,
+      percentage:
+        totalBytes > 0
+          ? Number(((entry.bytes / totalBytes) * 100).toFixed(1))
+          : 0
+    }))
   };
 }
 
@@ -167,6 +201,67 @@ async function fetchTopics(config, headers, repoName) {
   return Array.isArray(data.names) ? data.names : [];
 }
 
+async function fetchRepoLanguages(config, headers, repoName, logger) {
+  try {
+    const data = await githubRequest(`/repos/${config.owner}/${repoName}/languages`, {}, headers);
+    return summarizeLanguages(data);
+  } catch (error) {
+    logger?.warn?.(`Failed to fetch languages for ${repoName}`, error);
+    return { totalBytes: 0, languages: [] };
+  }
+}
+
+async function fetchContributionCount(config, headers, repoName, logger) {
+  let page = 1;
+  let total = 0;
+
+  while (true) {
+    const endpoint = new URL(
+      `/repos/${config.owner}/${repoName}/contributors`,
+      'https://api.github.com'
+    );
+    endpoint.searchParams.set('per_page', '100');
+    endpoint.searchParams.set('anon', 'true');
+    endpoint.searchParams.set('page', String(page));
+
+    const response = await fetch(endpoint, { headers });
+
+    if (response.status === 204) {
+      break;
+    }
+
+    if (!response.ok) {
+      const message = await response.text();
+      logger?.warn?.(
+        `Unable to retrieve contributor stats for ${repoName} (${response.status} ${response.statusText}): ${message}`
+      );
+      return total;
+    }
+
+    const contributors = await response.json();
+    if (!Array.isArray(contributors) || contributors.length === 0) {
+      break;
+    }
+
+    total += contributors.reduce((sum, contributor) => {
+      if (!contributor) {
+        return sum;
+      }
+
+      const value = Number(contributor.contributions ?? contributor.total ?? 0);
+      return Number.isFinite(value) ? sum + value : sum;
+    }, 0);
+
+    if (contributors.length < 100) {
+      break;
+    }
+
+    page += 1;
+  }
+
+  return total;
+}
+
 function shouldIncludeRepo(config, repo, topics) {
   if (repo.archived || repo.disabled || repo.fork || repo.private) {
     return false;
@@ -204,7 +299,7 @@ function buildCaseStudyPath(config, topics, slug) {
   return null;
 }
 
-function toProject(config, repo, topics) {
+function toProject(config, repo, topics, languageSummary, contributionCount) {
   const normalizedTopics = topics.map((topic) => topic.toLowerCase());
   const filteredTags = topics.filter((topic) => {
     const lower = topic.toLowerCase();
@@ -215,13 +310,19 @@ function toProject(config, repo, topics) {
     );
   });
 
+  const languages = languageSummary?.languages ?? [];
+
   return {
     slug: repo.name,
     name: repo.name,
     description: repo.description ?? '',
     tags: filteredTags,
     stars: repo.stargazers_count,
+    forks: repo.forks_count,
     language: repo.language,
+    languages,
+    totalLanguageBytes: languageSummary?.totalBytes ?? 0,
+    contributions: Number.isFinite(contributionCount) ? contributionCount : 0,
     url: repo.html_url,
     caseStudy: buildCaseStudyPath(config, topics, repo.name),
     featured: normalizedTopics.includes(config.featureTopic)
@@ -230,12 +331,16 @@ function toProject(config, repo, topics) {
 
 function sortProjects(projects) {
   return [...projects].sort((a, b) => {
-    if (a.featured !== b.featured) {
-      return a.featured ? -1 : 1;
+    if ((b.contributions ?? 0) !== (a.contributions ?? 0)) {
+      return (b.contributions ?? 0) - (a.contributions ?? 0);
     }
 
     if ((b.stars ?? 0) !== (a.stars ?? 0)) {
       return (b.stars ?? 0) - (a.stars ?? 0);
+    }
+
+    if ((b.forks ?? 0) !== (a.forks ?? 0)) {
+      return (b.forks ?? 0) - (a.forks ?? 0);
     }
 
     return a.slug.localeCompare(b.slug);
@@ -311,7 +416,14 @@ export async function syncProjects(options = {}) {
     if (!shouldIncludeRepo(config, repo, topics)) {
       continue;
     }
-    projects.push(toProject(config, repo, topics));
+    const [languageSummary, contributionCount] = await Promise.all([
+      fetchRepoLanguages(config, headers, repo.name, logger),
+      fetchContributionCount(config, headers, repo.name, logger)
+    ]);
+
+    projects.push(
+      toProject(config, repo, topics, languageSummary, contributionCount)
+    );
   }
 
   const sorted = sortProjects(projects);
