@@ -18,6 +18,7 @@ The project fetcher script reads the following optional variables:
 | `GITHUB_OWNER` | Overrides the default GitHub account (`hackall360`). |
 | `GITHUB_MIN_STARS` | Minimum star threshold for repositories to be included (default: `0`). |
 | `GITHUB_INCLUDE_TOPICS` | Comma-separated list of topics; at least one must match for a repository to be included. |
+| `GITHUB_PROJECTS_INCLUDE_REPOS` | Comma-separated allow list of repository names to fetch and surface in project cards. |
 | `GITHUB_FEATURE_TOPIC` | Topic name that marks a repository as `featured` (default: `featured`). |
 | `GITHUB_CASE_STUDY_TOPIC` | Topic that enables automatic `/projects/<slug>` case study links (default: `case-study`). |
 | `GITHUB_CASE_STUDY_PREFIX` | Topic prefix that encodes explicit case-study slugs (default: `case-study:`). |
@@ -28,7 +29,7 @@ The project fetcher script reads the following optional variables:
 | `GITHUB_PROJECTS_SKIP_AUTO_SYNC` | When `true`, prevents both the integration and CLI script from fetching data. Useful for fully offline builds. |
 | `GITHUB_PROXY` | Proxy URL to override environment proxy settings when calling the GitHub API. |
 
-If your network requires a proxy, set `GITHUB_PROXY` or rely on `HTTPS_PROXY`/`HTTP_PROXY`, which the script respects automatically.
+If your network requires a proxy, set `GITHUB_PROXY` or rely on `HTTPS_PROXY`/`HTTP_PROXY`, which the script respects automatically. The fetcher only queries public repositories and skips any that are archived, disabled, forked, or private.
 
 ### Site features
 

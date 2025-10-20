@@ -28,6 +28,17 @@ function toList(value) {
     .filter(Boolean);
 }
 
+function toListPreserveCase(value) {
+  if (!value) {
+    return [];
+  }
+
+  return String(value)
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
 function parseNumber(value, fallback) {
   const parsed = Number.parseInt(String(value ?? ''), 10);
   return Number.isFinite(parsed) ? parsed : fallback;
@@ -41,6 +52,9 @@ function resolveConfig(env = process.env) {
     env.HTTP_PROXY ??
     env.http_proxy ??
     null;
+
+  const allowedRepos = toListPreserveCase(env.GITHUB_PROJECTS_INCLUDE_REPOS);
+  const allowedReposNormalized = new Set(allowedRepos.map((name) => name.toLowerCase()));
 
   return {
     proxyUrl,
@@ -56,7 +70,9 @@ function resolveConfig(env = process.env) {
     forceRefresh: toBoolean(env.GITHUB_PROJECTS_FORCE_REFRESH),
     token: env.GITHUB_TOKEN,
     skip: toBoolean(env.GITHUB_PROJECTS_SKIP_AUTO_SYNC),
-    autoSyncDisabled: env.GITHUB_PROJECTS_AUTO_SYNC?.toLowerCase() === 'false'
+    autoSyncDisabled: env.GITHUB_PROJECTS_AUTO_SYNC?.toLowerCase() === 'false',
+    allowedRepos,
+    allowedReposNormalized
   };
 }
 
@@ -101,6 +117,23 @@ async function githubRequest(endpoint, params, headers) {
 }
 
 async function fetchAllRepos(config, headers, logger) {
+  if (config.allowedRepos.length > 0) {
+    const repos = [];
+
+    const uniqueRepoNames = [...new Set(config.allowedRepos)];
+
+    for (const repoName of uniqueRepoNames) {
+      const repo = await githubRequest(`/repos/${config.owner}/${repoName}`, {}, headers);
+      repos.push(repo);
+    }
+
+    logger?.info?.(
+      `Fetched ${repos.length} explicitly selected repositories for ${config.owner}`
+    );
+
+    return repos;
+  }
+
   let page = 1;
   const repos = [];
 
@@ -108,7 +141,8 @@ async function fetchAllRepos(config, headers, logger) {
     const pageData = await githubRequest(`/users/${config.owner}/repos`, {
       per_page: config.perPage,
       page,
-      sort: 'updated'
+      sort: 'updated',
+      type: 'public'
     }, headers);
 
     if (!Array.isArray(pageData) || pageData.length === 0) {
@@ -134,7 +168,14 @@ async function fetchTopics(config, headers, repoName) {
 }
 
 function shouldIncludeRepo(config, repo, topics) {
-  if (repo.archived || repo.disabled || repo.fork) {
+  if (repo.archived || repo.disabled || repo.fork || repo.private) {
+    return false;
+  }
+
+  if (
+    config.allowedReposNormalized?.size > 0 &&
+    !config.allowedReposNormalized.has(repo.name?.toLowerCase())
+  ) {
     return false;
   }
 
