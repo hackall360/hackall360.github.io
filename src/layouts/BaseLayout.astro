@@ -11,7 +11,7 @@ interface Props {
 }
 
 const {
-  title = 'HackAll360',
+  title = 'hackall360',
   description = 'Builder, tinkerer, and chronic note taker.',
   structuredData,
   ogImage = '/social-share.jpg'
@@ -30,7 +30,7 @@ const analyticsEnabled = Boolean(plausibleDomain);
     <meta name="description" content={description} />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="HackAll360" />
+    <meta property="og:site_name" content="hackall360" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
@@ -75,6 +75,7 @@ const analyticsEnabled = Boolean(plausibleDomain);
     </div>
     <script type="module" is:inline>
       import '~/scripts/motion.ts';
+      import '~/scripts/contact-actions.ts';
     </script>
   </body>
 </html>

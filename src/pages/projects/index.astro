@@ -4,9 +4,9 @@ import projects from '~/data/projects.json';
 import ProjectFilters from '~/components/ProjectFilters.astro';
 import ProjectCard from '~/components/ProjectCard.astro';
 
-const pageTitle = 'Projects | HackAll360';
+const pageTitle = 'Projects | hackall360';
 const pageDescription =
-  "Explore HackAll360's mix of AI experiments, security tooling, and full-stack prototypes.";
+  "Explore hackall360's mix of AI experiments, security tooling, and full-stack prototypes.";
 
 const tagGroups = new Map<string, number>();
 for (const project of projects) {
@@ -20,7 +20,7 @@ const availableTags = Array.from(tagGroups.keys()).sort();
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'HackAll360 Projects',
+  name: 'hackall360 Projects',
   description: pageDescription,
   itemListElement: projects.map((project, index) => ({
     '@type': 'ListItem',

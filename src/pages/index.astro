@@ -7,14 +7,18 @@ import FeaturedProjects from '~/components/FeaturedProjects.astro';
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'HackAll360',
+  name: 'hackall360',
   url: 'https://hackall360.github.io',
-  sameAs: ['https://github.com/hackall360', 'https://www.linkedin.com/in/hackall360']
+  sameAs: [
+    'https://github.com/hackall360',
+    'https://www.linkedin.com/in/alex-schott-395628233/',
+    'https://profile.indeed.com/p/alexs-hxc5xkz'
+  ]
 };
 ---
 <BaseLayout
-  title="HackAll360 | Systems Engineer & Platform Builder"
-  description="Portfolio of HackAll360 — systems engineer crafting reliable platforms, resilient tooling, and developer experiences."
+  title="hackall360 | Systems Engineer & Platform Builder"
+  description="Portfolio of hackall360 — systems engineer crafting reliable platforms, resilient tooling, and developer experiences."
   structuredData={structuredData}
 >
   <div class="relative mx-auto flex max-w-6xl flex-col gap-16 px-6 py-24 sm:px-10 lg:py-28">

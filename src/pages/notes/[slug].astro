@@ -28,12 +28,12 @@ const structuredData = {
   dateModified: (note.data.updatedAt ?? note.data.publishedAt).toISOString(),
   author: {
     '@type': 'Person',
-    name: 'HackAll360'
+    name: 'hackall360'
   }
 };
 ---
 
-<BaseLayout title={`${note.data.title} | HackAll360`} description={note.data.description ?? undefined} structuredData={structuredData}>
+<BaseLayout title={`${note.data.title} | hackall360`} description={note.data.description ?? undefined} structuredData={structuredData}>
   <article class="mx-auto flex max-w-3xl flex-col gap-10 px-6 py-24 sm:px-10 lg:py-28">
     <header class="space-y-4">
       <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// note</p>
