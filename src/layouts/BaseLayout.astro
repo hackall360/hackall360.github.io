@@ -22,6 +22,7 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 const plausibleApiHost = import.meta.env.PUBLIC_PLAUSIBLE_API_HOST ?? undefined;
 const plausibleScriptSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC ?? 'https://plausible.io/js/script.js';
 const analyticsEnabled = Boolean(plausibleDomain);
+const structuredDataJson = structuredData ? JSON.stringify(structuredData) : null;
 ---
 <html lang="en" class="dark">
   <head>
@@ -49,10 +50,8 @@ const analyticsEnabled = Boolean(plausibleDomain);
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
 
-    {structuredData && (
-      <script type="application/ld+json" is:inline>
-        {JSON.stringify(structuredData)}
-      </script>
+    {structuredDataJson && (
+      <script type="application/ld+json" is:inline set:html={structuredDataJson}></script>
     )}
 
     {analyticsEnabled && (
