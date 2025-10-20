@@ -11,7 +11,7 @@
     "language": "Python",
     "url": "https://github.com/hackall360/SuperToken",
     "caseStudy": null,
-    "featured": false,
+    "featured": true,
     "forks": 0,
     "contributions": 262,
     "languages": [
@@ -94,7 +94,7 @@
     "language": "Python",
     "url": "https://github.com/hackall360/auto-coder",
     "caseStudy": null,
-    "featured": false,
+    "featured": true,
     "forks": 0,
     "contributions": 194,
     "languages": [
@@ -374,7 +374,7 @@
     "language": null,
     "url": "https://github.com/hackall360/Software-Development-Course-Git",
     "caseStudy": null,
-    "featured": false,
+    "featured": true,
     "forks": 0,
     "contributions": 1,
     "languages": [
@@ -385,5 +385,29 @@
       }
     ],
     "totalLanguageBytes": 140
+  },
+  {
+    "slug": "HighEntropyEncryptionProgram",
+    "name": "HighEntropyEncryptionProgram",
+    "description": "High-entropy symmetric encryption CLI with streaming support and audit trails.",
+    "tags": [
+      "Security",
+      "Systems"
+    ],
+    "stars": 0,
+    "language": "Go",
+    "url": "https://github.com/hackall360/HighEntropyEncryptionProgram",
+    "caseStudy": null,
+    "featured": true,
+    "forks": 0,
+    "contributions": 7,
+    "languages": [
+      {
+        "name": "Go",
+        "percentage": 100,
+        "bytes": 18226
+      }
+    ],
+    "totalLanguageBytes": 18226
   }
 ]
