@@ -24,6 +24,8 @@ The project fetcher script reads the following optional variables:
 | `GITHUB_PROJECTS_OUTPUT` | Output path for the generated JSON data (default: `src/data/projects.json`). |
 | `GITHUB_PROJECTS_CACHE_MAX_AGE_HOURS` | Maximum age in hours before the fetcher refreshes cached data (default: `24`). |
 | `GITHUB_PROJECTS_FORCE_REFRESH` | Set to `true`/`1` to bypass the cache and always hit the GitHub API. |
+| `GITHUB_PROJECTS_AUTO_SYNC` | Set to `false` to disable the automatic sync that runs during `astro dev` and `astro build`. |
+| `GITHUB_PROJECTS_SKIP_AUTO_SYNC` | When `true`, prevents both the integration and CLI script from fetching data. Useful for fully offline builds. |
 | `GITHUB_PROXY` | Proxy URL to override environment proxy settings when calling the GitHub API. |
 
 If your network requires a proxy, set `GITHUB_PROXY` or rely on `HTTPS_PROXY`/`HTTP_PROXY`, which the script respects automatically.
@@ -43,7 +45,11 @@ Set these optional variables to toggle specific site features:
 
 ## Fetching project metadata
 
-Use the `fetch-projects` script to synchronize local project data with GitHub:
+Project metadata now refreshes automatically when you run `astro dev` or `astro build`. The integration honors the same
+environment variables shown above and skips work when the cached JSON file is still fresh. Set `GITHUB_PROJECTS_AUTO_SYNC=false`
+if you prefer to opt out of the automated step.
+
+Use the `fetch-projects` script to manually synchronize local project data with GitHub:
 
 ```bash
 npm install
@@ -85,7 +91,9 @@ To run the workflow manually:
 2. Click **Run workflow**.
 3. Select the desired branch (defaults to `main`) and confirm.
 
-The workflow will restore cached project data when available and only call the GitHub API if a fresh snapshot is required, helping stay well within API rate limits.
+With the automatic sync integrated into Astro, the site can also be built and deployed manually without relying on GitHub
+Actions. The workflow remains available for convenience—it restores cached project data when available and only calls the
+GitHub API if a fresh snapshot is required, helping stay well within API rate limits.
 
 ## Development
 
