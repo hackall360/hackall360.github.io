@@ -7,7 +7,253 @@
 View on GitHub
 </a>  </div> </header> <section class="grid gap-10 rounded-3xl border border-slate-800/80 bg-slate-900/50 p-8 shadow-xl shadow-accent/5 sm:grid-cols-2"> <div class="space-y-6"> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Problem</h2> <p class="mt-3 text-base leading-relaxed text-slate-300">How do we push this build forward without compromising speed, reliability, or security?</p> </div> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Solution</h2> <p class="mt-3 text-base leading-relaxed text-slate-300">Lean on tight feedback loops, automation, and thoughtful defaults. The README below unpacks the current implementation.</p> </div> </div> <div class="space-y-6"> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Tech Stack</h2> <ul class="mt-3 flex flex-wrap gap-2"> <li class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-light"> Security </li><li class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-light"> Utility </li> </ul> </div> <div> <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Results</h2> <ul class="mt-3 space-y-2 text-base leading-relaxed text-slate-300"> <li class="flex items-start gap-2"> <span class="mt-2 h-1.5 w-1.5 rounded-full bg-accent"></span> <span>Track progress through commit history and release notes in the repository.</span> </li> </ul> </div> </div> </section> <section class="space-y-6"> <div class="flex flex-col gap-2"> <h2 class="text-sm font-semibold uppercase tracking-[0.35em] text-accent-light">Deep Dive</h2> <p class="text-base text-slate-400">
 Detailed notes that surface the engineering trade-offs, safeguards, and iteration loops powering this build.
-</p> </div> <div class="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:text-slate-100 prose-a:text-accent-light prose-code:bg-surface-elevated/60 prose-code:text-accent-light prose-pre:bg-slate-900/70"> <p>No additional write-up is available yet. Explore the repository for the latest technical context.</p> </div> </section> </article>  </main> <footer class="relative border-t border-slate-800/80 bg-surface/80 py-12 text-sm text-slate-400 backdrop-blur"> <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" aria-hidden="true"></div> <div class="mx-auto flex max-w-5xl flex-col gap-10 px-6 md:flex-row md:justify-between"> <div> <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent-light">$ tail -f now</p> <h2 class="mt-2 text-lg font-semibold text-white">Let’s connect</h2> <ul class="mt-4 space-y-2 font-mono text-slate-300"> <li> <a href="mailto:hello@hackall360.dev" class="hover:underline">hello@hackall360.dev</a> </li> <li> <a href="https://github.com/hackall360" class="hover:underline" target="_blank" rel="noopener">github.com/hackall360</a> </li> <li> <a href="https://www.linkedin.com/in/hackall360" class="hover:underline" target="_blank" rel="noopener">linkedin.com/in/hackall360</a> </li> </ul> </div> <div class="grid gap-4 sm:grid-cols-2"> <div class="rounded-xl border border-slate-800/80 bg-surface-elevated/80 p-5 text-slate-200 shadow-[0_0_30px_-15px_rgba(45,212,191,0.6)]"> <p class="font-mono text-xs uppercase tracking-widest text-accent-light">Shipments</p> <p class="mt-2 text-3xl font-semibold text-white">42+</p> <p class="mt-1 text-xs text-slate-400">Production launches & experiments.</p> </div> <div class="rounded-xl border border-slate-800/80 bg-surface-elevated/80 p-5 text-slate-200 shadow-[0_0_30px_-15px_rgba(14,165,233,0.6)]"> <p class="font-mono text-xs uppercase tracking-widest text-accent-light">Uptime</p> <p class="mt-2 text-3xl font-semibold text-white">99.9%</p> <p class="mt-1 text-xs text-slate-400">Projects maintained with obsessive care.</p> </div> </div> </div> <div class="mx-auto mt-10 max-w-5xl px-6 text-xs text-slate-500"> <p>Built with Astro & Tailwind. Deploying curiosity daily.</p> <p class="mt-2">
+</p> </div> <div class="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:text-slate-100 prose-a:text-accent-light prose-code:bg-surface-elevated/60 prose-code:text-accent-light prose-pre:bg-slate-900/70"> <div><h1 id="supertoken">SuperToken</h1>
+<div align="center">
+<img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&#x26;logoColor=white&#x26;style=for-the-badge" alt="Python 3.10+">
+<img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" alt="Status: Active">
+<a href="docs/performance.md"><img src="https://img.shields.io/badge/Docs-Performance-blue?style=for-the-badge&#x26;logo=readthedocs&#x26;logoColor=white" alt="Documentation"></a>
+<img src="https://img.shields.io/badge/Made%20with-%E2%9D%A4-red?style=for-the-badge" alt="Made with Love">
+</div>
+<p>SuperToken is a GPU-accelerated tokenizer toolkit that offers high-throughput byte-pair and unigram training pipelines. It combines streaming data ingestion, adaptive batch sizing, and GPU-friendly packing utilities to keep your accelerators busy while you iterate on vocabulary design.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#quick-start">Quick Start</a></li>
+<li><a href="#privacy-modes">Privacy Modes</a></li>
+<li><a href="#command-reference">Command Reference</a></li>
+<li><a href="#benchmarking">Benchmarking</a></li>
+<li><a href="#architecture--api-overview">Architecture &#x26; API Overview</a></li>
+<li><a href="#project-layout">Project Layout</a></li>
+<li><a href="#documentation">Documentation</a>
+<ul>
+<li><a href="docs/modules.md">Module Guide</a></li>
+<li><a href="docs/architecture.md">Architecture overview</a></li>
+<li><a href="docs/cli.md">CLI usage guide</a></li>
+<li><a href="docs/api.md">API reference</a></li>
+<li><a href="docs/performance.md">Performance notes and benchmarks</a></li>
+</ul>
+</li>
+<li><a href="#contributing">Contributing</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>GPU-native trainers</strong> for both Byte Pair Encoding (BPE) and unigram vocabularies via <code>GPUBPETrainer</code> and <code>GPUUnigramTrainer</code>.</li>
+<li><strong>CPU parity mode</strong> for the unigram trainer, reusing the same candidate extension, forward/backward scoring, and pruning logic when CUDA is unavailable.</li>
+<li><strong>Adaptive autoscaling</strong> batch suggestion system to maintain target GPU utilization using the <code>AutoScaler</code> utility.</li>
+<li><strong>Streaming corpus ingestion</strong> with optional compression, memory-mapped shards, and background worker prefetch.</li>
+<li><strong>Opt-in morphology preprocessing</strong> powered by pluggable annotators. Keep token statistics stable by default and selectively
+enable language-specific passes when you need them.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>This project requires Python 3.10+ and a working PyTorch installation with CUDA support.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> venv</span><span style="color:#9ECBFF"> .venv</span></span>
+<span class="line"><span style="color:#79B8FF">source</span><span style="color:#9ECBFF"> .venv/bin/activate</span></span>
+<span class="line"><span style="color:#B392F0">pip</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> -U</span><span style="color:#9ECBFF"> pip</span></span>
+<span class="line"><span style="color:#B392F0">pip</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> -e</span><span style="color:#9ECBFF"> .</span></span>
+<span class="line"></span></code></pre>
+<blockquote>
+<p><strong>Note:</strong> Editable installs make it easy to iterate on the library modules in <code>gpu_tokenizer/</code> while running the CLI.</p>
+</blockquote>
+<h2 id="quick-start">Quick Start</h2>
+<p>Train a BPE model against a directory of text shards:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> train-bpe</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> "data/**/*.txt"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --merges</span><span style="color:#79B8FF"> 50000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --token-bytes</span><span style="color:#79B8FF"> 8192</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --target-util</span><span style="color:#79B8FF"> 0.85</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --morphology-lang</span><span style="color:#9ECBFF"> tr</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --morphology-case-markers</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --out-dir</span><span style="color:#9ECBFF"> ./artifacts/bpe</span></span>
+<span class="line"></span></code></pre>
+<p>Enable morphology plugins only when you need them—leaving <code>--morphology-lang</code> unset keeps byte statistics identical to the raw
+corpus. The example above activates the Turkish segmenter and optional case markers to demonstrate the new flags.</p>
+<p>Need resilience against interruptions? The BPE trainer now supports periodic checkpointing and seamless resume:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> train-bpe</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> "data/**/*.txt"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --merges</span><span style="color:#79B8FF"> 50000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --checkpoint-dir</span><span style="color:#9ECBFF"> ./artifacts/bpe-checkpoints</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --checkpoint-every</span><span style="color:#79B8FF"> 2000</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Later, continue from the most recent checkpoint:</span></span>
+<span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> train-bpe</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> "data/**/*.txt"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --merges</span><span style="color:#79B8FF"> 50000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --resume-from</span><span style="color:#9ECBFF"> ./artifacts/bpe-checkpoints</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --checkpoint-dir</span><span style="color:#9ECBFF"> ./artifacts/bpe-checkpoints</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --checkpoint-every</span><span style="color:#79B8FF"> 2000</span></span>
+<span class="line"></span></code></pre>
+<p>The CLI will restore the autoscaler state, on-device batches, and resume streaming where it left off while logging each checkpoint save/restore event.</p>
+<p>Train a unigram model with a fixed vocabulary size:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> train-unigram</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> "data/**/*.txt"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --vocab-size</span><span style="color:#79B8FF"> 50000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --epochs</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --out-dir</span><span style="color:#9ECBFF"> ./artifacts/unigram</span></span>
+<span class="line"></span></code></pre>
+<p>Both commands will automatically adapt the batch size in response to your GPU throughput and persist the resulting vocabulary files.</p>
+<p>Evaluate exported artifacts against a reference corpus in a single step—the CLI writes a schema-validated JSON report to <code>reports/evaluate.json</code> by default and prints a human-friendly banner summarising key metrics:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> evaluate</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> tests/data/evaluate_corpus/plain.txt</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --artifacts</span><span style="color:#9ECBFF"> tests/data/models/bpe</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --deterministic</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --summary-format</span><span style="color:#9ECBFF"> table</span></span>
+<span class="line"></span></code></pre>
+<p>Switch to <code>--model-type unigram</code> when scoring SentencePiece packages (<code>unigram.vocab</code>) and use <code>--summary-format json</code> if you prefer machine-readable summaries in stdout.</p>
+<p>Alternate between BPE warm starts and unigram refinement in a single run:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> train-hybrid</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> "data/**/*.txt"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --merges</span><span style="color:#79B8FF"> 50000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --cycles</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --unigram-epochs</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --privacy</span><span style="color:#9ECBFF"> tie-randomize</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --out-dir</span><span style="color:#9ECBFF"> ./artifacts/hybrid</span></span>
+<span class="line"></span></code></pre>
+<p>The hybrid workflow exports Hugging Face-ready BPE files alongside SentencePiece probabilities and a manifest describing each cycle.</p>
+<p>Switch to the AST-aware pipeline when training on source repositories. Code-mode can be paired with morphology and privacy guards just like the text pipelines:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> train-bpe</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> repo.jsonl</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --merges</span><span style="color:#79B8FF"> 32000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --code-mode</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --code-langs</span><span style="color:#9ECBFF"> python</span><span style="color:#9ECBFF"> typescript</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --meta-compress</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --privacy</span><span style="color:#9ECBFF"> hash-merges</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --out-dir</span><span style="color:#9ECBFF"> ./artifacts/code-bpe</span></span>
+<span class="line"></span></code></pre>
+<p>The CLI prints a <code>code_mode</code> summary block so you can audit AST coverage and meta-token compression gains. Enable <code>--privacy</code> to redact merge histories (<code>hash-merges</code>) or randomise tie-breaks (<code>tie-randomize</code>) before exporting.</p>
+<h2 id="privacy-modes">Privacy Modes</h2>
+<p>SuperToken provides an opt-in privacy guard for the merge history produced by the GPU trainers. The <code>--privacy</code> flag, available on the <code>train-bpe</code> and <code>train-hybrid</code> subcommands, accepts three modes:</p>
+<ul>
+<li><code>none</code> <em>(default)</em> – Export raw merge tables and maintain deterministic tie-breaks. Checkpoints and manifests record the merge pairs in plain text.</li>
+<li><code>hash-merges</code> – Replace merge IDs with salted hashes in all exported manifests. The <code>privacy</code> block written to <code>state.json</code>, <code>bpe_merges.json</code>, and <code>hybrid_manifest.json</code> indicates that merges were redacted and whether a salt was supplied via <code>--privacy-salt</code>.</li>
+<li><code>tie-randomize</code> – Hash merges <strong>and</strong> randomize tie-break resolution. This deliberately breaks deterministic parity across devices; provide <code>--tie-seed</code> to make the stochastic ordering reproducible across runs.</li>
+</ul>
+<p>Every exported manifest now includes a <code>"privacy"</code> section summarizing the active mode, whether merges were redacted, the effective tie seed, and if a salt was configured. Downstream consumers can inspect this block to detect redactions without reverse engineering trainer configuration. See <a href="docs/cli.md#privacy-options">docs/cli.md</a> for end-to-end examples.</p>
+<h2 id="command-reference">Command Reference</h2>
+<p>The CLI is organized into subcommands that share a common set of arguments.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Command</th><th>Description</th><th>Highlights</th></tr></thead><tbody><tr><td><code>train-bpe</code></td><td>Trains a GPU-accelerated BPE tokenizer.</td><td>Autoscaled batch sizing, streaming ingestion, optional on-the-fly merges export.</td></tr><tr><td><code>train-unigram</code></td><td>Trains a GPU-accelerated unigram tokenizer.</td><td>Epoch-based training with configurable vocab size and subword length.</td></tr><tr><td><code>train-hybrid</code></td><td>Alternates BPE warm starts with unigram refinement.</td><td>Shared batches across phases, hybrid artifact bundle (<code>merges.txt</code>, <code>unigram.prob</code>, manifest).</td></tr><tr><td><code>benchmark</code></td><td>Runs both trainers against synthetic and/or real corpora.</td><td>Emits comparative tables and JSON telemetry snapshots.</td></tr></tbody></table>
+<h2 id="benchmarking">Benchmarking</h2>
+<p>Run the bundled benchmark to compare the BPE and unigram trainers with a single command. The example below synthesizes 2,000 sentences while also sampling up to 1,000 documents from your dataset globs:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> benchmark</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> "data/**/*.txt"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --max-real-docs</span><span style="color:#79B8FF"> 1000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --synthetic-docs</span><span style="color:#79B8FF"> 2000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --synthetic-min-len</span><span style="color:#79B8FF"> 16</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --synthetic-max-len</span><span style="color:#79B8FF"> 64</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --output-dir</span><span style="color:#9ECBFF"> ./artifacts/benchmarks</span></span>
+<span class="line"></span></code></pre>
+<p>Sample output:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Corpus → 2500 sequences, 102400 tokens (max len 128)</span></span>
+<span class="line"><span>Trainer           | Wall time (s) | Tokens/s    | Final vocab</span></span>
+<span class="line"><span>------------------+---------------+-------------+------------</span></span>
+<span class="line"><span>GPUBPETrainer     | 12.84         | 7975.19     | 50256</span></span>
+<span class="line"><span>GPUUnigramTrainer | 8.42          | 12158.52    | 50000</span></span>
+<span class="line"><span>Saved benchmark metadata → artifacts/benchmarks/benchmark_20240101T120000Z.json</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>The benchmark will always emit a pretty-printed comparison table and serialize the full telemetry payloads into timestamped JSON files under the requested output directory. Those JSON artifacts capture the raw trainer metadata, corpus descriptors, and the CLI configuration so runs are fully reproducible.</p>
+<p>Common flags include:</p>
+<ul>
+<li><code>--data</code>: One or more glob patterns pointing at UTF-8 text shards.</li>
+<li><code>--compression</code>: Choose between <code>none</code>, <code>zstd</code>, or <code>lz4</code> for shard decoding.</li>
+<li><code>--io-workers</code> &#x26; <code>--prefetch-batches</code>: Control the background streaming pipeline.</li>
+<li><code>--bos</code>/<code>--eos</code>: Optionally inject special token IDs during packing.</li>
+</ul>
+<p>Run <code>python main.py --help</code> for a full list of options.</p>
+<h3 id="morphology-plugins-opt-in">Morphology plugins (opt-in)</h3>
+<p>SuperToken ships with a small, safe-by-default morphology layer that leaves byte streams untouched unless explicitly enabled.
+Plugins pre-segment text before it reaches the <code>BytePacker</code>, which can improve compression ratios for agglutinative languages
+at the cost of changing downstream token statistics. To enable a plugin, pass <code>--morphology-lang</code> with one of the advertised
+language codes (for example, <code>tr</code> for the bundled Turkish segmenter):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span><span style="color:#9ECBFF"> train-bpe</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --data</span><span style="color:#9ECBFF"> "data/**/*.txt"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --merges</span><span style="color:#79B8FF"> 50000</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --morphology-lang</span><span style="color:#9ECBFF"> tr</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --morphology-case-markers</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --out-dir</span><span style="color:#9ECBFF"> ./artifacts/bpe-tr</span></span>
+<span class="line"></span></code></pre>
+<p>Leave the flag unset to retain the raw byte stream. See <a href="docs/api.md#morphology-plugins">docs/api.md</a> for the plugin interface
+and <a href="docs/cookbook/morphology.md">docs/cookbook/morphology.md</a> for an end-to-end recipe that trains with the Turkish plugin and
+verifies reconstruction fidelity.</p>
+<h2 id="architecture--api-overview">Architecture &#x26; API Overview</h2>
+<p>SuperToken is organized into modular layers that can be reused independently or combined through the CLI:</p>
+<ul>
+<li><strong>Autoscaling (<code>gpu_tokenizer.autoscaler</code>)</strong> – Provides the <code>AutoScaler</code> class that tracks throughput telemetry and surfaces <code>suggest_batch_size</code> helpers for trainers. See the inline docstrings in <a href="gpu_tokenizer/autoscaler.py"><code>gpu_tokenizer/autoscaler.py</code></a> for configuration knobs and extension hooks around utilization targets.</li>
+<li><strong>BPE training (<code>gpu_tokenizer.bpe_trainer</code>)</strong> – Implements <code>GPUBPETrainer</code>, merging heuristics, and checkpoint serialization. This module integrates directly with the autoscaler and exposes hooks for custom merge filters; refer to <a href="gpu_tokenizer/bpe_trainer.py"><code>gpu_tokenizer/bpe_trainer.py</code></a>.</li>
+<li><strong>Unigram training (<code>gpu_tokenizer.unigram_trainer</code>)</strong> – Offers <code>GPUUnigramTrainer</code> plus scoring utilities for probabilistic vocabularies. Docstrings in <a href="gpu_tokenizer/unigram_trainer.py"><code>gpu_tokenizer/unigram_trainer.py</code></a> describe how to plug in custom smoothing or constraint logic.</li>
+<li><strong>Datasets &#x26; packing (<code>gpu_tokenizer.datasets</code>)</strong> – Houses streaming dataset abstractions, packing helpers, and synthetic corpus generators used by both trainers. See <a href="gpu_tokenizer/datasets/__init__.py"><code>gpu_tokenizer/datasets/__init__.py</code></a> and the submodules it re-exports.</li>
+<li><strong>I/O pipeline (<code>gpu_tokenizer.io</code>)</strong> – Encapsulates shard decoding, compression handling, and background workers. Start with <a href="gpu_tokenizer/io/__init__.py"><code>gpu_tokenizer/io/__init__.py</code></a> and follow the module-level docs for extension points.</li>
+<li><strong>CLI composition (<code>main.py</code>)</strong> – Declares the <code>train-bpe</code>, <code>train-unigram</code>, <code>train-hybrid</code>, and <code>benchmark</code> subcommands. You can register new commands by extending the <code>build_parser</code> function and wiring your trainers to the shared autoscaler utilities.</li>
+<li><strong>Benchmark utilities (<code>benchmarks/</code>)</strong> – Contains reusable benchmarking harnesses and report formatters. Module docstrings point to upcoming narrative guides under <code>docs/benchmarks/</code> for more complex scenarios.</li>
+</ul>
+<p>Future deep dives will land in the <code>docs/</code> directory (see <a href="docs/architecture.md"><code>docs/architecture.md</code></a>) and will mirror the high-level flow described here.</p>
+<h2 id="project-layout">Project Layout</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>.</span></span>
+<span class="line"><span>├── main.py              # CLI entry point tying together trainers and utilities</span></span>
+<span class="line"><span>├── gpu_tokenizer/       # Core GPU trainers, packing utilities, and dataset helpers</span></span>
+<span class="line"><span>├── docs/                # Design notes and performance documentation</span></span>
+<span class="line"><span>└── tests/               # Unit tests covering packing, IO, and trainer behavior</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="documentation">Documentation</h2>
+<ul>
+<li><a href="docs/architecture.md">Architecture overview</a>: Understand the end-to-end trainer pipeline, autoscaler lifecycle, and how datasets stream into GPU kernels.</li>
+<li><a href="docs/cli.md">CLI usage guide</a>: Learn the subcommands, shared flags, and example workflows for training, resuming, and benchmarking tokenizers.</li>
+<li><a href="docs/api.md">API reference</a>: Dive into the primary Python entry points, including trainers, autoscaler hooks, dataset utilities, and benchmarking helpers.</li>
+<li><a href="docs/modules.md">Module guide</a>: Browse the module-by-module breakdown of the codebase for deeper implementation details.</li>
+<li><a href="docs/performance.md">Performance notes and benchmarks</a>: Review methodology and representative throughput numbers, plus tips for reproducing measurements.</li>
+</ul>
+<h3 id="module-primers">Module Primers</h3>
+<ul>
+<li><strong>Trainers</strong> – <code>GPUBPETrainer</code> and <code>GPUUnigramTrainer</code> coordinate packing, kernel launches, and checkpointing. See the <a href="docs/modules.md#trainers">Module guide → Trainers</a> section for configuration hints and extension hooks.</li>
+<li><strong>Autoscaler</strong> – The adaptive batching logic in <code>gpu_tokenizer.autoscaler</code> keeps GPU utilization in the target band. Refer to <a href="docs/modules.md#autoscaler">Module guide → Autoscaler</a> for heuristics and subclassing advice.</li>
+<li><strong>Streaming I/O</strong> – Dataset loaders and IO helpers manage compressed shards, worker pools, and synthetic corpora. Explore <a href="docs/modules.md#streaming-io">Module guide → Streaming I/O</a> to customize ingestion paths.</li>
+</ul>
+<h3 id="cli--benchmark-navigation">CLI &#x26; Benchmark Navigation</h3>
+<ul>
+<li><strong>Discover commands</strong> – <code>main.py</code> is the CLI entry point; run <code>python main.py --help</code> to enumerate subcommands. Each <code>train-*</code> action is registered inside the <code>build_parser</code> helper alongside shared arguments.</li>
+<li><strong>Command implementations</strong> – The BPE flow lives in <a href="gpu_tokenizer/cli_train_bpe.py"><code>gpu_tokenizer/cli_train_bpe.py</code></a>, which binds argument parsing to the <code>GPUBPETrainer</code>. Mirror its structure when adding new CLI frontends so trainers remain reusable.</li>
+<li><strong>Benchmark utilities</strong> – Reusable harnesses, corpus generators, and reporting helpers reside under <a href="benchmarks/"><code>benchmarks/</code></a>. Pair them with <code>python main.py benchmark</code> for quick comparisons, or import them directly in notebooks to script bespoke experiments.</li>
+</ul>
+<p>Additional guides and API notes can be added under the <code>docs/</code> directory as the project grows.</p>
+<h2 id="contributing">Contributing</h2>
+<ol>
+<li>Fork the repository and create a virtual environment.</li>
+<li>Install development dependencies (see <code>pyproject.toml</code> if present).</li>
+<li>Format your changes and ensure tests pass via <code>pytest</code>.</li>
+<li>Open a pull request describing your changes and include benchmark results when appropriate.</li>
+</ol>
+<h2 id="license">License</h2>
+<p>This project is licensed under the <a href="LICENSE">Mozilla Public License 2.0</a>.</p></div> </div> </section> </article>  </main> <footer class="relative border-t border-slate-800/80 bg-surface/80 py-12 text-sm text-slate-400 backdrop-blur"> <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" aria-hidden="true"></div> <div class="mx-auto flex max-w-5xl flex-col gap-10 px-6 md:flex-row md:justify-between"> <div> <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent-light">$ tail -f now</p> <h2 class="mt-2 text-lg font-semibold text-white">Let’s connect</h2> <ul class="mt-4 space-y-2 font-mono text-slate-300"> <li> <a href="mailto:hello@hackall360.dev" class="hover:underline">hello@hackall360.dev</a> </li> <li> <a href="https://github.com/hackall360" class="hover:underline" target="_blank" rel="noopener">github.com/hackall360</a> </li> <li> <a href="https://www.linkedin.com/in/hackall360" class="hover:underline" target="_blank" rel="noopener">linkedin.com/in/hackall360</a> </li> </ul> </div> <div class="grid gap-4 sm:grid-cols-2"> <div class="rounded-xl border border-slate-800/80 bg-surface-elevated/80 p-5 text-slate-200 shadow-[0_0_30px_-15px_rgba(45,212,191,0.6)]"> <p class="font-mono text-xs uppercase tracking-widest text-accent-light">Shipments</p> <p class="mt-2 text-3xl font-semibold text-white">42+</p> <p class="mt-1 text-xs text-slate-400">Production launches & experiments.</p> </div> <div class="rounded-xl border border-slate-800/80 bg-surface-elevated/80 p-5 text-slate-200 shadow-[0_0_30px_-15px_rgba(14,165,233,0.6)]"> <p class="font-mono text-xs uppercase tracking-widest text-accent-light">Uptime</p> <p class="mt-2 text-3xl font-semibold text-white">99.9%</p> <p class="mt-1 text-xs text-slate-400">Projects maintained with obsessive care.</p> </div> </div> </div> <div class="mx-auto mt-10 max-w-5xl px-6 text-xs text-slate-500"> <p>Built with Astro & Tailwind. Deploying curiosity daily.</p> <p class="mt-2">
 Analytics respect Do Not Track. Set <code class="rounded bg-slate-800 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-[0.3em] text-accent-light">localStorage.plausible_ignore = "true"</code>
 to opt out instantly.
 </p> </div> </footer> </div> <script type="module">
