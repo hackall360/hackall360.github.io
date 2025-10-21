@@ -39,50 +39,6 @@
     "totalLanguageBytes": 1270625
   },
   {
-    "slug": "SOLLOL",
-    "name": "SOLLOL",
-    "description": "Performance-aware routing for distributed Ollama deployments with Ray and Dask.",
-    "tags": [
-      "AI",
-      "Utility"
-    ],
-    "stars": 0,
-    "language": "Python",
-    "url": "https://github.com/hackall360/SOLLOL",
-    "caseStudy": null,
-    "featured": false,
-    "forks": 0,
-    "contributions": 197,
-    "languages": [
-      {
-        "name": "Python",
-        "percentage": 66.8,
-        "bytes": 1461819
-      },
-      {
-        "name": "Markdown",
-        "percentage": 30.4,
-        "bytes": 664413
-      },
-      {
-        "name": "HTML",
-        "percentage": 1,
-        "bytes": 22290
-      },
-      {
-        "name": "YAML",
-        "percentage": 0.9,
-        "bytes": 19171
-      },
-      {
-        "name": "Shell",
-        "percentage": 0.7,
-        "bytes": 14873
-      }
-    ],
-    "totalLanguageBytes": 2187099
-  },
-  {
     "slug": "auto-coder",
     "name": "auto-coder",
     "description": "Autonomous code generation experiments exploring agent collaboration.",
