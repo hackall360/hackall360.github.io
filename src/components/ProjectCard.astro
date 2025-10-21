@@ -53,7 +53,7 @@ const stats: Array<{
   data-tags={tags.map((tag) => tag.toLowerCase()).join(',')}
   data-motion-child
   data-motion-direction="up"
-  class="group flex flex-col justify-between rounded-3xl border border-accent/15 bg-surface-highlight/70 p-6 text-neutral-emphasis shadow-[0_30px_90px_-45px_rgba(34,211,238,0.4)] transition duration-300 ease-spring-out hover:border-accent/60 hover:shadow-glow focus-within:border-accent/60"
+  class="group flex w-full flex-col justify-between rounded-3xl border border-accent/15 bg-surface-highlight/70 p-6 text-neutral-emphasis shadow-[0_30px_90px_-45px_rgba(34,211,238,0.4)] transition duration-300 ease-spring-out hover:border-accent/60 hover:shadow-glow focus-within:border-accent/60"
 >
   <header class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
     <span class="inline-flex items-center gap-2 self-start rounded-full border border-accent/20 bg-surface-overlay/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-light shadow-inner shadow-slate-950/40 transition group-hover:border-accent/60 group-hover:text-accent">
@@ -102,12 +102,12 @@ const stats: Array<{
   </header>
 
   <div class="mt-6 space-y-5">
-    <h3 class="text-xl font-semibold text-white transition group-hover:text-accent-light">
-      <a class="outline-none focus-visible:outline-none" href={project.url} target="_blank" rel="noreferrer">
+    <h3 class="break-words text-xl font-semibold text-white transition group-hover:text-accent-light">
+      <a class="break-words outline-none focus-visible:outline-none" href={project.url} target="_blank" rel="noreferrer">
         {project.name}
       </a>
     </h3>
-    <p class="text-sm leading-relaxed text-neutral-soft">{description}</p>
+    <p class="break-words text-sm leading-relaxed text-neutral-soft">{description}</p>
     {languageBreakdown.length > 0 && (
       <div class="space-y-2">
         <p class="text-xs font-semibold uppercase tracking-wide text-neutral-soft">Top languages</p>

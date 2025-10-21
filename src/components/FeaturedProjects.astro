@@ -31,12 +31,12 @@ const featured = projectList.filter((project) => project.featured).slice(0, 5);
         Browse all projects
       </a>
     </div>
-    <div class="mt-12 grid gap-8 md:grid-cols-2" data-motion-group data-motion-stagger="0.12">
+    <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2" data-motion-group data-motion-stagger="0.12">
       {(featured.length ? featured : projectList).slice(0, 4).map((project) => (
         <article
           data-motion-child
           data-motion-direction="up"
-          class="group flex h-full flex-col justify-between rounded-3xl border border-accent/15 bg-surface-highlight/70 p-8 shadow-[0_35px_120px_-45px_rgba(34,211,238,0.35)] transition duration-300 ease-spring-out hover:border-accent/60 hover:shadow-glow focus-within:border-accent/60"
+          class="group flex h-full w-full flex-col justify-between rounded-3xl border border-accent/15 bg-surface-highlight/70 p-8 shadow-[0_35px_120px_-45px_rgba(34,211,238,0.35)] transition duration-300 ease-spring-out hover:border-accent/60 hover:shadow-glow focus-within:border-accent/60"
         >
           <div class="space-y-5">
             <div class="flex flex-wrap gap-2">
@@ -46,8 +46,8 @@ const featured = projectList.filter((project) => project.featured).slice(0, 5);
                 </span>
               ))}
             </div>
-            <h3 class="text-2xl font-semibold text-white">{project.name}</h3>
-            <p class="text-base text-neutral-soft">{project.description ?? 'This project is still getting its write-up.'}</p>
+            <h3 class="break-words text-2xl font-semibold text-white">{project.name}</h3>
+            <p class="break-words text-base text-neutral-soft">{project.description ?? 'This project is still getting its write-up.'}</p>
           </div>
           <div class="mt-8 flex flex-wrap gap-3">
             {project.url && (
