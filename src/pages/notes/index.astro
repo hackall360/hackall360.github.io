@@ -25,7 +25,7 @@ const notes = (await getCollection('notes'))
       </p>
     </header>
 
-    <section class="grid gap-6">
+    <section class="grid grid-cols-1 gap-6">
       {notes.length === 0 ? (
         <p class="rounded-3xl border border-slate-800/70 bg-slate-950/40 p-8 text-slate-300">
           Notes are drafting backstage. Check back soon for fresh thinking.
