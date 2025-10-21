@@ -62,7 +62,7 @@ const stats: Array<{
     </span>
     <dl class="flex flex-wrap items-center gap-2 text-xs font-semibold text-neutral-soft">
       {stats.map((stat) => (
-        <div class="inline-flex items-center gap-1 rounded-full bg-surface-overlay/70 px-2.5 py-1" key={stat.label}>
+        <div class="inline-flex items-center gap-2 rounded-full bg-surface-overlay/70 px-2.5 py-1" key={stat.label}>
           <dt class="sr-only">{stat.label}:</dt>
           <span class:list={{
             'flex items-center justify-center': true,
@@ -71,21 +71,21 @@ const stats: Array<{
             'text-sky-300': stat.icon === 'fork'
           }}>
             {stat.icon === 'contributions' ? (
-              <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <svg class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path
                   fill="currentColor"
                   d="M6 7a3 3 0 1 1 4-2.646V9.26A3 3 0 0 1 13 12h5.268A3 3 0 1 1 18 14H8a3 3 0 0 1-2-5.268V7Z"
                 />
               </svg>
             ) : stat.icon === 'fork' ? (
-              <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <svg class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path
                   fill="currentColor"
                   d="M7 3a2 2 0 1 1-.94 3.745A3.01 3.01 0 0 0 9 9v2h6V9a3.01 3.01 0 0 0 2.94-2.255A2 2 0 1 1 19 5a2 2 0 0 1-3 1.732V11a2 2 0 0 1-2 2h-1v2.268a2 2 0 1 1-2 0V13H8a2 2 0 0 1-2-2V6.732A2 2 0 1 1 7 3Z"
                 />
               </svg>
             ) : (
-              <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <svg class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path
                   fill="currentColor"
                   d="M12 3.75l2.167 4.39 4.848.707-3.508 3.42.828 4.822L12 14.938l-4.335 2.151.828-4.822-3.508-3.42 4.848-.707z"
@@ -143,13 +143,13 @@ const stats: Array<{
 
   <footer class="mt-6 flex flex-wrap items-center gap-3">
     <a
-      class="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-accent px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-accent/30 transition duration-200 ease-spring-out hover:bg-accent-light focus-visible:outline-none"
+      class="inline-flex items-center justify-center gap-3 rounded-full border border-transparent bg-accent px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-accent/30 transition duration-200 ease-spring-out hover:bg-accent-light focus-visible:outline-none"
       href={project.url}
       target="_blank"
       rel="noreferrer"
     >
       View on GitHub
-      <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <svg class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path
           fill="currentColor"
           d="M5 12a1 1 0 0 1 1-1h9.586l-2.293-2.293a1 1 0 0 1 1.414-1.414l4.707 4.707-4.707 4.707a1 1 0 0 1-1.414-1.414L15.586 13H6a1 1 0 0 1-1-1Z"
@@ -158,11 +158,11 @@ const stats: Array<{
     </a>
     {project.caseStudy && (
       <a
-        class="inline-flex items-center justify-center gap-2 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
+        class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
         href={project.caseStudy}
       >
         Read case study
-        <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <svg class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path
             fill="currentColor"
             d="M12 4a1 1 0 0 1 1 1v6l3.553 2.133a1 1 0 1 1-1.006 1.734l-4-2.4A1 1 0 0 1 11 11V5a1 1 0 0 1 1-1Z"
