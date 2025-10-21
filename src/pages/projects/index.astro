@@ -89,6 +89,25 @@ const structuredData = {
       grid.querySelectorAll('[data-project-card]')
     );
 
+    const readActiveTags = () =>
+      Array.from(
+        filterContainer.querySelectorAll('button[data-tag][aria-pressed="true"]')
+      )
+        .map((button) => button.dataset.tag ?? '')
+        .filter(Boolean);
+
+    const scheduleFromDom = () => {
+      const run = () => {
+        updateVisibility(readActiveTags());
+      };
+
+      if (typeof queueMicrotask === 'function') {
+        queueMicrotask(run);
+      } else {
+        setTimeout(run, 0);
+      }
+    };
+
     const updateVisibility = (activeTags) => {
       const normalized = activeTags.map((tag) => tag.toLowerCase());
       let visibleCount = 0;
@@ -121,9 +140,40 @@ const structuredData = {
 
     filterContainer.addEventListener('filtersChange', (event) => {
       const detail = (event && 'detail' in event) ? event.detail : { activeTags: [] };
-      updateVisibility(detail.activeTags ?? []);
+      const incoming = Array.isArray(detail.activeTags)
+        ? detail.activeTags.map((tag) => `${tag}`)
+        : [];
+      updateVisibility(incoming);
     });
 
-    updateVisibility([]);
+    filterContainer.addEventListener('click', (event) => {
+      const target = event.target instanceof HTMLElement
+        ? event.target.closest('button[data-tag], [data-clear-filters]')
+        : null;
+
+      if (!target) {
+        return;
+      }
+
+      scheduleFromDom();
+    });
+
+    filterContainer.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') {
+        return;
+      }
+
+      const target = event.target instanceof HTMLElement
+        ? event.target.closest('button[data-tag], [data-clear-filters]')
+        : null;
+
+      if (!target) {
+        return;
+      }
+
+      scheduleFromDom();
+    });
+
+    updateVisibility(readActiveTags());
   </script>
 </BaseLayout>
