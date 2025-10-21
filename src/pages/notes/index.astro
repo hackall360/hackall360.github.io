@@ -61,11 +61,11 @@ const notes = (await getCollection('notes'))
             </p>
             <div>
               <a
-                class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-accent-light transition hover:text-accent"
+                class="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-accent-light transition hover:text-accent"
                 href={`/notes/${note.slug}/`}
               >
                 Read note
-                <svg class="h-3 w-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <svg class="h-[clamp(1.5rem,3vw,1.75rem)] w-[clamp(1.5rem,3vw,1.75rem)]" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                   <path d="M7.5 5H15v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   <path d="M15 5 5 15" stroke-linecap="round"></path>
                 </svg>

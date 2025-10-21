@@ -48,11 +48,11 @@ const items = nowTimeline as TimelineItem[];
                 <div class="flex flex-wrap gap-3">
                   {item.links.map((link) => (
                     <a
-                      class="inline-flex items-center gap-2 rounded-full border border-slate-700/60 bg-slate-900/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-200 transition hover:border-accent/60 hover:text-white"
+                      class="inline-flex items-center gap-3 rounded-full border border-slate-700/60 bg-slate-900/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-200 transition hover:border-accent/60 hover:text-white"
                       href={link.href}
                     >
                       <span>{link.label}</span>
-                      <svg class="h-3 w-3" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <svg class="h-[clamp(1.5rem,3vw,1.75rem)] w-[clamp(1.5rem,3vw,1.75rem)]" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                         <path d="M7.5 5H15v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M15 5 5 15" stroke-linecap="round"></path>
                       </svg>
