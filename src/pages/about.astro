@@ -55,12 +55,6 @@ const contactLinks = [
     iconPath:
       'M12 .5a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-3 0-3.7-1.4-3.9-2.7-.1-.4-.6-1-1-1.2-.3-.2-.8-.6 0-.6.7.1 1.2.7 1.4 1 .8 1.3 2.1.9 2.6.7.1-.6.3-1 .6-1.2-2.7-.3-5.6-1.4-5.6-6a4.6 4.6 0 0 1 1.2-3.2 4.2 4.2 0 0 1 .1-3.1s1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2a4.2 4.2 0 0 1 .1 3.1 4.6 4.6 0 0 1 1.2 3.2c0 4.6-2.9 5.7-5.6 6 .4.3.7.9.7 1.8v2.6c0 .3.2.6.7.5A10 10 0 0 0 12 .5z'
   },
-  {
-    label: 'Book office hours',
-    href: 'https://cal.com/hackall360/office-hours',
-    description: 'Schedule a strategy session or async systems audit.',
-    iconPath: 'M6 2a2 2 0 0 0-2 2v2h16V4a2 2 0 0 0-2-2H6zm14 6H4v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm-4 5h-4v4h4v-4z'
-  }
 ];
 
 const formEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
@@ -99,7 +93,7 @@ const formEnabled = Boolean(formEndpoint);
           class="relative aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-slate-700/70 bg-slate-900/60 shadow-[0_0_70px_-30px_rgba(45,212,191,0.6)]"
         >
           <img
-            src="/AbstractImage.png"
+            src="/docs/AbstractImage.png"
             alt="Abstract systems-inspired artwork representing hackall360"
             class="h-full w-full object-cover"
             loading="lazy"
