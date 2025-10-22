@@ -1,0 +1,59 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Hybrid Tokenizer Dossier | hackall360"
+  description="Documenting the hybrid tokenizer shipped for auto coder: grammar-aware tokenization for ranking, embeddings, and AST synthesis."
+>
+  <div class="mx-auto flex max-w-4xl flex-col gap-12 px-6 py-24 sm:px-10 lg:py-28">
+    <header class="space-y-6 text-slate-200">
+      <p class="font-mono text-xs uppercase tracking-[0.5em] text-accent-light/80">// milestone · hybrid tokenizer</p>
+      <h1 class="text-4xl font-semibold text-white sm:text-5xl">Hybrid tokenizer research shipped.</h1>
+      <p class="text-base leading-relaxed text-slate-300 sm:text-lg">
+        The tokenizer blends statistical segmentation with grammar-aware parsing so downstream systems can rank, embed, and
+        generate ASTs with tighter control. It now powers the <a class="text-accent-light underline-offset-4 hover:underline" href="https://github.com/hackall360/auto-coder" rel="noopener noreferrer" target="_blank">auto coder</a> stack — a workspace of autonomous and human-assisted coding agents focused on resilient delivery.
+      </p>
+    </header>
+
+    <section class="space-y-4 rounded-3xl border border-slate-800/60 bg-slate-950/40 p-8 text-slate-200">
+      <h2 class="text-2xl font-semibold text-white">auto coder integration</h2>
+      <p class="text-sm leading-relaxed text-slate-300">
+        The repository orchestrates concurrent coding agents guarded by a shared knowledge base. The hybrid tokenizer became the
+        foundation for consistent chunking, context ranking, and AST-aware diffs, giving every agent the same source of truth.
+      </p>
+      <ul class="list-disc space-y-3 pl-5 text-sm leading-relaxed text-slate-300">
+        <li>Tokenizer output feeds the retrieval mesh to keep prompt windows precise even under long sessions.</li>
+        <li>AST scaffolds drive refactor previews so humans can review intent, not just raw text patches.</li>
+        <li>Ranking scores inform which diffs or suggestions surface first in the operator console.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-4 rounded-3xl border border-slate-800/60 bg-slate-950/30 p-8 text-slate-200">
+      <h2 class="text-2xl font-semibold text-white">Tokenizer architecture</h2>
+      <p class="text-sm leading-relaxed text-slate-300">
+        The tokenizer marries a byte-pair baseline with grammar cues sourced from language-specific parsers. A ranking kernel
+        evaluates candidates on semantic cohesion, AST coverage, and embedding fidelity.
+      </p>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-slate-800/60 bg-slate-950/50 p-6 text-sm leading-relaxed text-slate-300">
+          <h3 class="text-lg font-semibold text-white">Statistical spine</h3>
+          <p>Adaptive BPE merges track production corpora so new idioms and framework tokens stay first-class.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800/60 bg-slate-950/50 p-6 text-sm leading-relaxed text-slate-300">
+          <h3 class="text-lg font-semibold text-white">Grammar overlays</h3>
+          <p>Parser hints capture scopes, node types, and operator precedence so AST synthesis remains deterministic.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-4 rounded-3xl border border-slate-800/60 bg-slate-950/40 p-8 text-slate-200">
+      <h2 class="text-2xl font-semibold text-white">What shipped</h2>
+      <ul class="list-disc space-y-3 pl-5 text-sm leading-relaxed text-slate-300">
+        <li>Tokenizer CLI and library APIs surfaced through the auto coder mono-repo for immediate adoption.</li>
+        <li>Evaluation harness comparing embedding fidelity and AST reconstruction against legacy tokenizers.</li>
+        <li>Documentation for tuning merges, injecting grammar hints, and wiring ranking heuristics into new projects.</li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

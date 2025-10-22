@@ -1,37 +1,61 @@
 [
   {
-    "title": "Leading reliability playbook refresh",
-    "window": "This quarter",
-    "description": "Auditing incident response runbooks and facilitating tabletop drills to validate escalation clarity and observability coverage.",
-    "status": "In motion",
+    "title": "Composing neuro-symbolic control planes",
+    "window": "Q4 2025",
+    "description": "Prototyping an adaptive AI execution fabric that fuses agentic planners, retrieval meshes, and live observability into a cohesive control plane for upcoming services.",
+    "status": "Lab prototyping",
     "links": [
       {
-        "label": "Facilitation outline",
-        "href": "https://hackall360.github.io/notes"
+        "label": "Architecture workbench",
+        "href": "/initiatives/ai-control-planes"
       }
     ]
   },
   {
-    "title": "AI-assisted knowledge capture",
-    "window": "October 2024",
-    "description": "Pairing with staff engineers to build a lightweight assistant that summarizes architecture reviews and flags regression risks.",
-    "status": "Prototyping",
+    "title": "October 2025 · Algorithmic readiness game-days",
+    "window": "October 2025",
+    "description": "Running tabletop scenarios that interrogate threat models, bias regressions, and recovery choreography across AI and AI-assisted production pipelines.",
+    "status": "Active drills",
     "links": [
       {
-        "label": "Assistant prototype",
-        "href": "/assistant"
+        "label": "Scenario playbook",
+        "href": "/initiatives/ai-tabletop-drills#october-2025"
       }
     ]
   },
   {
-    "title": "GitHub Pages polish",
+    "title": "November 2025 · Autonomous incident simulations",
+    "window": "November 2025",
+    "description": "Extending the tabletop program into instrumented simulations that rehearse autonomous guardrails, policy enforcement, and red-team escalation loops before launch.",
+    "status": "Ready queue",
+    "links": [
+      {
+        "label": "Simulation outline",
+        "href": "/initiatives/ai-tabletop-drills#november-2025"
+      }
+    ]
+  },
+  {
+    "title": "Preparing · Agentic workflow accelerators",
     "window": "Preparing",
-    "description": "Auditing redirects, HTTPS settings, and documentation while the site continues to live on hackall360.github.io.",
-    "status": "Scoping",
+    "description": "Prototyping compact agentic systems that combine human-in-the-loop validation with autonomous flows to compress analysis and change-management cycles.",
+    "status": "Design in progress",
     "links": [
       {
-        "label": "Deployment notes",
-        "href": "https://github.com/hackall360/hackall360.github.io#domain-configuration"
+        "label": "Agentic prototyping notes",
+        "href": "/initiatives/agentic-workbench"
+      }
+    ]
+  },
+  {
+    "title": "Shipped · Hybrid tokenizer research",
+    "window": "Shipped",
+    "description": "Delivered a hybrid tokenizer for tokenization, ranking, embedding, and AST code generation workloads by merging statistical segmentation with grammar-aware parsing.",
+    "status": "Completed",
+    "links": [
+      {
+        "label": "Hybrid tokenizer dossier",
+        "href": "/initiatives/hybrid-tokenizer"
       }
     ]
   }
