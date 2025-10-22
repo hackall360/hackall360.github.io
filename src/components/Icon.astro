@@ -1,0 +1,22 @@
+---
+import type { IconDefinition } from '~/utils/iconPaths';
+
+interface Props {
+  icon: IconDefinition;
+  class?: string;
+  ariaHidden?: boolean;
+  focusable?: boolean;
+}
+
+const { icon, class: className = '', ariaHidden = true, focusable = false } = Astro.props as Props;
+---
+<svg
+  class={className}
+  viewBox={icon.viewBox}
+  aria-hidden={ariaHidden ? 'true' : 'false'}
+  focusable={focusable ? 'true' : 'false'}
+>
+  {icon.paths.map((path) => (
+    <path d={path} fill="currentColor" />
+  ))}
+</svg>
