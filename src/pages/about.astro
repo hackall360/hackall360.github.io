@@ -4,6 +4,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import SkillsMatrix from '~/components/SkillsMatrix.astro';
 import { ICONS, type IconName } from '~/utils/iconPaths';
 
+const abstractImagePath = '/AbstractImage.png';
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -110,7 +112,7 @@ const formEnabled = Boolean(formEndpoint);
           class="relative aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-slate-700/70 bg-slate-900/60 shadow-[0_0_70px_-30px_rgba(45,212,191,0.6)]"
         >
           <img
-            src="/docs/AbstractImage.png"
+            src={abstractImagePath}
             alt="Abstract systems-inspired artwork representing hackall360"
             class="h-full w-full object-cover"
             loading="lazy"
