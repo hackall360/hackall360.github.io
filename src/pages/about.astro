@@ -94,20 +94,22 @@ const formEnabled = Boolean(formEndpoint);
           </p>
         </div>
       </div>
-      <figure class="relative flex items-center justify-center">
+      <figure class="relative flex flex-col items-center justify-center">
         <div
-          class="relative aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-slate-700/70 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 shadow-[0_0_70px_-30px_rgba(45,212,191,0.6)]"
-          role="img"
-          aria-label="Abstract portrait placeholder for hackall360"
+          class="relative aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-slate-700/70 bg-slate-900/60 shadow-[0_0_70px_-30px_rgba(45,212,191,0.6)]"
         >
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.22),transparent_55%),radial-gradient(circle_at_80%_70%,rgba(14,165,233,0.18),transparent_60%)]"></div>
-          <div class="absolute inset-6 rounded-2xl border border-slate-600/40 bg-slate-900/40 backdrop-blur"></div>
-          <div class="absolute inset-x-8 bottom-8 space-y-3 text-center text-slate-200">
-            <p class="text-sm font-mono uppercase tracking-[0.3em] text-accent-light/80">// portrait</p>
-            <p class="text-lg font-semibold text-white">Abstract visual forthcoming</p>
-            <p class="text-xs text-slate-400">Placeholder representing the systems-first aesthetic.</p>
-          </div>
+          <img
+            src="/AbstractImage.png"
+            alt="Abstract systems-inspired artwork representing hackall360"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.18),transparent_55%),radial-gradient(circle_at_80%_70%,rgba(14,165,233,0.15),transparent_60%)] mix-blend-screen"></div>
+          <div class="pointer-events-none absolute inset-4 rounded-2xl border border-white/10 shadow-inner shadow-cyan-500/10"></div>
         </div>
+        <figcaption class="mt-6 text-center text-sm text-slate-400">
+          Abstract generative portrait showcasing hackall360’s systems-focused aesthetic.
+        </figcaption>
       </figure>
     </section>
 
