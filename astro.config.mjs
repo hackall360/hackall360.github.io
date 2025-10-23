@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import { build as esbuildBuild } from 'esbuild';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import tailwind from '@astrojs/tailwind';
 import { syncProjects } from './scripts/github-projects.mjs';
@@ -125,96 +124,14 @@ function clientScriptPlugin() {
   };
 }
 
-function abstractImageStaticAssetPlugin() {
-  const servedPath = '/AbstractImage.png';
-  const imageUrl = new URL('./docs/AbstractImage.png', import.meta.url);
-  const imagePath = fileURLToPath(imageUrl);
-
-  let imageBuffer = null;
-  let command = 'build';
-
-  const loadImage = () => {
-    try {
-      imageBuffer = readFileSync(imagePath);
-    } catch (error) {
-      imageBuffer = null;
-    }
-  };
-
-  loadImage();
-
-  return {
-    name: 'abstract-image-static-asset',
-    configResolved(resolvedConfig) {
-      command = resolvedConfig.command;
-    },
-    configureServer(server) {
-      server.watcher.add(imagePath);
-      server.middlewares.use((req, res, next) => {
-        const requestPath = req.url?.split('?')[0] ?? '';
-
-        if (requestPath !== servedPath) {
-          next();
-          return;
-        }
-
-        if (!imageBuffer) {
-          loadImage();
-        }
-
-        if (!imageBuffer) {
-          next();
-          return;
-        }
-
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'image/png');
-        res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
-        res.end(imageBuffer);
-      });
-
-      server.watcher.on('change', (changedPath) => {
-        if (changedPath === imagePath) {
-          loadImage();
-        }
-      });
-    },
-    buildStart() {
-      if (command !== 'build') {
-        return;
-      }
-
-      if (!imageBuffer) {
-        loadImage();
-      }
-
-      if (!imageBuffer) {
-        this.error(
-          new Error(
-            `Abstract image not found at ${imagePath}. Ensure docs/AbstractImage.png is committed before building.`,
-          ),
-        );
-        return;
-      }
-
-      this.addWatchFile(imagePath);
-      this.emitFile({
-        type: 'asset',
-        fileName: 'AbstractImage.png',
-        source: imageBuffer
-      });
-    }
-  };
-}
-
 export default defineConfig({
   site: 'https://hackall360.github.io',
-  outDir: './docs',
+  outDir: './dist',
   vite: {
     build: {
       assetsInlineLimit: 0
     },
-    plugins: [clientScriptPlugin(), abstractImageStaticAssetPlugin()]
+    plugins: [clientScriptPlugin()]
   },
   integrations: [
     tailwind({

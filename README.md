@@ -86,6 +86,10 @@ Automated deploys run through the **Deploy site** GitHub Actions workflow locate
 - **Project data cache:** Before invoking `npm run fetch-projects`, the workflow restores `src/data/projects.json` from the Actions cache keyed by day. If the cache is hit, the fetch step is skipped, preventing unnecessary GitHub API usage. When a refresh is needed, the fetch script honors `GITHUB_PROJECTS_CACHE_MAX_AGE_HOURS` and can use the built-in `GITHUB_TOKEN` to raise rate limits.
 - **Build and deploy:** After building the Astro site (`npm run build`), the job publishes to the `gh-pages` branch using [`withastro/action`](https://github.com/withastro/action). The default `GITHUB_TOKEN` secret supplied by GitHub Actions is sufficient for deployments; no extra secrets are required.
 
+> **GitHub Pages configuration:** `Settings → Pages` is set to **Deploy from a branch → gh-pages → /**. Keep `.github/workflows/deploy.yml` active so [`withastro/action@v1`](https://github.com/withastro/action) can publish on every push to `main`.
+
+- **Build and deploy:** After building the Astro site (`npm run build`), the job publishes to the `gh-pages` branch using [`withastro/action`](https://github.com/withastro/action). The default `GITHUB_TOKEN` secret supplied by GitHub Actions is sufficient for deployments; no extra secrets are required.
+
 To run the workflow manually:
 
 1. Navigate to **Actions → Deploy site** in the repository on GitHub.
@@ -112,13 +116,29 @@ npm run build
 npm run preview
 ```
 
-## Manual GitHub Pages deploy (without Actions)
+## Manual GitHub Pages deploy (fallback when Actions are unavailable)
 
-1. Run `npm run build` to generate the static site inside the tracked `docs/` directory.
-2. Commit the updated `docs/` folder along with any other changes.
-3. Push to `main` (or your chosen branch) and set **GitHub Pages → Source** to `Deploy from a branch → main → /docs`.
+1. Run `npm run build` to generate the static site inside `dist/`.
+2. Check out the published branch locally:
+   ```bash
+   git fetch origin gh-pages
+   git switch gh-pages
+   ```
+3. Replace the branch contents with the latest build:
+   ```bash
+   rm -rf ./*
+   cp -R ../<path-to-main-checkout>/dist/. .
+   ```
+   Adjust the copy command if you're working from a different checkout (a `git worktree` is ideal so `dist/` is still accessible).
+4. Commit the new static assets and push:
+   ```bash
+   git add .
+   git commit -m "chore: manual pages publish"
+   git push origin gh-pages
+   ```
+5. Switch back to `main` once the branch is published.
 
-The built bundle is also linked from the home page so you can download or inspect the generated files directly.
+The automated workflow should be re-enabled as soon as possible so future deploys stay reproducible.
 
 ## Notes collection
 

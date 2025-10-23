@@ -18,7 +18,7 @@ github: "https://github.com/hackall360/hackall360.github.io"
 ## Highlights
 
 - Uses Astro Islands to blend static content with interactive components such as the assistant prototype.
-- Ships pre-rendered HTML to the `docs/` directory so GitHub Pages can serve the site without extra tooling.
+- Ships pre-rendered HTML to the `gh-pages` branch via GitHub Actions so GitHub Pages serves the site without extra tooling or tracked build artifacts.
 - Maintains deployment notes in the repository README to capture configuration tweaks and future ideas.
 
 ## Next Up
