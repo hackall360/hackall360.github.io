@@ -10,7 +10,67 @@ interface TimelineItem {
   links?: Array<{ label: string; href: string }>;
 }
 
+type TimelineState = 'complete' | 'active' | 'upcoming';
+
+interface TimelineEntry extends TimelineItem {
+  state: TimelineState;
+}
+
 const items = nowTimeline as TimelineItem[];
+
+const statePriority: Record<TimelineState, number> = {
+  complete: 0,
+  active: 1,
+  upcoming: 2,
+};
+
+const getTimelineState = (status: string, window: string): TimelineState => {
+  const normalized = `${status} ${window}`.toLowerCase();
+
+  if (/(completed|complete|shipped|delivered|done)/.test(normalized)) {
+    return 'complete';
+  }
+
+  if (/(active|in progress|progress|prototyp|lab|working|prepar|drill|running|building)/.test(normalized)) {
+    return 'active';
+  }
+
+  return 'upcoming';
+};
+
+const toTimelineEntries = (list: TimelineItem[]): TimelineEntry[] =>
+  list
+    .map((item) => {
+      const state = getTimelineState(item.status, item.window);
+      return { ...item, state } satisfies TimelineEntry;
+    })
+    .sort((a, b) => statePriority[a.state] - statePriority[b.state]);
+
+const entries = toTimelineEntries(items);
+
+const getConnectorState = (from?: TimelineState, to?: TimelineState) => {
+  if (!from || !to) {
+    return 'none';
+  }
+
+  if (from === 'upcoming' || to === 'upcoming') {
+    return 'upcoming';
+  }
+
+  return 'progress';
+};
+
+const dotClassMap: Record<TimelineState, string> = {
+  complete: 'timeline-dot--complete',
+  active: 'timeline-dot--active',
+  upcoming: 'timeline-dot--upcoming',
+};
+
+const stateLabelMap: Record<TimelineState, string> = {
+  complete: 'Completed focus area',
+  active: 'Currently in progress',
+  upcoming: 'Queued focus area',
+};
 ---
 
 <BaseLayout
@@ -28,42 +88,61 @@ const items = nowTimeline as TimelineItem[];
       </p>
     </header>
 
-      <section class="relative space-y-8">
-        <span class="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-accent/20 via-accent/40 to-transparent sm:block" aria-hidden="true"></span>
-        <div class="space-y-10">
-          {items.map((item) => (
-            <article class="relative grid grid-cols-1 gap-4 rounded-3xl border border-slate-800/70 bg-slate-950/40 p-8 shadow-[0_0_40px_-30px_rgba(56,189,248,0.7)] transition hover:border-accent/60 sm:grid-cols-[auto,1fr] sm:gap-8">
-              <div class="flex items-center gap-4">
-                <span class="hidden h-4 w-4 rounded-full border-2 border-accent/70 bg-slate-900 sm:flex"></span>
-                <span class="rounded-full border border-accent/40 bg-accent/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-accent-light">
-                  {item.window}
-                </span>
-              </div>
-              <div class="space-y-4">
-                <div class="space-y-2">
-                  <h2 class="text-2xl font-semibold text-white">{item.title}</h2>
-                  <p class="font-mono text-xs uppercase tracking-[0.4em] text-accent-light/80">{item.status}</p>
-                  <p class="text-sm leading-relaxed text-slate-300">{item.description}</p>
+      <section class="relative">
+        <div class="timeline-list">
+          {entries.map((item, index, list) => {
+            const state = item.state;
+            const prevState = index > 0 ? list[index - 1].state : undefined;
+            const nextState = index < list.length - 1 ? list[index + 1].state : undefined;
+            const dotClass = dotClassMap[state];
+            const stateLabel = stateLabelMap[state];
+            const prevConnector = getConnectorState(prevState, state);
+            const nextConnector = getConnectorState(state, nextState);
+
+            return (
+              <article
+                class={`timeline-item timeline-item--${state} relative grid gap-6 rounded-3xl border border-slate-800/70 bg-slate-950/40 shadow-[0_0_40px_-30px_rgba(56,189,248,0.7)] transition hover:border-accent/60 sm:gap-8`}
+              >
+                <div
+                  class="timeline-track"
+                  data-connector-prev={prevConnector}
+                  data-connector-next={nextConnector}
+                >
+                  <span class={`timeline-dot ${dotClass}`} title={stateLabel} aria-hidden="true"></span>
                 </div>
-                {item.links && item.links.length > 0 && (
-                  <div class="flex flex-wrap gap-3">
-                    {item.links.map((link) => (
-                      <a
-                        class="inline-flex items-center gap-3 rounded-full border border-slate-700/60 bg-slate-900/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-200 transition hover:border-accent/60 hover:text-white"
-                        href={link.href}
-                      >
-                        <span>{link.label}</span>
-                        <svg class="h-[clamp(1.5rem,3vw,1.75rem)] w-[clamp(1.5rem,3vw,1.75rem)]" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                          <path d="M7.5 5H15v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          <path d="M15 5 5 15" stroke-linecap="round"></path>
-                        </svg>
-                      </a>
-                    ))}
+                <div class="timeline-body space-y-5">
+                  <div class="timeline-header flex flex-wrap items-center gap-3">
+                    <span class="timeline-window rounded-full border border-accent/40 bg-accent/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-accent-light">
+                      {item.window}
+                    </span>
+                    <span class="timeline-status font-mono text-[0.7rem] uppercase tracking-[0.45em] text-accent-light/80">
+                      {item.status}
+                    </span>
                   </div>
-                )}
-              </div>
-            </article>
-          ))}
+                  <div class="space-y-3">
+                    <h2 class="text-2xl font-semibold text-white">{item.title}</h2>
+                    <p class="text-sm leading-relaxed text-slate-300">{item.description}</p>
+                  </div>
+                  {item.links && item.links.length > 0 && (
+                    <div class="flex flex-wrap gap-3">
+                      {item.links.map((link) => (
+                        <a
+                          class="inline-flex items-center gap-3 rounded-full border border-slate-700/60 bg-slate-900/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-200 transition hover:border-accent/60 hover:text-white"
+                          href={link.href}
+                        >
+                          <span>{link.label}</span>
+                          <svg class="h-[clamp(1.5rem,3vw,1.75rem)] w-[clamp(1.5rem,3vw,1.75rem)]" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path d="M7.5 5H15v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M15 5 5 15" stroke-linecap="round"></path>
+                          </svg>
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </div>
@@ -107,6 +186,123 @@ const items = nowTimeline as TimelineItem[];
     background: radial-gradient(55% 60% at 50% 50%, rgba(14, 116, 144, 0.2), transparent 75%);
     filter: blur(55px);
     opacity: 0.65;
+  }
+
+  .timeline-list {
+    --timeline-gap: clamp(2.5rem, 5vw, 3.25rem);
+    --timeline-dot-size: 0.9rem;
+    --timeline-track-width: clamp(1.5rem, 2.6vw, 1.85rem);
+    --timeline-card-padding-y: clamp(1.75rem, 3vw, 2rem);
+    display: grid;
+    gap: var(--timeline-gap);
+  }
+
+  .timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--timeline-track-width) 1fr;
+    align-items: stretch;
+    padding: 0 clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .timeline-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--timeline-card-padding-y) 0;
+  }
+
+  .timeline-track::before,
+  .timeline-track::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 2px;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .timeline-track::before {
+    top: calc(-1 * (var(--timeline-gap) + var(--timeline-card-padding-y)));
+    bottom: calc(100% - (var(--timeline-card-padding-y) + var(--timeline-dot-size) / 2));
+  }
+
+  .timeline-track::after {
+    top: calc(var(--timeline-card-padding-y) + var(--timeline-dot-size) / 2);
+    bottom: calc(-1 * (var(--timeline-gap) + var(--timeline-card-padding-y)));
+  }
+
+  .timeline-track[data-connector-prev='progress']::before {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(56, 189, 248, 0.85), rgba(56, 189, 248, 0.1));
+  }
+
+  .timeline-track[data-connector-prev='upcoming']::before {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0));
+  }
+
+  .timeline-track[data-connector-next='progress']::after {
+    opacity: 1;
+    background: linear-gradient(to bottom, rgba(56, 189, 248, 0.85), rgba(56, 189, 248, 0.1));
+  }
+
+  .timeline-track[data-connector-next='upcoming']::after {
+    opacity: 1;
+    background: linear-gradient(to bottom, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0));
+  }
+
+  .timeline-body {
+    padding: var(--timeline-card-padding-y) 0;
+  }
+
+  .timeline-dot {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: var(--timeline-dot-size);
+    height: var(--timeline-dot-size);
+    border-radius: 9999px;
+    border: 2px solid rgba(56, 189, 248, 0.45);
+    background: transparent;
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+    transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  .timeline-dot--upcoming {
+    border-color: rgba(56, 189, 248, 0.35);
+    background: rgba(2, 6, 23, 0.2);
+  }
+
+  .timeline-dot--active {
+    border-color: rgba(56, 189, 248, 0.95);
+    background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.85), rgba(14, 165, 233, 0.92));
+    box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.18);
+  }
+
+  .timeline-dot--complete {
+    border-color: rgba(45, 212, 191, 0.95);
+    background: radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.92), rgba(13, 148, 136, 0.9));
+    box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.22);
+  }
+
+  .timeline-item:hover .timeline-dot--active {
+    box-shadow: 0 0 0 7px rgba(56, 189, 248, 0.22);
+  }
+
+  .timeline-item:hover .timeline-dot--complete {
+    box-shadow: 0 0 0 7px rgba(45, 212, 191, 0.26);
+  }
+
+  .timeline-window {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
 
   @supports (min-height: 100svh) {
