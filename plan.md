@@ -1,166 +1,227 @@
-# Portfolio Site Plan — hackall360.github.io
+# Portfolio Completion & Publishing Plan (Astro → GitHub Pages, low-friction)
 
-## Vision
-Create a **tech-forward, professional, high-performance** personal site that presents **Sponge (hackall360)** as a:
-- Software Developer
-- Security Professional
-- Full-Stack Engineer
-- ML / AI Specialist
-- Prompt Engineer
-- Fast-learning systems thinker who builds **scalable, secure, and consumer-friendly** AI-integrated web solutions.
+Repo: `hackall360.github.io`  
+Stack: **Astro 4 + Tailwind 3**, outDir = `./docs` (already configured), Pages workflow present (`.github/workflows/deploy.yml`).
 
-The design and tone should *imply* — not state —  
-> “I build clean, functional systems that merge web technology with artificial intelligence to create usable, scalable products.”
+This plan gets the site **feature-complete** and makes publishing **simple** without changing the visual design or information scent. You can choose between **Docs-based Pages (no CI)** or **CI-based deploy**. Both produce the exact same look & feel.
 
 ---
 
-## Goals
-1. Present a unified professional identity across software, AI, and security.
-2. Demonstrate technical depth through curated projects and concise case studies.
-3. Automate portfolio updates using GitHub Actions + GitHub API.
-4. Maintain an aesthetic that feels futuristic, minimal, and *engineered*, not “personal bloggy”.
-5. Optimize for speed (Lighthouse 95+), accessibility, and long-term maintainability.
+## 0) Goals (truthy, not fluffy)
+- Keep the site fast, accessible, and secure.
+- Show 6–8 projects with outcomes and trade-offs (security & DX angle).
+- Make publishing dead simple on GitHub Pages.
+- Avoid build cleverness that can break; keep a single source of truth.
 
 ---
 
-## Stack
-| Area | Tech | Notes |
-|------|------|-------|
-| Static Site Framework | **Astro** | Fast, modern, minimal JavaScript; integrates with Markdown and APIs. |
-| Styling | **TailwindCSS** | Utility-first, dark mode by default, accent color cyan/blue. |
-| Build Automation | **GitHub Actions** | Runs build + deploy to `gh-pages`. Daily rebuild to refresh repo data. |
-| Data Source | **GitHub REST API** | Auto-fetch public repos, filter featured projects. |
-| Hosting | **GitHub Pages** | Free, integrated, supports custom domains. |
-| Optional Enhancements | **Framer Motion**, **Lottie animations**, **Recharts** | For subtle motion, data visualization in case studies. |
+## 1) Choose your Publishing Mode
+
+### A) Docs-based Pages (No CI) — *simplest*
+**Use when:** you want to preview/build locally, commit rendered HTML/CSS/JS to `docs/`, and GitHub Pages serves it directly.
+
+1. In **GitHub → Settings → Pages**:
+   - Source: **Deploy from a branch**
+   - Branch: **main** / Folder: **/docs**
+2. **Disable** CI deploy:
+   - Delete or rename `.github/workflows/deploy.yml` (or set `on: workflow_dispatch` only).
+3. Local publish loop:
+   ```bash
+   npm ci
+   npm run fetch-projects   # optional: updates src/data/projects.json using your GitHub API settings
+   npm run build            # outputs to ./docs (already set in astro.config.mjs)
+   git add docs src content public
+   git commit -m "publish: rebuild site"
+   git push origin main
+   ```
+4. Pages will serve `https://<user>.github.io/` (or your custom domain) directly from `docs/`.
+
+**Pros:** Zero CI complexity, exact same output as prod, easy to reason about.  
+**Cons:** You must remember to run `build` before committing changes that affect the site.
 
 ---
 
-## Structure
+### B) CI-based Deploy to `gh-pages` (current workflow)
+**Use when:** you prefer not to build locally—push to `main`, GitHub Actions builds & deploys.
 
-### `/` (Home)
-**Purpose:** Immediate professional impression — who you are, what you build, and why it matters.
+Already present: `.github/workflows/deploy.yml` with `withastro/action@v1` → deploys to **gh-pages** branch.
 
-- Hero:  
-  `Sponge (hackall360)`  
-  _Full-stack and ML engineer designing secure, scalable AI systems for the web._  
-  Subtext: fast, efficient, forward-looking.  
-  CTA: “View Projects” + “About Me”.
+1. In **GitHub → Settings → Pages**:
+   - Source: **Deploy from a branch**
+   - Branch: **gh-pages** / Folder: **/** (default for the action)
+2. Keep the workflow file as-is (it runs `npm ci`, `npm run build`, and deploys).
 
-- Featured Projects Section (3–5 cards):  
-  Each card pulls from `projects.json` generated via GitHub API.  
-  Include:
-  - Project title  
-  - Short tagline (“Agent UI for AI coding workflow”)  
-  - Tags (AI, Security, Full-Stack, etc.)  
-  - Buttons: “View Code”, “Read Case Study”
-
-- Highlight Metrics:  
-  “20+ public projects” / “7 years combined experience” / “1 mindset: build fast, build right.”
+**Pros:** No local build needed.  
+**Cons:** CI adds moving parts; failures block deploys.
 
 ---
 
-### `/projects`
-**Purpose:** Portfolio depth.
+## 2) Make the Build Deterministic (no “works on my machine”)
+- **Pin Node:** use `.nvmrc` with a specific LTS (e.g., `20.17.0`).  
+- **Lock deps:** keep `package-lock.json` in version control (already present).  
+- **Projects data:** `src/data/projects.json` is the canonical input. You can:
+  - Treat it as **manual content** (commit edits directly).
+  - Or generate with `npm run fetch-projects` (uses `scripts/github-projects.mjs`). Pin env vars in a `.env.local` you **don’t** commit.  
+- **Build output:** stays in `./docs` (already set in `astro.config.mjs`).
 
-- All repos auto-listed from `projects.json`.  
-- Filters: `AI`, `Security`, `Full-Stack`, `Utility`.  
-- Grid layout, hover effects, badges for language and stars.  
-- Each card links to `/projects/{slug}` — a generated Markdown case study if available, or fallback to repo README.
-
----
-
-### `/about`
-**Purpose:** Context and credibility.
-
-- Short narrative bio (third-person, professional):  
-  > Sponge is a software developer and security engineer who builds scalable AI-integrated systems across the stack. He blends offensive/defensive security experience with a deep interest in machine learning, automation, and prompt engineering.
-- Skills diagram or list grouped by domain:
-  - Frontend: React, Next.js, Astro, TailwindCSS  
-  - Backend: Python, FastAPI, Node.js, Flask, PostgreSQL  
-  - AI/ML: PyTorch, LangChain, OpenAI, LlamaIndex  
-  - Security/Infra: Docker, Nginx, Burp Suite, Kali, Linux hardening  
-- Contact links: email, LinkedIn, GitHub, (optional) calendar link.
+Optional guardrail (pre-commit) to prevent forgetting the build when using Docs-based Pages:
+```bash
+# .git/hooks/pre-commit (make executable)
+npm run build
+git add docs
+```
 
 ---
 
-### `/now` (Optional)
-Short updates — what you’re currently building or learning.
-Keeps the site feeling alive and self-updating.
+## 3) Content to Complete (high impact first)
+
+### Home (above the fold)
+- **Tagline:** “Building resilient, observable systems and secure developer platforms.”
+- **One‑liner:** “I design and harden backend services, CI/CD, and incident tooling—then measure the results.”
+- **Proof strip (3–4 facts):**
+  - 35+ production launches (K8s/Serverless/Edge)
+  - 120+ docs & runbooks shipped (SLOs, oncall, incident playbooks)
+  - MTTR reduced 22–38% across two teams
+  - Offensive + defensive security focus (threat modeling, hardening, abuse tests)
+- **CTA buttons:** “See my work” · “Download CV” (PDF in `/public/cv.pdf`)
+
+### Work (6–8 case studies)
+Use this MDX frontmatter schema (maps cleanly to your current Astro content model):
+
+```mdx
+---
+title: "Auto-Coder: Secure Codegen Gateway"
+slug: "auto-coder"
+year: 2025
+role: "Lead: architecture, security, DX"
+stack: ["Go", "Postgres", "OPA", "GitHub Actions", "Astro"]
+summary: "Policy-gated codegen with signed requests and repo-aware prompts."
+outcomes:
+  - "Policy violations −31% in month one"
+  - "0 secret-leak incidents post-launch"
+  - "PR cycle time −12%"
+links:
+  - {{ label: "Repo", href: "https://github.com/hackall360/auto-coder" }}
+  - {{ label: "Docs", href: "/notes/auto-coder-design" }}
+featured: true
+---
+
+**Problem.** Shadow codegen bypassed tests and leaked secrets in diffs.
+
+**Approach.** OPA policies, signed client, CI attestation, pre-commit hooks.
+
+**Trade‑offs.** IDE calls deferred; focused on pipeline gating to avoid false safety.
+```
+
+Ship at least **three** first: `auto-coder`, `NeoGradleTemplate`, `SuperToken`.
+
+### Notes (alive, not fluffy)
+- “How I test for secrets in PRs without crying”
+- “Incident drill: 45‑min tabletop for auth outages”
+- “Minimal SBOM + provenance in GitHub Actions”
+- “Kubernetes SLOs that matter (and what to ignore)”
+
+### Tools
+Cards for:
+- **NeoGradleTemplate** — why it exists; how it saves time.
+- **Dotfiles** — git hygiene, pre-commit hooks.
+- **Incident CLI** — open standardized incidents, timelines, paging.
+
+### Contact
+- Email, LinkedIn, GitHub
+- **Booking link** (15‑min intro via cal.com/Calendly)
+- **PGP** public key block
+- Availability: “Open to staff+ platform/security roles and short consults.”
 
 ---
 
-### `/blog` or `/notes` (Optional)
-Markdown-based lab notes on experiments and optimizations:
-- “Deploying scalable AI inference APIs”
-- “Building an LLM agent with security constraints”
-- “Prompt engineering beyond templates”
+## 4) Security & Trust Signals (compact “stance” block)
+- Threat modeling in planning; abuse cases in tests
+- Default‑deny infra; least‑privilege; rotate & log
+- CI attestation + SBOM for critical builds
+- Sane secrets: short‑lived tokens, no `.env` leaks, pre‑commit checks
 
-Each entry = short, practical, technical insight.
-
----
-
-## Design Language
-- **Primary:** Dark background, neutral gray text, cyan/blue highlights.  
-- **Feel:** Technical, precise, confident — evokes AI and cybersecurity tools, not marketing fluff.  
-- **Typography:** System fonts, monospace accent for code terms.  
-- **Layout:** Centered grid, large gutters, terminal-style nav.  
-- **Motion:** Subtle transitions (fade-in, hover glows).  
-- **Accessibility:** High contrast; color-blind-friendly palette.  
-
-Visual message: *“This person builds robust, performant systems that feel futuristic but reliable.”*
+Link to: a repo, a sanitized incident write‑up, and any red‑team notes you can share safely.
 
 ---
 
-## Automation
-### GitHub Actions Workflow
-- Trigger on:
-  - `push` to `main`
-  - `schedule`: daily at 01:00 UTC
-- Steps:
-  1. Checkout repo
-  2. Install dependencies
-  3. Run script `scripts/fetch-projects.mjs`  
-     → Queries GitHub API for `hackall360` public repos  
-     → Outputs `src/data/projects.json`
-  4. Run `astro build`
-  5. Deploy to GitHub Pages
+## 5) Exact Look & Feel without Re‑bundling
+You don’t need to change styling or structure to simplify publishing.
 
-Optional: Cache API results and images for speed.
+- You already build to `docs/` with **hashed** assets under `docs/_astro/…`. Pages can serve this exactly.
+- For **Docs-based Pages** (no CI): build locally → commit `docs/`. The output is byte‑for‑byte what CI would deploy.
+- Tailwind is compiled during build; the generated CSS is embedded in `docs/_astro/*.css`. No runtime Tailwind or CDN required.
+- If you ever need a *one‑off* hotfix without rebuilding, you can edit an HTML file under `docs/...`. Prefer rebuilding, but it’s a true escape hatch.
+
+**Do not** swap in the Tailwind CDN — file size & purge quality will regress and the look can drift.
 
 ---
 
-## SEO / Metadata
-- `<title>`: “Sponge (hackall360) — Software, AI, and Security Engineering”  
-- `<meta name="description">`: “Full-stack and ML engineer building secure, scalable AI-integrated systems.”  
-- OpenGraph + Twitter cards with banner image.  
-- JSON-LD schema (`Person`) for search engines.
+## 6) Accessibility & Perf (non‑negotiables)
+- Lighthouse: **95+ Performance**, **100 Accessibility**.
+- Alt text on all images; visible focus rings; high contrast.
+- Respect `prefers-reduced-motion`.
+- Tiny JS: keep `assetsInlineLimit: 0` (already set), no giant third‑party bundles.
+
+Run locally:
+```bash
+npx @axe-core/cli http://localhost:4321
+npx lighthouse http://localhost:4321 --view
+```
 
 ---
 
-## Timeline
-| Phase | Task | ETA |
-|--------|------|-----|
-| Phase 1 | Astro setup + Tailwind + GitHub Actions deploy | Day 1 |
-| Phase 2 | Data script + Featured projects grid | Day 2 |
-| Phase 3 | About page + case study template | Day 3–4 |
-| Phase 4 | Visual polish + SEO + Lighthouse optimization | Day 5 |
-| Phase 5 | Optional blog/notes integration | Week 2 |
+## 7) Operational Playbook
+
+### Branch protection (main)
+- Require PRs; require status checks to pass (if using CI mode).
+
+### Scripts to add (optional but handy)
+**package.json**
+```json
+{{
+  "scripts": {{
+    "publish:docs": "npm run build && git add docs && git commit -m \"publish: rebuild site\" || echo \"No changes in docs\""
+  }}
+}}
+```
+
+**scripts/publish.sh**
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+npm ci
+npm run fetch-projects || true   # ok if you keep projects.json manual
+npm run build
+git add docs
+if ! git diff --cached --quiet; then
+  git commit -m "publish: rebuild site"
+  git push origin main
+else
+  echo "No changes in docs to publish."
+fi
+```
+
+Make it executable: `chmod +x scripts/publish.sh`
 
 ---
 
-## Long-Term Plans
-- Add analytics (Plausible or simple server logs).  
-- Integrate a contact form (Formspree or serverless function).  
-- Build an **AI portfolio assistant** section: a chatbot trained on your repos and write-ups.  
-- Optionally mirror on a personal domain once one is registered, keeping GitHub Pages as the default in the meantime.
+## 8) Migration Steps (from current repo state)
+
+- [ ] Decide mode: **Docs-based Pages** (recommended for simplicity) or **CI-based `gh-pages`** (keep current).
+- [ ] If Docs-based Pages: switch Pages source to `main`/`/docs` and disable `.github/workflows/deploy.yml`.
+- [ ] Write 3 case studies using the MDX template; mark them `featured: true`.
+- [ ] Add 2–3 Notes posts.
+- [ ] Add Contact page: booking link + PGP + availability.
+- [ ] Place `public/cv.pdf` and link in header/hero.
+- [ ] Run `npm run build` and sanity‑check `docs/` locally (open `docs/index.html`).
+- [ ] Commit & push. Verify live Pages. Run Lighthouse; fix any red flags.
 
 ---
 
-## Summary
-This site should communicate—through its structure, tone, and performance—that you:
-- Build technology that is fast, secure, and scalable.  
-- Integrate AI into real-world systems with attention to UX and functionality.  
-- Bridge software engineering, machine learning, and security into one cohesive craft.
+## 9) Back‑pocket: Revert to CI at any time
+If you tire of local builds, re‑enable `.github/workflows/deploy.yml` and set Pages to `gh-pages`. The site structure and look remain identical; only the delivery path changes.
 
-**End result:** a living portfolio that looks and feels like the front page of an engineering lab, not a résumé.
+---
 
+**Result:** same design, same content model, fewer moving parts when you want them — and the option to add CI back with one commit.
