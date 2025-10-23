@@ -1,9 +1,9 @@
 # Portfolio Completion & Publishing Plan (Astro → GitHub Pages, low-friction)
 
 Repo: `hackall360.github.io`  
-Stack: **Astro 4 + Tailwind 3**, outDir = `./docs` (already configured), Pages workflow present (`.github/workflows/deploy.yml`).
+Stack: **Astro 4 + Tailwind 3**, build output = `./dist` (deployed via GitHub Actions), Pages workflow present (`.github/workflows/deploy.yml`).
 
-This plan gets the site **feature-complete** and makes publishing **simple** without changing the visual design or information scent. You can choose between **Docs-based Pages (no CI)** or **CI-based deploy**. Both produce the exact same look & feel.
+This plan gets the site **feature-complete** and makes publishing **simple** without changing the visual design or information scent. We now ship via the **CI-based deploy** path; the Docs-based flow remains below for archival context only.
 
 ---
 
@@ -17,7 +17,11 @@ This plan gets the site **feature-complete** and makes publishing **simple** wit
 
 ## 1) Choose your Publishing Mode
 
+> ✅ **Current configuration:** Option B (CI-based deploy to `gh-pages`). Keep `.github/workflows/deploy.yml` active and do not switch GitHub Pages back to `/docs` without revisiting the workflow.
+
 ### A) Docs-based Pages (No CI) — *simplest*
+
+> ℹ️ Historical approach: keep for reference only. The repository no longer commits `docs/`, and GitHub Pages is pointed at `gh-pages`.
 **Use when:** you want to preview/build locally, commit rendered HTML/CSS/JS to `docs/`, and GitHub Pages serves it directly.
 
 1. In **GitHub → Settings → Pages**:
@@ -62,7 +66,7 @@ Already present: `.github/workflows/deploy.yml` with `withastro/action@v1` → d
 - **Projects data:** `src/data/projects.json` is the canonical input. You can:
   - Treat it as **manual content** (commit edits directly).
   - Or generate with `npm run fetch-projects` (uses `scripts/github-projects.mjs`). Pin env vars in a `.env.local` you **don’t** commit.  
-- **Build output:** stays in `./docs` (already set in `astro.config.mjs`).
+- **Build output:** lands in `./dist` (default Astro output). GitHub Actions publishes that folder to the `gh-pages` branch.
 
 Optional guardrail (pre-commit) to prevent forgetting the build when using Docs-based Pages:
 ```bash
@@ -148,10 +152,10 @@ Link to: a repo, a sanitized incident write‑up, and any red‑team notes you c
 ## 5) Exact Look & Feel without Re‑bundling
 You don’t need to change styling or structure to simplify publishing.
 
-- You already build to `docs/` with **hashed** assets under `docs/_astro/…`. Pages can serve this exactly.
-- For **Docs-based Pages** (no CI): build locally → commit `docs/`. The output is byte‑for‑byte what CI would deploy.
-- Tailwind is compiled during build; the generated CSS is embedded in `docs/_astro/*.css`. No runtime Tailwind or CDN required.
-- If you ever need a *one‑off* hotfix without rebuilding, you can edit an HTML file under `docs/...`. Prefer rebuilding, but it’s a true escape hatch.
+- Astro emits hashed assets under `dist/_astro/…`; GitHub Actions syncs that folder to `gh-pages`.
+- If you ever revert to Docs-based Pages, build locally → commit `docs/`. The output is byte‑for-byte what CI would deploy.
+- Tailwind is compiled during build; the generated CSS is embedded in the static `_astro/*.css` files. No runtime Tailwind or CDN required.
+- If you need a *one-off* hotfix while in Docs-based mode, you can edit an HTML file under the published folder. Prefer rebuilding, but it remains an escape hatch.
 
 **Do not** swap in the Tailwind CDN — file size & purge quality will regress and the look can drift.
 
@@ -177,6 +181,8 @@ npx lighthouse http://localhost:4321 --view
 - Require PRs; require status checks to pass (if using CI mode).
 
 ### Scripts to add (optional but handy)
+
+> 💤 Keep these disabled unless you intentionally switch back to Docs-based Pages; the CI pipeline makes them unnecessary day-to-day.
 **package.json**
 ```json
 {{
@@ -208,19 +214,19 @@ Make it executable: `chmod +x scripts/publish.sh`
 
 ## 8) Migration Steps (from current repo state)
 
-- [ ] Decide mode: **Docs-based Pages** (recommended for simplicity) or **CI-based `gh-pages`** (keep current).
-- [ ] If Docs-based Pages: switch Pages source to `main`/`/docs` and disable `.github/workflows/deploy.yml`.
+- [x] Mode: **CI-based `gh-pages`** (current default).
+- [ ] If you ever pivot to Docs-based Pages: switch Pages source to `main`/`/docs` and disable `.github/workflows/deploy.yml`.
 - [ ] Write 3 case studies using the MDX template; mark them `featured: true`.
 - [ ] Add 2–3 Notes posts.
 - [ ] Add Contact page: booking link + PGP + availability.
 - [ ] Place `public/cv.pdf` and link in header/hero.
-- [ ] Run `npm run build` and sanity‑check `docs/` locally (open `docs/index.html`).
+- [ ] Run `npm run build` and sanity‑check the static output locally (open `dist/index.html` or the docs folder if you intentionally switch modes).
 - [ ] Commit & push. Verify live Pages. Run Lighthouse; fix any red flags.
 
 ---
 
-## 9) Back‑pocket: Revert to CI at any time
-If you tire of local builds, re‑enable `.github/workflows/deploy.yml` and set Pages to `gh-pages`. The site structure and look remain identical; only the delivery path changes.
+## 9) Back‑pocket: Revert to Docs-based at any time
+If you ever need a no-CI fallback, disable `.github/workflows/deploy.yml`, build locally to `docs/`, and point Pages at `main`/`/docs`. The site structure and look remain identical; only the delivery path changes.
 
 ---
 
