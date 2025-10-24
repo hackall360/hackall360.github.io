@@ -13,7 +13,7 @@ interface Project {
 const projectList = (projects as Project[]) ?? [];
 const featured = projectList.filter((project) => project.featured).slice(0, 5);
 ---
-<section class="relative mt-20">
+<section class="relative mt-20" id="work">
   <div class="absolute inset-0 -z-10 rounded-[2.75rem] border border-accent/10 bg-surface/60 blur-3xl"></div>
   <div class="mx-auto max-w-6xl rounded-4xl border border-accent/10 bg-surface-elevated/80 px-6 py-18 shadow-glow backdrop-blur-xl sm:px-12">
     <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between" data-motion-reveal data-motion-direction="up">
