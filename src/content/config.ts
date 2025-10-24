@@ -15,6 +15,28 @@ const projects = defineCollection({
   })
 });
 
+const work = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    slug: z.string().min(1),
+    year: z.number().int(),
+    role: z.string(),
+    stack: z.array(z.string()).default([]),
+    summary: z.string(),
+    outcomes: z.array(z.string().min(1)).min(1),
+    links: z
+      .array(
+        z.object({
+          label: z.string(),
+          href: z.string().url()
+        })
+      )
+      .default([]),
+    featured: z.boolean().default(false)
+  })
+});
+
 const notes = defineCollection({
   type: 'content',
   schema: z.object({
@@ -27,4 +49,4 @@ const notes = defineCollection({
   })
 });
 
-export const collections = { projects, notes };
+export const collections = { projects, notes, work };

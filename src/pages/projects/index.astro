@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import projects from '~/data/projects.json';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import ProjectFilters from '~/components/ProjectFilters.astro';
 import ProjectCard from '~/components/ProjectCard.astro';
 
@@ -8,9 +9,20 @@ const pageTitle = 'Projects | hackall360';
 const pageDescription =
   "Explore hackall360's mix of AI experiments, security tooling, and full-stack prototypes.";
 
+type WorkEntry = CollectionEntry<'work'>;
+type Project = WorkEntry['data'] & { slug: string };
+
+const entries = await getCollection('work');
+const projects: Project[] = entries
+  .map((entry) => ({
+    ...entry.data,
+    slug: entry.slug
+  }))
+  .sort((a, b) => b.year - a.year);
+
 const tagGroups = new Map<string, number>();
 for (const project of projects) {
-  for (const tag of project.tags ?? []) {
+  for (const tag of project.stack ?? []) {
     const key = tag.trim();
     tagGroups.set(key, (tagGroups.get(key) ?? 0) + 1);
   }
@@ -25,9 +37,9 @@ const structuredData = {
   itemListElement: projects.map((project, index) => ({
     '@type': 'ListItem',
     position: index + 1,
-    url: project.url,
-    name: project.name,
-    description: project.description
+    url: project.links[0]?.href ?? `/projects/${project.slug}`,
+    name: project.title,
+    description: project.summary
   }))
 };
 ---
