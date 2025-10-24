@@ -9,7 +9,8 @@
     "sync": "astro sync",
     "preview": "astro preview",
     "astro:check": "astro check",
-    "fetch-projects": "node ./scripts/fetch-projects.mjs"
+    "fetch-projects": "node ./scripts/fetch-projects.mjs",
+    "publish:docs": "./scripts/publish.sh"
   },
   "dependencies": {
     "astro": "^4.16.12",
