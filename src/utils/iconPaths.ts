@@ -11,7 +11,8 @@ export type IconName =
   | 'gitPullRequest'
   | 'star'
   | 'fork'
-  | 'arrowUpRight';
+  | 'arrowUpRight'
+  | 'terminal';
 
 export const ICONS: Record<IconName, IconDefinition> = {
   email: {
@@ -66,6 +67,13 @@ export const ICONS: Record<IconName, IconDefinition> = {
     viewBox: '0 0 24 24',
     paths: [
       'M18.25 15.5a.75.75 0 0 1-.75-.75V7.56L7.28 17.78a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L16.44 6.5H9.25a.75.75 0 0 1 0-1.5h9a.75.75 0 0 1 .75.75v9a.75.75 0 0 1-.75.75Z'
+    ]
+  },
+  terminal: {
+    viewBox: '0 0 24 24',
+    paths: [
+      'M5.47 8.47a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06L8.69 12 5.47 8.81a.75.75 0 0 1 0-1.06Z',
+      'M12.75 15.5a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75Z'
     ]
   }
 };
