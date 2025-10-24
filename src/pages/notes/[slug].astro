@@ -41,13 +41,13 @@ const structuredData = {
       <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400">
         <span class="uppercase tracking-[0.35em]">{readTime}</span>
         <span aria-hidden="true">•</span>
-        <time dateTime={note.data.publishedAt.toISOString()}>
+        <time datetime={note.data.publishedAt.toISOString()}>
           Published {note.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
         </time>
         {note.data.updatedAt && note.data.updatedAt.getTime() !== note.data.publishedAt.getTime() && (
           <>
             <span aria-hidden="true">•</span>
-            <time dateTime={note.data.updatedAt.toISOString()}>
+            <time datetime={note.data.updatedAt.toISOString()}>
               Updated {note.data.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </time>
           </>

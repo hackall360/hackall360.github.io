@@ -1,289 +1,131 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import projects from '~/data/projects.json';
-import { getEntryBySlug } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import { createMarkdownProcessor } from '@astrojs/markdown-remark';
-
-const readmeCache = new Map<string, string>();
-let readmeFetchDisabled = false;
-
-async function loadReadmeMarkdown(repoUrl: string) {
-  if (!repoUrl || readmeFetchDisabled) {
-    return null;
-  }
-
-  if (readmeCache.has(repoUrl)) {
-    const cached = readmeCache.get(repoUrl)!;
-    return cached.length > 0 ? cached : null;
-  }
-
-  try {
-    const url = new URL(repoUrl);
-    const [owner, repo] = url.pathname.replace(/^\/+|\/+$/g, '').split('/');
-
-    if (!owner || !repo) {
-      return null;
-    }
-
-    const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/README.md`;
-    const response = await fetch(rawUrl, {
-      headers: {
-        'User-Agent': 'hackall360-portfolio-build',
-        Accept: 'text/plain'
-      }
-    });
-
-    if (!response.ok) {
-      console.warn(`Failed to load README for ${repoUrl}: ${response.status} ${response.statusText}`);
-      readmeCache.set(repoUrl, '');
-      return null;
-    }
-
-    const markdown = await response.text();
-    readmeCache.set(repoUrl, markdown);
-    return markdown;
-  } catch (error) {
-    console.warn(`Unexpected error loading README for ${repoUrl}:`, error);
-    readmeCache.set(repoUrl, '');
-    if (error instanceof Error) {
-      const cause = (error as { cause?: unknown }).cause;
-      const maybeDisable = (value: unknown) => {
-        if (value && typeof value === 'object' && 'code' in value && (value as { code?: string }).code === 'ENETUNREACH') {
-          readmeFetchDisabled = true;
-        }
-      };
-
-      if (cause instanceof AggregateError) {
-        for (const inner of cause.errors ?? []) {
-          maybeDisable(inner);
-          if (readmeFetchDisabled) {
-            break;
-          }
-        }
-      } else {
-        maybeDisable(cause);
-      }
-    }
-    return null;
-  }
-}
+import { getCollection, getEntry } from 'astro:content';
 
 export async function getStaticPaths() {
+  const projects = await getCollection('work');
   return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: { project }
+    params: { slug: project.slug }
   }));
 }
 
-interface Props {
-  project: (typeof projects)[number];
+const { slug } = Astro.params;
+
+if (!slug) {
+  throw new Error('Expected a slug parameter for project detail page.');
 }
 
-const { project } = Astro.props as Props;
-const { slug } = Astro.params;
+const project = await getEntry('work', slug as string);
 
 if (!project) {
   throw new Error(`Project not found for slug: ${slug}`);
 }
 
-type ProjectEntry = CollectionEntry<'projects'>;
+const { data } = project;
+const { Content } = await project.render();
 
-let entry = slug ? await getEntryBySlug('projects', slug) : null;
-
-if (!entry && typeof slug === 'string') {
-  const sanitizedSlug = slug.replace(/[^a-zA-Z0-9-]/g, '');
-  if (sanitizedSlug !== slug) {
-    entry = await getEntryBySlug('projects', sanitizedSlug);
-  }
-}
-
-let Content: Awaited<ReturnType<ProjectEntry['render']>>['Content'] | null = null;
-let caseStudyMarkdown: string | null = null;
-let fallbackHtml: string | null = null;
-let summary = project.description;
-let caseStudyData: Partial<ProjectEntry['data']> = {};
-
-if (entry) {
-  const rendered = await entry.render();
-  Content = rendered.Content;
-  const frontmatter = (rendered as unknown as { data?: Record<string, unknown>; Content: typeof rendered.Content }).data ?? {};
-  caseStudyData = frontmatter as Partial<ProjectEntry['data']>;
-  if (typeof frontmatter.summary === 'string' && frontmatter.summary.length > 0) {
-    summary = frontmatter.summary;
-  }
-} else {
-  const rawCaseStudy = String(project.caseStudy ?? '').trim();
-  if (rawCaseStudy.length > 0 && !rawCaseStudy.startsWith('/projects')) {
-    caseStudyMarkdown = rawCaseStudy;
-  } else {
-    caseStudyMarkdown = await loadReadmeMarkdown(project.url);
-  }
-}
-
-if (!Content && caseStudyMarkdown) {
-  const processor = await createMarkdownProcessor();
-  const rendered = await processor.render(caseStudyMarkdown);
-  fallbackHtml = rendered.code;
-}
-
-const problem =
-  typeof caseStudyData.problem === 'string' && caseStudyData.problem.length > 0
-    ? caseStudyData.problem
-    : 'How do we push this build forward without compromising speed, reliability, or security?';
-
-const solution =
-  typeof caseStudyData.solution === 'string' && caseStudyData.solution.length > 0
-    ? caseStudyData.solution
-    : 'Lean on tight feedback loops, automation, and thoughtful defaults. The README below unpacks the current implementation.';
-
-const techStack = Array.isArray(caseStudyData.techStack)
-  ? (caseStudyData.techStack as string[])
-  : Array.isArray(project.tags)
-    ? project.tags.filter((tag): tag is string => Boolean(tag))
-    : [];
-
-const resultsRaw = caseStudyData.results;
-const results = Array.isArray(resultsRaw)
-  ? (resultsRaw as string[])
-  : typeof resultsRaw === 'string' && resultsRaw.trim().length > 0
-    ? [resultsRaw]
-    : ['Track progress through commit history and release notes in the repository.'];
-
-const githubUrl =
-  typeof caseStudyData.github === 'string' && caseStudyData.github.length > 0 ? (caseStudyData.github as string) : project.url;
-const demoUrl =
-  typeof caseStudyData.demo === 'string' && caseStudyData.demo.length > 0 ? (caseStudyData.demo as string) : null;
+const pageTitle = `${data.title} | Projects | hackall360`;
+const pageDescription = data.summary;
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
   { label: 'Projects', href: '/projects' },
-  { label: project.name, href: `/projects/${project.slug}` }
+  { label: data.title, href: `/projects/${project.slug}` }
 ];
-
-const pageTitle = `${project.name} | hackall360 Projects`;
-const pageDescription = summary || project.description || 'Deep dive into the systems thinking behind this build.';
 
 const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'SoftwareSourceCode',
-  name: project.name,
-  description: pageDescription,
-  url: githubUrl,
-  programmingLanguage: project.language ?? (techStack.length > 0 ? techStack.join(', ') : undefined),
-  isBasedOn: project.url,
-  keywords: Array.isArray(project.tags) ? project.tags.join(', ') : undefined
+  '@type': 'CreativeWork',
+  name: data.title,
+  description: data.summary,
+  datePublished: `${data.year}-01-01`,
+  url: `https://hackall360.github.io/projects/${project.slug}`,
+  author: {
+    '@type': 'Person',
+    name: 'hackall360'
+  },
+  keywords: data.stack.join(', '),
+  workExample: data.outcomes.map((outcome) => ({
+    '@type': 'DefinedTerm',
+    name: outcome
+  }))
 };
 ---
 <BaseLayout title={pageTitle} description={pageDescription} structuredData={structuredData}>
-  <article class="relative mx-auto flex w-full max-w-5xl flex-col gap-12 px-6 py-16">
-    <nav aria-label="Breadcrumb" class="text-sm text-slate-400">
-      <ol class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.25em]">
+  <section class="relative mx-auto flex w-full max-w-5xl flex-col gap-12 px-6 py-20">
+    <nav aria-label="Breadcrumb" class="text-sm font-medium text-neutral-soft">
+      <ol class="flex flex-wrap items-center gap-2">
         {breadcrumbs.map((crumb, index) => (
-          <li class="flex items-center gap-2" aria-current={index === breadcrumbs.length - 1 ? 'page' : undefined}>
-            {index > 0 && <span class="text-slate-600">/</span>}
-            {index === breadcrumbs.length - 1 ? (
-              <span class="text-slate-300">{crumb.label}</span>
-            ) : (
-              <a class="text-accent-light hover:text-accent" href={crumb.href}>{crumb.label}</a>
-            )}
+          <li class="inline-flex items-center gap-2">
+            {index > 0 && <span aria-hidden="true" class="text-accent">/</span>}
+            <a class="transition hover:text-accent-light" href={crumb.href}>
+              {crumb.label}
+            </a>
           </li>
         ))}
       </ol>
     </nav>
 
-    <header class="space-y-6">
-      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-accent-light">Project Case Study</p>
-      <h1 class="text-4xl font-bold text-slate-100 sm:text-5xl">{project.name}</h1>
-      {summary && <p class="max-w-3xl text-lg text-slate-300">{summary}</p>}
-
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <a
-          href="/projects"
-          class="inline-flex items-center justify-center rounded-full border border-slate-700/70 px-5 py-2 text-sm font-medium uppercase tracking-wide text-slate-200 transition hover:border-accent hover:text-accent"
-        >
-          ← Back to Projects
-        </a>
-        {githubUrl && (
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex items-center justify-center rounded-full border border-accent/70 bg-accent/10 px-5 py-2 text-sm font-semibold uppercase tracking-wide text-accent-light transition hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-          >
-            View on GitHub
-          </a>
-        )}
-        {demoUrl && (
-          <a
-            href={demoUrl}
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex items-center justify-center rounded-full border border-slate-700/70 px-5 py-2 text-sm font-semibold uppercase tracking-wide text-slate-200 transition hover:border-accent hover:text-accent"
-          >
-            View Demo
-          </a>
-        )}
+    <header class="space-y-6" data-motion-reveal data-motion-direction="up">
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-accent/80">Case study</p>
+      <h1 class="text-4xl font-bold text-white sm:text-5xl">{data.title}</h1>
+      <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-soft">
+        <span class="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-3 py-1 font-semibold uppercase tracking-wide text-accent-light">
+          {data.year}
+        </span>
+        <span class="text-neutral-emphasis">{data.role}</span>
       </div>
+      <p class="max-w-3xl text-base text-neutral-soft sm:text-lg">{data.summary}</p>
+      {data.links.length > 0 && (
+        <div class="flex flex-wrap gap-3">
+          {data.links.map((link, index) => (
+            <a
+              href={link.href}
+              class={`inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition duration-200 ease-spring-out focus-visible:outline-none ${
+                index === 0
+                  ? 'border border-transparent bg-accent text-slate-950 shadow-sm shadow-accent/30 hover:bg-accent-light'
+                  : 'border border-accent/25 bg-surface-overlay/80 text-neutral-emphasis hover:border-accent hover:text-accent-light'
+              }`}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
     </header>
 
-    <section class="grid grid-cols-1 gap-10 rounded-3xl border border-slate-800/80 bg-slate-900/50 p-8 shadow-xl shadow-accent/5 sm:grid-cols-2">
-      <div class="space-y-6">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <article class="prose prose-invert max-w-none prose-a:text-accent prose-strong:text-white prose-headings:text-white">
+        <Content />
+      </article>
+      <aside class="space-y-8 rounded-3xl border border-accent/15 bg-surface-elevated/70 p-6 shadow-inner-terminal">
         <div>
-          <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Problem</h2>
-          <p class="mt-3 text-base leading-relaxed text-slate-300">{problem}</p>
-        </div>
-        <div>
-          <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Solution</h2>
-          <p class="mt-3 text-base leading-relaxed text-slate-300">{solution}</p>
-        </div>
-      </div>
-      <div class="space-y-6">
-        <div>
-          <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Tech Stack</h2>
-          <ul class="mt-3 flex flex-wrap gap-2">
-            {techStack.length > 0 ? (
-              techStack.map((tech) => (
-                <li class="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-light">
-                  {tech}
-                </li>
-              ))
-            ) : (
-              <li class="text-sm text-slate-500">Stack details coming soon.</li>
-            )}
-          </ul>
-        </div>
-        <div>
-          <h2 class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-light">Results</h2>
-          <ul class="mt-3 space-y-2 text-base leading-relaxed text-slate-300">
-            {results.map((item) => (
-              <li class="flex items-start gap-2">
-                <span class="mt-2 h-1.5 w-1.5 rounded-full bg-accent" />
-                <span>{item}</span>
+          <h2 class="text-xs font-semibold uppercase tracking-wide text-neutral-soft">Outcomes</h2>
+          <ul class="mt-4 space-y-3 text-sm text-neutral-soft" role="list">
+            {data.outcomes.map((outcome) => (
+              <li class="flex gap-3">
+                <span aria-hidden="true" class="mt-1 size-1.5 rounded-full bg-accent-light shadow-[0_0_6px_rgba(34,211,238,0.7)]"></span>
+                <span>{outcome}</span>
               </li>
             ))}
           </ul>
         </div>
-      </div>
-    </section>
-
-    <section class="space-y-6">
-      <div class="flex flex-col gap-2">
-        <h2 class="text-sm font-semibold uppercase tracking-[0.35em] text-accent-light">Deep Dive</h2>
-        <p class="text-base text-slate-400">
-          Detailed notes that surface the engineering trade-offs, safeguards, and iteration loops powering this build.
-        </p>
-      </div>
-
-      <div class="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:text-slate-100 prose-a:text-accent-light prose-code:bg-surface-elevated/60 prose-code:text-accent-light prose-pre:bg-slate-900/70">
-        {Content ? (
-          <Content />
-        ) : fallbackHtml ? (
-          <div set:html={fallbackHtml} />
-        ) : (
-          <p>No additional write-up is available yet. Explore the repository for the latest technical context.</p>
+        {data.stack.length > 0 && (
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-wide text-neutral-soft">Stack</h2>
+            <ul class="mt-4 flex flex-wrap gap-2" role="list">
+              {data.stack.map((item) => (
+                <li class="text-xs">
+                  <span class="inline-flex items-center rounded-full border border-accent/25 bg-surface-overlay/80 px-3 py-1 text-[0.7rem] font-medium uppercase tracking-wide text-neutral-emphasis">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
-      </div>
-    </section>
-  </article>
+      </aside>
+    </div>
+  </section>
 </BaseLayout>

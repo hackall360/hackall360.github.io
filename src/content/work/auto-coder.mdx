@@ -1,0 +1,29 @@
+---
+title: "Auto-Coder: Secure Codegen Gateway"
+slug: "auto-coder"
+year: 2025
+role: "Lead engineer — architecture, security, DX"
+stack:
+  - "Go"
+  - "Postgres"
+  - "OPA"
+  - "GitHub Actions"
+  - "Astro"
+summary: "Policy-gated AI code generation with signed requests, org-aware prompts, and attestations that ship directly into CI."
+outcomes:
+  - "Policy violations dropped 31% in the first month as shadow scripts disappeared."
+  - "Zero secret leakage incidents across 180+ generated branches post-launch."
+  - "Median PR cycle time improved 12% thanks to pre-reviewed scaffolds."
+links:
+  - label: "Repository"
+    href: "https://github.com/hackall360/auto-coder"
+  - label: "Design doc"
+    href: "/notes/auto-coder-design"
+featured: true
+---
+
+**Problem.** Teams were bypassing review with ad-hoc AI scripts, committing unvetted code and leaking environment variables into diffs. We needed a sanctioned path that preserved velocity while enforcing policy and auditability.
+
+**Approach.** Built a gateway service that signs each generation request, injects repo-specific guardrails, and stores prompts + responses in Postgres for review. OPA policies gate prompt inputs, GitHub Actions verify signatures before merging, and Astro docs expose live telemetry for operators.
+
+**Trade-offs.** Deferred IDE plug-ins to focus on CI-integrated flows. We intentionally limited model choice to approved endpoints so we could validate tokens and redact secrets aggressively.

@@ -1,24 +1,19 @@
 ---
-import Icon from '~/components/Icon.astro';
-import { ICONS } from '~/utils/iconPaths';
+interface ProjectLink {
+  label: string;
+  href: string;
+}
 
 interface Project {
   slug: string;
-  name: string;
-  description?: string | null;
-  tags?: string[];
-  stars?: number;
-  forks?: number;
-  contributions?: number;
-  language?: string | null;
-  languages?: Array<{
-    name: string;
-    percentage?: number;
-    bytes?: number;
-  }>;
-  totalLanguageBytes?: number;
-  url: string;
-  caseStudy?: string | null;
+  title: string;
+  summary: string;
+  role: string;
+  year: number;
+  stack: string[];
+  outcomes: string[];
+  links: ProjectLink[];
+  featured: boolean;
 }
 
 interface Props {
@@ -26,50 +21,11 @@ interface Props {
 }
 
 const { project } = Astro.props as Props;
-const tags = project.tags ?? [];
-const languageBreakdown = (project.languages ?? []).map((entry) => ({
-  name: entry.name,
-  percentage: Number.isFinite(entry.percentage) ? Number(entry.percentage) : 0,
-  bytes: Number.isFinite(entry.bytes) ? Number(entry.bytes) : undefined,
-  width: `${Math.max(0.8, Math.min(100, Number(entry.percentage ?? 0)))}%`
-}));
-const primaryLanguage = languageBreakdown[0]?.name ?? project.language ?? 'Language agnostic';
-const description =
-  project.description?.trim() || 'This project is still getting its full write-up. Stay tuned!';
-const stars = typeof project.stars === 'number' ? project.stars : 0;
-const forks = typeof project.forks === 'number' ? project.forks : 0;
-const contributions = typeof project.contributions === 'number' ? project.contributions : 0;
-const formatNumber = (value: number) => new Intl.NumberFormat('en-US').format(value);
-
-const stats: Array<{
-  label: string;
-  value: number;
-  icon: 'contributions' | 'star' | 'fork';
-}> = [
-  { label: 'Contributions', value: contributions, icon: 'contributions' },
-  { label: 'Stars', value: stars, icon: 'star' },
-  { label: 'Forks', value: forks, icon: 'fork' }
-];
-
-const statIconMap = {
-  contributions: ICONS.gitPullRequest,
-  star: ICONS.star,
-  fork: ICONS.fork
-} as const;
-
-const statColorMap = {
-  contributions: 'text-accent-light',
-  star: 'text-amber-300',
-  fork: 'text-sky-300'
-} as const;
-
-const statsWithIcons = stats.map((stat) => ({
-  ...stat,
-  iconDef: statIconMap[stat.icon],
-  colorClass: statColorMap[stat.icon]
-}));
-
-const externalArrowIcon = ICONS.arrowUpRight;
+const tags = project.stack ?? [];
+const outcomes = project.outcomes ?? [];
+const primaryLink = project.links[0];
+const secondaryLinks = project.links.slice(1);
+const detailUrl = `/projects/${project.slug}`;
 ---
 <article
   data-project-card
@@ -78,46 +34,31 @@ const externalArrowIcon = ICONS.arrowUpRight;
   data-motion-direction="up"
   class="group flex w-full flex-col justify-between rounded-3xl border border-accent/15 bg-surface-highlight/70 p-6 text-neutral-emphasis shadow-[0_30px_90px_-45px_rgba(34,211,238,0.4)] transition duration-300 ease-spring-out hover:border-accent/60 hover:shadow-glow focus-within:border-accent/60"
 >
-  <header class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-    <span class="inline-flex items-center gap-2 self-start rounded-full border border-accent/20 bg-surface-overlay/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-light shadow-inner shadow-slate-950/40 transition group-hover:border-accent/60 group-hover:text-accent">
-      <span class="size-2 rounded-full bg-accent-light shadow-[0_0_12px_rgba(34,211,238,0.6)]"></span>
-      {primaryLanguage}
-    </span>
-    <dl class="flex flex-wrap items-center gap-2 text-xs font-semibold text-neutral-soft">
-      {statsWithIcons.map((stat) => (
-        <div class="inline-flex items-center gap-2 rounded-full bg-surface-overlay/70 px-2.5 py-1" key={stat.label}>
-          <dt class="sr-only">{stat.label}:</dt>
-          <span class={`flex items-center justify-center ${stat.colorClass}`}>
-            <Icon icon={stat.iconDef} class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" />
-          </span>
-          <dd class="tabular-nums">{formatNumber(stat.value)}</dd>
-        </div>
-      ))}
-    </dl>
+  <header class="flex flex-col gap-3">
+    <div class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-neutral-soft">
+      <span class="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-surface-overlay/80 px-3 py-1 text-accent-light shadow-inner shadow-slate-950/40 transition group-hover:border-accent/60 group-hover:text-accent">
+        <span class="size-2 rounded-full bg-accent-light shadow-[0_0_12px_rgba(34,211,238,0.6)]"></span>
+        {project.year}
+      </span>
+      <span class="text-neutral-emphasis normal-case">{project.role}</span>
+    </div>
+    <h3 class="break-words text-xl font-semibold text-white transition group-hover:text-accent-light">
+      <a class="break-words outline-none focus-visible:outline-none" href={detailUrl}>
+        {project.title}
+      </a>
+    </h3>
   </header>
 
   <div class="mt-6 space-y-5">
-    <h3 class="break-words text-xl font-semibold text-white transition group-hover:text-accent-light">
-      <a class="break-words outline-none focus-visible:outline-none" href={project.url} target="_blank" rel="noreferrer">
-        {project.name}
-      </a>
-    </h3>
-    <p class="break-words text-sm leading-relaxed text-neutral-soft">{description}</p>
-    {languageBreakdown.length > 0 && (
+    <p class="break-words text-sm leading-relaxed text-neutral-soft">{project.summary}</p>
+    {outcomes.length > 0 && (
       <div class="space-y-2">
-        <p class="text-xs font-semibold uppercase tracking-wide text-neutral-soft">Top languages</p>
+        <p class="text-xs font-semibold uppercase tracking-wide text-neutral-soft">Key outcomes</p>
         <ul class="space-y-2" role="list">
-          {languageBreakdown.map((entry) => (
-            <li class="flex items-center gap-3 text-xs text-neutral-soft" key={entry.name}>
-              <span class="relative flex-1 overflow-hidden rounded-full bg-surface-overlay/60">
-                <span
-                  class="block h-2 rounded-full bg-accent-light transition-all duration-300 ease-spring-out"
-                  style={`width: ${entry.width}`}
-                  aria-hidden="true"
-                />
-              </span>
-              <span class="w-24 text-right font-medium text-neutral-emphasis">{entry.name}</span>
-              <span class="w-12 text-right tabular-nums">{entry.percentage}%</span>
+          {outcomes.map((outcome) => (
+            <li class="flex gap-2 text-sm text-neutral-soft">
+              <span aria-hidden="true" class="mt-1 size-1.5 rounded-full bg-accent-light shadow-[0_0_6px_rgba(34,211,238,0.7)]"></span>
+              <span>{outcome}</span>
             </li>
           ))}
         </ul>
@@ -138,31 +79,28 @@ const externalArrowIcon = ICONS.arrowUpRight;
 
   <footer class="mt-6 flex flex-wrap items-center gap-3">
     <a
-      class="inline-flex items-center justify-center gap-3 rounded-full border border-transparent bg-accent px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-accent/30 transition duration-200 ease-spring-out hover:bg-accent-light focus-visible:outline-none"
-      href={project.url}
-      target="_blank"
-      rel="noreferrer"
+      class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
+      href={detailUrl}
     >
-      View on GitHub
-      <Icon icon={externalArrowIcon} class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" />
+      View case study
     </a>
-    {project.caseStudy && (
+    {primaryLink && (
       <a
-        class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
-        href={project.caseStudy}
+        class="inline-flex items-center justify-center gap-3 rounded-full border border-transparent bg-accent px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-accent/30 transition duration-200 ease-spring-out hover:bg-accent-light focus-visible:outline-none"
+        href={primaryLink.href}
+        rel={primaryLink.href.startsWith('http') ? 'noreferrer noopener' : undefined}
       >
-        Read case study
-        <svg class="h-[clamp(1.75rem,3.5vw,2rem)] w-[clamp(1.75rem,3.5vw,2rem)]" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path
-            fill="currentColor"
-            d="M12 4a1 1 0 0 1 1 1v6l3.553 2.133a1 1 0 1 1-1.006 1.734l-4-2.4A1 1 0 0 1 11 11V5a1 1 0 0 1 1-1Z"
-          />
-          <path
-            fill="currentColor"
-            d="M5 5a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V5Zm3-1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H8Z"
-          />
-        </svg>
+        {primaryLink.label}
       </a>
     )}
+    {secondaryLinks.map((link) => (
+      <a
+        class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
+        href={link.href}
+        rel={link.href.startsWith('http') ? 'noreferrer noopener' : undefined}
+      >
+        {link.label}
+      </a>
+    ))}
   </footer>
 </article>
