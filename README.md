@@ -120,6 +120,23 @@ npm run build
 npm run preview
 ```
 
+The static build publishes to `dist/`. When you need the legacy GitHub Pages flow that serves from `/docs`, copy the contents of `dist/` into `docs/`—the hashed assets stay under `docs/_astro/` so existing cache policies remain valid.
+
+## Accessibility & performance QA
+
+Run automated accessibility and performance checks against a local build before shipping changes:
+
+```bash
+npm run build
+npm run preview -- --host
+npx @axe-core/cli http://localhost:4321 --exit
+npx lighthouse http://localhost:4321 --preset=desktop --chrome-flags="--headless" --output=json --output-path=./.lighthouse-report.json
+```
+
+- Axe must report **0 violations**. Investigate and resolve any failures before merging.
+- Lighthouse scores should stay at or above **Performance ≥ 95**, **Accessibility = 100**, **Best Practices ≥ 95**, and **SEO = 100**.
+- Attach reports or key findings to the pull request description so reviewers can see the latest results.
+
 ## Manual GitHub Pages deploy (fallback when Actions are unavailable)
 
 1. Run `npm run build` to generate the static site inside `dist/`.

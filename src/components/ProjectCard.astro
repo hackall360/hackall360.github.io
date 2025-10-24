@@ -43,7 +43,7 @@ const detailUrl = `/projects/${project.slug}`;
       <span class="text-neutral-emphasis normal-case">{project.role}</span>
     </div>
     <h3 class="break-words text-xl font-semibold text-white transition group-hover:text-accent-light">
-      <a class="break-words outline-none focus-visible:outline-none" href={detailUrl}>
+      <a class="break-words outline-none focus-visible:focus-ring-accent focus-visible:outline-none" href={detailUrl}>
         {project.title}
       </a>
     </h3>
@@ -79,14 +79,14 @@ const detailUrl = `/projects/${project.slug}`;
 
   <footer class="mt-6 flex flex-wrap items-center gap-3">
     <a
-      class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
+      class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none focus-visible:focus-ring-accent"
       href={detailUrl}
     >
       View case study
     </a>
     {primaryLink && (
       <a
-        class="inline-flex items-center justify-center gap-3 rounded-full border border-transparent bg-accent px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-accent/30 transition duration-200 ease-spring-out hover:bg-accent-light focus-visible:outline-none"
+        class="inline-flex items-center justify-center gap-3 rounded-full border border-transparent bg-accent px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-accent/30 transition duration-200 ease-spring-out hover:bg-accent-light focus-visible:outline-none focus-visible:focus-ring-accent"
         href={primaryLink.href}
         rel={primaryLink.href.startsWith('http') ? 'noreferrer noopener' : undefined}
       >
@@ -95,7 +95,7 @@ const detailUrl = `/projects/${project.slug}`;
     )}
     {secondaryLinks.map((link) => (
       <a
-        class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
+        class="inline-flex items-center justify-center gap-3 rounded-full border border-accent/25 bg-surface-overlay/80 px-4 py-2 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none focus-visible:focus-ring-accent"
         href={link.href}
         rel={link.href.startsWith('http') ? 'noreferrer noopener' : undefined}
       >

@@ -28,7 +28,7 @@ const featured = projectList.filter((project) => project.featured).slice(0, 5);
       </div>
       <a
         href="/projects"
-        class="inline-flex items-center justify-center rounded-full border border-accent/30 px-5 py-2.5 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none"
+        class="inline-flex items-center justify-center rounded-full border border-accent/30 px-5 py-2.5 text-sm font-semibold text-neutral-emphasis transition duration-200 ease-spring-out hover:border-accent hover:text-accent-light focus-visible:outline-none focus-visible:focus-ring-accent"
       >
         Browse all projects
       </a>
@@ -77,8 +77,8 @@ const featured = projectList.filter((project) => project.featured).slice(0, 5);
                   href={link.href}
                   class={`inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition duration-200 ease-spring-out focus-visible:outline-none ${
                     index === 0
-                      ? 'border border-transparent bg-accent text-slate-950 shadow-sm shadow-accent/30 hover:bg-accent-light'
-                      : 'border border-accent/25 bg-surface-overlay/80 text-neutral-emphasis hover:border-accent hover:text-accent-light'
+                      ? 'border border-transparent bg-accent text-slate-950 shadow-sm shadow-accent/30 hover:bg-accent-light focus-visible:focus-ring-accent'
+                      : 'border border-accent/25 bg-surface-overlay/80 text-neutral-emphasis hover:border-accent hover:text-accent-light focus-visible:focus-ring-accent'
                   }`}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 >

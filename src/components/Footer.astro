@@ -64,7 +64,7 @@ const arrowIcon = ICONS.arrowUpRight;
           return action.type === 'copy' ? (
             <button
               type="button"
-              class="group flex w-full items-center justify-between gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 px-4 py-3 text-left font-mono text-xs uppercase tracking-[0.35em] text-slate-300 transition hover:border-accent/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              class="group flex w-full items-center justify-between gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 px-4 py-3 text-left font-mono text-xs uppercase tracking-[0.35em] text-slate-300 transition hover:border-accent/70 focus-visible:outline-none focus-visible:focus-ring-accent"
               data-copy={action.value}
             >
               <span class="flex w-full items-center gap-3 text-[0.7rem] tracking-[0.4em]">
@@ -80,7 +80,7 @@ const arrowIcon = ICONS.arrowUpRight;
             </button>
           ) : (
             <a
-              class="group flex w-full items-center justify-between gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 px-4 py-3 text-left font-mono text-xs uppercase tracking-[0.35em] text-slate-300 transition hover:border-accent/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              class="group flex w-full items-center justify-between gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 px-4 py-3 text-left font-mono text-xs uppercase tracking-[0.35em] text-slate-300 transition hover:border-accent/70 focus-visible:outline-none focus-visible:focus-ring-accent"
               href={action.href}
               target="_blank"
               rel="noopener noreferrer"

@@ -127,6 +127,16 @@ function clientScriptPlugin() {
 export default defineConfig({
   site: 'https://hackall360.github.io',
   outDir: './dist',
+  build: {
+    assetsDir: '_astro',
+    rollupOptions: {
+      output: {
+        entryFileNames: '_astro/[name].[hash].js',
+        chunkFileNames: '_astro/[name].[hash].js',
+        assetFileNames: '_astro/[name].[hash][extname]'
+      }
+    }
+  },
   vite: {
     build: {
       assetsInlineLimit: 0
