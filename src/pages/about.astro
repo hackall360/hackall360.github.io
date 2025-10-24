@@ -49,32 +49,35 @@ const contactLinks: ContactLink[] = [
     label: 'Email',
     href: 'mailto:alex.schott2002@gmail.com',
     copyValue: 'alex.schott2002@gmail.com',
-    description: 'Copy the address to start a technical deep-dive.',
+    description: 'Copy the address or open your mail client to reach me directly.',
     type: 'copy',
     icon: 'email'
   },
   {
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/in/alex-schott-395628233/',
-    description: 'Connect for collaborations and leadership opportunities.',
+    description: 'Follow my work history and send a quick DM for collaborations.',
     type: 'external',
     icon: 'linkedin'
   },
   {
-    label: 'Indeed',
-    href: 'https://profile.indeed.com/p/alexs-hxc5xkz',
-    description: 'Review recommendations and role history on Indeed.',
-    type: 'external',
-    icon: 'indeed'
-  },
-  {
     label: 'GitHub',
     href: 'https://github.com/hackall360',
-    description: 'Browse experiments, automations, and platform tooling.',
+    description: 'Explore infrastructure experiments, automations, and tooling.',
     type: 'external',
     icon: 'github'
   }
 ];
+
+const pgpPublicKey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEZcfb0RYJKwYBBAHaRw8BAQdAC2ut+8pkAX2C2JB8yL+ub1djlY8GgP8Jwgis
+5u8xg62+G0doYWNrYWxsMzYwIDxhbmNob3JAaGFja2FsbDM2MC5kZXY+iJAEExYK
+ADsWIQSnN9iwAxB8N4pOeT48GV4Pog9m5gUCZcfb0QIbAwULCQgHAgIiAgYVCgkI
+CwIEFgIDAQIeBwIXgAAKCRD48GV4Pog9m5hwAP9W2x3f7kkgRiP0A8a4Ks7IjMba
+hxobzvXLSkLR68ji1QD/dLU4bEhkFOwN2pC4A9vAaF3Ifm0jv8YIfr3W26ptgE=
+=wW4p
+-----END PGP PUBLIC KEY BLOCK-----`;
 
 const formEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
 const formEnabled = Boolean(formEndpoint);
@@ -186,6 +189,7 @@ const formEnabled = Boolean(formEndpoint);
                   type="button"
                   class="group flex w-full flex-col gap-3 rounded-2xl border border-slate-700/60 bg-slate-950/40 p-5 text-left transition hover:border-accent/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   data-copy={contact.copyValue}
+                  aria-label={`Copy email address ${contact.copyValue} to the clipboard`}
                 >
                   <span class="flex w-full items-center gap-3">
                     <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent/50 bg-accent/10 text-accent-light shadow-inner shadow-cyan-400/20 sm:h-12 sm:w-12">
@@ -204,6 +208,8 @@ const formEnabled = Boolean(formEndpoint);
                   href={contact.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Open ${contact.label} in a new tab`}
+                  title={contact.label}
                 >
                   <span class="flex w-full items-center gap-3">
                     <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent/50 bg-accent/10 text-accent-light shadow-inner shadow-cyan-400/20 sm:h-12 sm:w-12">
@@ -218,11 +224,50 @@ const formEnabled = Boolean(formEndpoint);
               );
             })}
           </div>
-          <p class="text-xs text-slate-400">
-            Prefer async updates? Mention your timezone and desired collaboration window so we can align without the back-and-forth.
-          </p>
+          <div class="space-y-4">
+            <p class="text-sm text-slate-300">
+              Availability stays intentionally tight to safeguard delivery focus. Weekly holds exist for incident retrospectives, platform roadmap reviews, and onboarding walkthroughs, typically during Pacific Time (PST/PDT) business hours.
+            </p>
+            <p class="text-xs text-slate-400">
+              Prefer async updates? Mention your timezone and desired collaboration window so we can align without the back-and-forth.
+            </p>
+            <div class="space-y-3 rounded-2xl border border-slate-800/70 bg-slate-950/60 p-4">
+              <h3 class="text-sm font-semibold uppercase tracking-[0.4em] text-accent-light/80">PGP public key</h3>
+              <p class="text-xs text-slate-400">Use the key below for encrypted briefs or credential handoffs.</p>
+              <pre class="max-h-64 overflow-auto rounded-xl bg-slate-900/80 p-4 text-[0.65rem] leading-relaxed text-accent-light">
+                <code>{pgpPublicKey}</code>
+              </pre>
+            </div>
+          </div>
         </div>
-        <div class="rounded-2xl border border-slate-800/70 bg-slate-950/60 p-6 shadow-[0_0_60px_-45px_rgba(45,212,191,0.7)]">
+        <div class="space-y-6 rounded-2xl border border-slate-800/70 bg-slate-950/60 p-6 shadow-[0_0_60px_-45px_rgba(45,212,191,0.7)]">
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold uppercase tracking-[0.4em] text-accent-light/80">Sync touchpoints</h3>
+            <p class="text-sm text-slate-300">
+              No scheduling platform required — request time directly and we’ll coordinate a slot that fits both calendars.
+            </p>
+            <ul class="space-y-3 text-sm text-slate-300">
+              <li class="flex items-start gap-3">
+                <span aria-hidden="true" class="mt-1 inline-block h-2 w-2 rounded-full bg-accent-light"></span>
+                <span>Share two or three windows that work for you, plus your timezone.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span aria-hidden="true" class="mt-1 inline-block h-2 w-2 rounded-full bg-accent-light"></span>
+                <span>Let me know the agenda — incident review, roadmap sync, or coaching — so prep material arrives early.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span aria-hidden="true" class="mt-1 inline-block h-2 w-2 rounded-full bg-accent-light"></span>
+                <span>Expect a confirmation or alternative within one business day.</span>
+              </li>
+            </ul>
+            <a
+              href="mailto:alex.schott2002@gmail.com?subject=Schedule%20a%20sync%20with%20hackall360"
+              class="inline-flex items-center justify-center rounded-xl border border-accent/50 px-4 py-2 text-sm font-semibold text-accent-light transition hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              aria-label="Email hackall360 to request a meeting"
+            >
+              Request a meeting via email
+            </a>
+          </div>
           {formEnabled ? (
             <form action={formEndpoint} method="POST" class="space-y-4" data-formspree>
               <input type="hidden" name="form-name" value="about-contact" />
@@ -265,7 +310,7 @@ const formEnabled = Boolean(formEndpoint);
               <div class="flex flex-col gap-2">
                 <button
                   type="submit"
-                  class="inline-flex items-center justify-center gap-2 rounded-xl border border-accent/50 bg-accent/20 px-4 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-accent-light transition hover:bg-accent/30"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl border border-accent/50 bg-accent/20 px-4 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-accent-light transition hover:bg-accent/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   Send message
                 </button>
@@ -284,6 +329,7 @@ const formEnabled = Boolean(formEndpoint);
                 type="button"
                 class="inline-flex items-center gap-2 rounded-full border border-accent/60 bg-accent/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-accent-light"
                 data-copy="alex.schott2002@gmail.com"
+                aria-label="Copy email address alex.schott2002@gmail.com to the clipboard"
               >
                 <span class="copy-default">Copy email</span>
                 <span class="copy-success hidden">Copied!</span>
