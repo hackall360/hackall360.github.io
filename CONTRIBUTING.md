@@ -8,6 +8,12 @@ Thanks for helping improve the site! A few conventions keep the workflow reprodu
 2. Install dependencies with `npm ci` to honor the checked-in `package-lock.json`.
 3. Copy `.env.local.example` to `.env.local` and fill in any required values (see below).
 
+## Branch protection and reviews
+
+- The `main` branch is protected—open a pull request for every change instead of pushing directly.
+- Required status checks must succeed when GitHub Actions is enabled. Keep the default deployment workflow (and any future CI jobs) green so merges are unblocked.
+- If CI is paused temporarily, the pull-request requirement remains but the status checks clear automatically after the queue drains.
+
 ## Dependency management
 
 - Never delete `package-lock.json`. It captures the exact dependency graph GitHub Actions uses to deploy the site.
@@ -25,14 +31,12 @@ GITHUB_TOKEN="<token>" npm run fetch-projects
 
 The script reads configuration from environment variables. The `.env.local.example` file outlines the supported keys, including optional filters, cache controls, and topic naming conventions.
 
-## Optional: Docs-based Pages publishing
+## Manual GitHub Pages publishes
 
-The default deployment path relies on GitHub Actions, but if you temporarily switch back to the Docs-based GitHub Pages flow, add the following Git hook to avoid forgetting the static build:
+Automated deploys are handled by GitHub Actions, but the repository keeps a manual escape hatch for emergencies. Run the helper script when CI is unavailable:
 
 ```bash
-# .git/hooks/pre-commit
-npm run build
-git add docs
+npm run publish:docs
 ```
 
-Make the hook executable with `chmod +x .git/hooks/pre-commit`. Remove it once you return to the CI-driven publish flow.
+The script builds the site, refreshes a temporary `gh-pages` worktree, commits any changes, and pushes to `origin/gh-pages`. To customize the destination branch or commit message, export `PUBLISH_BRANCH` or `PUBLISH_COMMIT_MESSAGE` before invoking the command. The script refuses to run in CI so manual publishes stay an explicit, local action.

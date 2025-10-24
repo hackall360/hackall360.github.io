@@ -161,6 +161,22 @@ npx lighthouse http://localhost:4321 --preset=desktop --chrome-flags="--headless
 
 The automated workflow should be re-enabled as soon as possible so future deploys stay reproducible.
 
+### Branch protection and release gates
+
+- All changes land on `main` via pull requests. Direct pushes are disabled so reviewers can sign off on every deploy.
+- When GitHub Actions is active, required status checks must pass before the merge button unlocks. Keep the default `Deploy site` workflow (and any additional CI jobs) healthy so branch protection rules can succeed.
+- When CI is paused, the rules still require a pull request, but the status-check requirement automatically clears once no workflows are queued.
+
+### Manual publish helper
+
+Run `npm run publish:docs` when you need the scripted fallback instead of the step-by-step instructions above. The helper does the following:
+
+1. Builds the static assets (`npm run build`).
+2. Refreshes a temporary `gh-pages` worktree in `.publish-gh-pages/`.
+3. Copies `dist/` into the worktree, commits, and pushes to `origin/gh-pages` when files changed.
+
+Override the target branch or commit message by exporting `PUBLISH_BRANCH` or `PUBLISH_COMMIT_MESSAGE` before invoking the script. The helper refuses to run in CI so the manual flow stays a deliberate, local-only action.
+
 ## Notes collection
 
 - Markdown notes live in `src/content/notes/` and follow the schema defined in `src/content/config.ts`.
