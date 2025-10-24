@@ -4,9 +4,10 @@ Personal site built with [Astro](https://astro.build/).
 
 ## Requirements
 
-- Node.js 18 or later
-- npm 9 or later
+- Node.js [LTS 20.17.0](https://nodejs.org/en/blog/release/v20.17.0) (`.nvmrc` is provided—run `nvm use` to align locally.)
+- npm 10 or later (install alongside the LTS runtime above)
 - (Recommended) A GitHub personal access token with `public_repo` scope exposed as `GITHUB_TOKEN` when running project automation scripts.
+- Keep `package-lock.json` committed and install dependencies with `npm ci` for reproducible builds.
 
 ## Environment variables
 
@@ -50,10 +51,11 @@ Project metadata now refreshes automatically when you run `astro dev` or `astro 
 environment variables shown above and skips work when the cached JSON file is still fresh. Set `GITHUB_PROJECTS_AUTO_SYNC=false`
 if you prefer to opt out of the automated step.
 
-Use the `fetch-projects` script to manually synchronize local project data with GitHub:
+Project metadata is treated as generated content—use the `fetch-projects` script to synchronize `src/data/projects.json` with GitHub when you need a fresh snapshot:
 
 ```bash
-npm install
+nvm use
+npm ci
 GITHUB_TOKEN="<token>" npm run fetch-projects
 ```
 
@@ -108,6 +110,8 @@ npm run dev
 ```
 
 Open http://localhost:4321/ to iterate locally.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for environment setup tips, dependency policies, and instructions on refreshing project data.
 
 ## Production build
 
