@@ -23,6 +23,7 @@ const links: Array<{ href: string; label: string; comingSoon?: boolean }> = [
           class:list={[
             'rounded-md border border-accent/15 px-3 py-1 transition-colors duration-200 ease-spring-out focus-visible:outline-none',
             'hover:border-accent hover:bg-accent/10 hover:text-accent-light',
+            'focus-visible:focus-ring-accent focus-visible:border-accent focus-visible:text-accent-light',
             item.comingSoon && 'pointer-events-none opacity-50'
           ]}
           href={item.href}
