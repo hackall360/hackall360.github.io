@@ -1,0 +1,88 @@
+---
+interface SignalLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface Signal {
+  title: string;
+  description: string;
+  link: SignalLink;
+}
+
+const signals: Signal[] = [
+  {
+    title: 'Threat models shape the roadmap',
+    description:
+      'Design reviews include explicit misuse cases, then we rehearse the failure paths through recurring tabletop drills.',
+    link: {
+      label: 'Auth outage tabletop kit',
+      href: '/notes/incident-drill-auth-outage'
+    }
+  },
+  {
+    title: 'Default-deny stays enforced',
+    description:
+      'Access policies ship as code with automated drift detection, keeping scopes narrow and auditable.',
+    link: {
+      label: 'SuperToken repository',
+      href: 'https://github.com/hackall360/SuperToken',
+      external: true
+    }
+  },
+  {
+    title: 'Builds publish signed evidence',
+    description:
+      'Critical pipelines emit CycloneDX SBOMs and attestations, blocking promotion when evidence goes missing.',
+    link: {
+      label: 'Minimal SBOM + provenance workflow',
+      href: '/notes/minimal-sbom-github-actions'
+    }
+  },
+  {
+    title: 'Secrets expire by default',
+    description:
+      'Short-lived credentials, pre-commit scans, and automated rotations shrink the blast radius of leaks.',
+    link: {
+      label: 'Secret scanning guardrails',
+      href: '/notes/how-i-test-for-secrets-in-prs'
+    }
+  }
+];
+---
+<section class="rounded-4xl border border-emerald-400/20 bg-emerald-500/5 p-8 text-slate-100 shadow-[0_0_60px_-30px_rgba(34,197,94,0.6)] sm:p-12">
+  <div class="mx-auto flex max-w-5xl flex-col gap-8">
+    <header class="space-y-3">
+      <p class="font-mono text-xs uppercase tracking-[0.5em] text-emerald-300/80">// security stance</p>
+      <h2 class="text-3xl font-semibold text-white sm:text-4xl">Security is shipped with the feature, not after it.</h2>
+      <p class="text-sm leading-relaxed text-emerald-100/80 sm:text-base">
+        Four commitments that keep delivery fast without relaxing threat coverage, backed by real runbooks and shipped code.
+      </p>
+    </header>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      {signals.map((signal) => {
+        const isExternal = Boolean(signal.link.external);
+        return (
+          <article class="group flex h-full flex-col gap-4 rounded-3xl border border-emerald-400/20 bg-slate-950/50 p-6 shadow-inner shadow-emerald-500/10 transition hover:border-emerald-300/60 focus-within:border-emerald-300/60">
+            <div class="space-y-2">
+              <h3 class="text-xl font-semibold text-white">{signal.title}</h3>
+              <p class="text-sm leading-relaxed text-emerald-100/80">{signal.description}</p>
+            </div>
+            <a
+              class="mt-auto inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-emerald-200 transition hover:text-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+              href={signal.link.href}
+              target={isExternal ? '_blank' : undefined}
+              rel={isExternal ? 'noopener noreferrer' : undefined}
+            >
+              {signal.link.label}
+              <span aria-hidden="true" class="transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1">
+                →
+              </span>
+            </a>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
