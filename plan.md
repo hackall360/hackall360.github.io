@@ -63,9 +63,7 @@ Already present: `.github/workflows/deploy.yml` with `withastro/action@v1` → d
 ## 2) Make the Build Deterministic (no “works on my machine”)
 - **Pin Node:** use `.nvmrc` with a specific LTS (e.g., `20.17.0`).  
 - **Lock deps:** keep `package-lock.json` in version control (already present).  
-- **Projects data:** `src/data/projects.json` is the canonical input. You can:
-  - Treat it as **manual content** (commit edits directly).
-  - Or generate with `npm run fetch-projects` (uses `scripts/github-projects.mjs`). Pin env vars in a `.env.local` you **don’t** commit.  
+- **Projects data:** `src/data/projects.json` stays generated via `npm run fetch-projects` (see `.env.local.example` for the env vars that drive the script). Commit the refreshed JSON whenever you sync from GitHub.
 - **Build output:** lands in `./dist` (default Astro output). GitHub Actions publishes that folder to the `gh-pages` branch.
 
 Optional guardrail (pre-commit) to prevent forgetting the build when using Docs-based Pages:
