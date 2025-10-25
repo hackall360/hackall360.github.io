@@ -27,6 +27,13 @@ const contactActions: ContactAction[] = [
     icon: 'email'
   },
   {
+    label: 'Intro call',
+    description: 'Book a 15-minute intro via Cal.com.',
+    type: 'external',
+    href: 'https://cal.com/hackall360/intro',
+    icon: 'calendar'
+  },
+  {
     label: 'GitHub',
     description: 'Open the latest experiments in a new tab.',
     type: 'external',
@@ -58,6 +65,9 @@ const arrowIcon = ICONS.arrowUpRight;
     <div>
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent-light">$ tail -f now</p>
       <h2 class="mt-2 text-lg font-semibold text-white">Let’s connect</h2>
+      <p class="mt-2 max-w-md text-xs uppercase tracking-[0.3em] text-slate-400">
+        Open to staff+ platform & security roles and short consults.
+      </p>
       <div class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {contactActions.map((action) => {
           const icon = ICONS[action.icon];

@@ -1,6 +1,5 @@
 ---
 title: "SuperToken: Unified Access Platform"
-slug: "supertoken"
 year: 2023
 role: "Security engineering lead — authz, telemetry, incident response"
 stack:

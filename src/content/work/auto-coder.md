@@ -1,6 +1,5 @@
 ---
 title: "Auto-Coder: Secure Codegen Gateway"
-slug: "auto-coder"
 year: 2025
 role: "Lead engineer — architecture, security, DX"
 stack:
