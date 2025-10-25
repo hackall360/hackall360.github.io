@@ -3,17 +3,22 @@ const metrics: Array<{ label: string; value: string; description: string }> = [
   {
     label: 'Production launches',
     value: '35+',
-    description: 'Shipped across platform, growth, and observability initiatives.'
+    description: 'Kubernetes, serverless, and edge rollouts guided from design review to steady state.'
   },
   {
-    label: 'Incidents led',
-    value: '20%',
-    description: 'Reduction in meantime-to-recovery by leading on-call and playbook revamps.'
-  },
-  {
-    label: 'Docs published',
+    label: 'Docs & runbooks',
     value: '120+',
-    description: 'Guides, runbooks, and RFCs keeping teams aligned and unblocked.'
+    description: 'SLOs, incident playbooks, and onboarding guides teams actually reference.'
+  },
+  {
+    label: 'MTTR improvement',
+    value: '22–38%',
+    description: 'Measured across two orgs after observability upgrades and on-call ritual redesign.'
+  },
+  {
+    label: 'Security coverage',
+    value: 'Offense + defense',
+    description: 'Threat modeling, hardening, and abuse testing to keep guardrails honest.'
   }
 ];
 ---
@@ -23,7 +28,7 @@ const metrics: Array<{ label: string; value: string; description: string }> = [
     <h2 class="font-mono text-xs uppercase tracking-[0.5em] text-accent/80" data-motion-reveal data-motion-direction="up">
       // by the numbers
     </h2>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3" data-motion-group data-motion-stagger="0.1">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" data-motion-group data-motion-stagger="0.1">
       {metrics.map((metric) => (
         <article
           data-motion-child

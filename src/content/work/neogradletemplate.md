@@ -1,6 +1,5 @@
 ---
 title: "NeoGradleTemplate: Hardened JVM Service Skeleton"
-slug: "neogradletemplate"
 year: 2024
 role: "Platform lead — build, testing, onboarding"
 stack:

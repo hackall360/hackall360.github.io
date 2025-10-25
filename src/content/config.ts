@@ -15,11 +15,17 @@ const projects = defineCollection({
   })
 });
 
+const linkHrefSchema = z.string().refine(
+  (value) => value.startsWith('/') || value.startsWith('https://') || value.startsWith('http://'),
+  {
+    message: 'Link href must be an absolute URL or start with "/".'
+  }
+);
+
 const work = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    slug: z.string().min(1),
     year: z.number().int(),
     role: z.string(),
     stack: z.array(z.string()).default([]),
@@ -29,7 +35,7 @@ const work = defineCollection({
       .array(
         z.object({
           label: z.string(),
-          href: z.string().url()
+          href: linkHrefSchema
         })
       )
       .default([]),
