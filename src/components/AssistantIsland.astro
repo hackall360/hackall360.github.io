@@ -94,23 +94,49 @@ const apiUrl =
         responseBox.replaceChildren(thinking);
 
         try {
+          const systemPrompt = [
+            'You are the hackall360 portfolio assistant.',
+            'Provide concise summaries about platform reliability work, migrations, facilitation rituals, and active experiments.',
+            'Politely decline unrelated requests, avoid inventing commitments, and remind users to verify details with the linked repositories when appropriate.'
+          ].join(' ');
+
+          const body = {
+            model: 'gpt-4o-mini',
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: prompt }
+            ],
+            temperature: 0.6,
+            reasoning_effort: 'medium'
+          };
+
           const res = await fetch(apiUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-              prompt,
-              context: 'portfolio-assistant'
-            })
+            body: JSON.stringify(body)
           });
 
-          if (!res.ok) {
-            throw new Error(`Request failed with status ${res.status}`);
+          const fallback = 'The assistant returned an empty response.';
+          let data = null;
+
+          try {
+            data = await res.json();
+          } catch (parseError) {
+            console.warn('Failed to parse assistant response JSON.', parseError);
           }
 
-          const data = await res.json();
-          const message = data?.reply ?? 'The assistant returned an empty response.';
+          if (!res.ok) {
+            const pollinationsMessage = data?.error?.message;
+            throw new Error(
+              pollinationsMessage && pollinationsMessage.trim().length > 0
+                ? pollinationsMessage
+                : `Request failed with status ${res.status}`
+            );
+          }
+
+          const message = data?.choices?.[0]?.message?.content ?? fallback;
           const paragraph = document.createElement('p');
           paragraph.textContent = message;
           responseBox.replaceChildren(paragraph);
@@ -118,7 +144,12 @@ const apiUrl =
           console.error(error);
           const errorParagraph = document.createElement('p');
           errorParagraph.className = 'text-red-300';
-          errorParagraph.textContent = 'The assistant is unavailable. Try again later or reach out directly.';
+          const defaultMessage = 'The assistant is unavailable. Try again later or reach out directly.';
+          const extraDetails =
+            error instanceof Error && typeof error.message === 'string' && error.message.trim().length > 0
+              ? ` Details: ${error.message}`
+              : '';
+          errorParagraph.textContent = `${defaultMessage}${extraDetails}`;
           responseBox.replaceChildren(errorParagraph);
         }
       });
