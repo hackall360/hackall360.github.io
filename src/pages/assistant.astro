@@ -24,8 +24,9 @@ const assistantEnabled = !isDisabled;
       <h1 class="text-4xl font-semibold text-white sm:text-5xl">Ask the portfolio copilot.</h1>
       <p class="text-base leading-relaxed text-slate-300 sm:text-lg">
         This interactive prototype taps into a hosted inference API to surface concise summaries about platform outcomes,
-        facilitation rituals, and active experiments. It defaults to a Pollinations endpoint that validates requests via the
-        <span class="whitespace-nowrap">hackall360.github.io</span> referrer, with overrides handled through environment variables.
+        facilitation rituals, and active experiments. It defaults to a Pollinations endpoint that accepts anonymous browser
+        calls only when they present the <span class="whitespace-nowrap">hackall360.github.io</span> referrer; activity is subject to
+        Pollinations&apos; public rate limits, so sustained chats may be throttled unless you point the client at your own proxy.
       </p>
       {!assistantEnabled && (
         <div class="rounded-2xl border border-amber-400/40 bg-amber-500/10 p-4 text-sm text-amber-200">
@@ -35,7 +36,8 @@ const assistantEnabled = !isDisabled;
             <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">{DEFAULT_ASSISTANT_API_URL}</code>
             when no override exists. Provide
             <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_URL</code>
-            to target a different service, or leave it blank to keep this preview offline.
+            to target a different service, or leave it blank to keep this preview offline and avoid Pollinations&apos; anonymous
+            rate limits altogether.
           </p>
         </div>
       )}
@@ -47,6 +49,10 @@ const assistantEnabled = !isDisabled;
       <h2 class="text-lg font-semibold text-white">Safety and privacy guardrails</h2>
       <ul class="list-disc space-y-2 pl-5">
         <li>The assistant forwards prompts to a configured API endpoint over HTTPS. No prompts are stored client-side.</li>
+        <li>
+          Browser requests hit Pollinations directly by default, disclosing your IP address and user agent to their service;
+          consider a first-party proxy if you need stricter privacy guarantees.
+        </li>
         <li>Disable analytics or the assistant entirely by omitting the related environment variables.</li>
         <li>Responses are advisory; verify architectural decisions with the source repositories before implementing.</li>
       </ul>
