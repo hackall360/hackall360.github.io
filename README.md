@@ -42,7 +42,7 @@ Set these optional variables to toggle specific site features:
 | `PUBLIC_PLAUSIBLE_API_HOST` | Optional custom API endpoint for self-hosted Plausible deployments. |
 | `PUBLIC_PLAUSIBLE_SRC` | Override the Plausible script source URL (defaults to `https://plausible.io/js/script.js`). |
 | `PUBLIC_FORMSPREE_ENDPOINT` | Formspree endpoint used by the `/about` contact form. |
-| `PUBLIC_ASSISTANT_API_URL` | Hosted inference endpoint for the `/assistant` prototype. |
+| `PUBLIC_ASSISTANT_API_URL` | Hosted inference endpoint for the `/assistant` prototype. Defaults to Pollinations with a baked-in `https://hackall360.github.io` referrer and inherits their anonymous browser rate limits; override with your own proxy if you need higher throughput or different referrer rules. |
 | `PUBLIC_ASSISTANT_API_KEY` | Public token or ephemeral key passed to the hosted inference endpoint. Prefer proxying secrets through your own backend in production. |
 
 ## Fetching project metadata
