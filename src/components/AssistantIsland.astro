@@ -1,7 +1,18 @@
 ---
-const apiUrl = import.meta.env.PUBLIC_ASSISTANT_API_URL ?? '';
-const apiToken = import.meta.env.PUBLIC_ASSISTANT_API_KEY ?? '';
-const assistantEnabled = Boolean(apiUrl && apiToken);
+const DEFAULT_ASSISTANT_API_URL =
+  'https://text.pollinations.ai/openai?referrer=https://hackall360.github.io';
+
+const configuredApiUrl = import.meta.env.PUBLIC_ASSISTANT_API_URL;
+const disabledValues = new Set(['', 'false', '0', 'off']);
+const isDisabled =
+  typeof configuredApiUrl === 'string' &&
+  disabledValues.has(configuredApiUrl.trim().toLowerCase());
+
+const assistantEnabled = !isDisabled;
+const apiUrl =
+  assistantEnabled && typeof configuredApiUrl === 'string' && configuredApiUrl.trim().length > 0
+    ? configuredApiUrl
+    : DEFAULT_ASSISTANT_API_URL;
 ---
 
 <div class="space-y-6">
@@ -18,7 +29,6 @@ const assistantEnabled = Boolean(apiUrl && apiToken);
         class="space-y-3 rounded-2xl border border-slate-800/60 bg-slate-950/50 p-4"
         data-assistant-form
         data-api-url={apiUrl}
-        data-api-token={apiToken}
       >
         <label class="flex flex-col gap-2 text-sm text-slate-200">
           <span class="font-semibold uppercase tracking-[0.3em] text-accent-light">Prompt</span>
@@ -49,9 +59,11 @@ const assistantEnabled = Boolean(apiUrl && apiToken);
   ) : (
     <div class="space-y-3 rounded-2xl border border-slate-800/60 bg-slate-950/40 p-4 text-sm text-slate-300">
       <p>
-        Set <code class="rounded bg-slate-800 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_URL</code>
-        and <code class="rounded bg-slate-800 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_KEY</code>
-        to enable the assistant. Without them, the UI remains in safe standby mode.
+        The assistant automatically enables for requests originating from
+        <span class="whitespace-nowrap text-white">hackall360.github.io</span> via the Pollinations referrer fallback.
+        Provide
+        <code class="rounded bg-slate-800 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_URL</code>
+        to override the endpoint, or leave it blank to keep the UI disabled.
       </p>
       <p class="text-xs text-slate-500">
         For production, route requests through a server-side proxy so sensitive credentials stay private.
@@ -71,7 +83,6 @@ const assistantEnabled = Boolean(apiUrl && apiToken);
         const formData = new FormData(form);
         const prompt = formData.get('prompt');
         const apiUrl = form.dataset.apiUrl;
-        const apiToken = form.dataset.apiToken;
 
         if (!prompt || typeof prompt !== 'string') {
           return;
@@ -86,8 +97,7 @@ const assistantEnabled = Boolean(apiUrl && apiToken);
           const res = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${apiToken}`
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               prompt,
