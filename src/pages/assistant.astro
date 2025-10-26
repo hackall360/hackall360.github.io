@@ -2,7 +2,16 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import AssistantIsland from '~/components/AssistantIsland.astro';
 
-const assistantEnabled = Boolean(import.meta.env.PUBLIC_ASSISTANT_API_URL && import.meta.env.PUBLIC_ASSISTANT_API_KEY);
+const DEFAULT_ASSISTANT_API_URL =
+  'https://text.pollinations.ai/openai?referrer=https://hackall360.github.io';
+
+const configuredApiUrl = import.meta.env.PUBLIC_ASSISTANT_API_URL;
+const disabledValues = new Set(['', 'false', '0', 'off']);
+const isDisabled =
+  typeof configuredApiUrl === 'string' &&
+  disabledValues.has(configuredApiUrl.trim().toLowerCase());
+
+const assistantEnabled = !isDisabled;
 ---
 
 <BaseLayout
@@ -15,16 +24,18 @@ const assistantEnabled = Boolean(import.meta.env.PUBLIC_ASSISTANT_API_URL && imp
       <h1 class="text-4xl font-semibold text-white sm:text-5xl">Ask the portfolio copilot.</h1>
       <p class="text-base leading-relaxed text-slate-300 sm:text-lg">
         This interactive prototype taps into a hosted inference API to surface concise summaries about platform outcomes,
-        facilitation rituals, and active experiments. Credentials stay opt-in via environment variables so local previews remain
-        private.
+        facilitation rituals, and active experiments. It defaults to a Pollinations endpoint that validates requests via the
+        <span class="whitespace-nowrap">hackall360.github.io</span> referrer, with overrides handled through environment variables.
       </p>
       {!assistantEnabled && (
         <div class="rounded-2xl border border-amber-400/40 bg-amber-500/10 p-4 text-sm text-amber-200">
           <p class="font-semibold">Prototype disabled.</p>
           <p class="text-amber-100/80">
-            Add <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_URL</code>
-            and <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_KEY</code>
-            to your environment to activate live responses.
+            Requests from <span class="whitespace-nowrap text-white">hackall360.github.io</span> automatically use
+            <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">{DEFAULT_ASSISTANT_API_URL}</code>
+            when no override exists. Provide
+            <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_URL</code>
+            to target a different service, or leave it blank to keep this preview offline.
           </p>
         </div>
       )}
