@@ -204,10 +204,16 @@ Override the target branch or commit message by exporting `PUBLISH_BRANCH` or `P
 
 ## Portfolio assistant prototype
 
-- Enable the `/assistant` Astro Island by setting both `PUBLIC_ASSISTANT_API_URL` and `PUBLIC_ASSISTANT_API_KEY`.
-- The component posts JSON payloads (`{ prompt, context }`) to the configured endpoint and expects a JSON response with a `reply` property.
-- Treat `PUBLIC_ASSISTANT_API_KEY` as a short-lived or public-safe token. For sensitive credentials, front the API with a small serverless proxy and expose only a `PUBLIC_ASSISTANT_SESSION_TOKEN`.
+- The assistant defaults to Pollinations when `PUBLIC_ASSISTANT_API_URL` is unset. Pollinations allows anonymous browser calls when the `referrer` query parameter is `https://hackall360.github.io`; the island injects this parameter automatically for both production and localhost previews.
+- Provide `PUBLIC_ASSISTANT_API_URL` to target a different service. Set `PUBLIC_ASSISTANT_API_KEY` only when your proxy requires a bearer token—the value is forwarded as an `Authorization: Bearer` header. Leave it blank for the default Pollinations flow.
+- The component posts OpenAI-compatible JSON payloads to the configured endpoint and expects a [Chat Completions](https://platform.openai.com/docs/api-reference/chat) style response.
 - Error states surface inline so the page remains informative even when the API is unavailable.
+
+### Local verification
+
+1. Run `npm run dev` and open `http://localhost:4321/assistant`.
+2. Submit a prompt without defining `PUBLIC_ASSISTANT_API_KEY`. Pollinations should respond successfully using its anonymous rate limits.
+3. If Pollinations ever rejects localhost origins, override `PUBLIC_ASSISTANT_API_URL` with an explicit `?referrer=https://hackall360.github.io` query parameter or point the client at a proxy that you control.
 
 ## Domain configuration
 
