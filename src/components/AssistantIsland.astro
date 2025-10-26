@@ -1,6 +1,5 @@
 ---
-const DEFAULT_ASSISTANT_API_URL =
-  'https://text.pollinations.ai/openai?referrer=https://hackall360.github.io';
+const DEFAULT_ASSISTANT_API_URL = 'https://text.pollinations.ai/openai';
 
 const configuredApiUrl = import.meta.env.PUBLIC_ASSISTANT_API_URL;
 const disabledValues = new Set(['', 'false', '0', 'off']);
@@ -82,7 +81,37 @@ const apiUrl =
         event.preventDefault();
         const formData = new FormData(form);
         const prompt = formData.get('prompt');
-        const apiUrl = form.dataset.apiUrl;
+        const baseUrl = form.dataset.apiUrl;
+
+        const normalizeAssistantUrl = (rawUrl) => {
+          if (typeof rawUrl !== 'string' || rawUrl.trim().length === 0) {
+            return null;
+          }
+
+          try {
+            const url = new URL(rawUrl);
+            const defaultReferrer = 'https://hackall360.github.io';
+            const shouldUseWindowOrigin =
+              typeof window !== 'undefined' && window.location?.origin === defaultReferrer;
+            const referrerValue = shouldUseWindowOrigin
+              ? window.location.origin
+              : defaultReferrer;
+
+            url.searchParams.set('referrer', referrerValue);
+
+            return url.toString();
+          } catch (error) {
+            console.warn('Invalid assistant API URL provided.', error);
+            return rawUrl;
+          }
+        };
+
+        const apiUrl = normalizeAssistantUrl(baseUrl);
+
+        if (!apiUrl) {
+          console.warn('Assistant request blocked due to missing API URL.');
+          return;
+        }
 
         if (!prompt || typeof prompt !== 'string') {
           return;
