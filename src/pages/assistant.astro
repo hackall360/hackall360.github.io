@@ -37,7 +37,9 @@ const assistantEnabled = !isDisabled;
             when no override exists. Provide
             <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_URL</code>
             to target a different service, or leave it blank to keep this preview offline and avoid Pollinations&apos; anonymous
-            rate limits altogether.
+            rate limits altogether. Expose
+            <code class="rounded bg-slate-900 px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-accent-light">PUBLIC_ASSISTANT_API_KEY</code>
+            only when your proxy requires a bearer token; the default Pollinations flow succeeds without one.
           </p>
         </div>
       )}
